@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.4  
+**Document version:** 0.5  
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -660,39 +660,69 @@ A transformation that changes chemical meaning or reporting basis MUST document 
 
 ### 12.1 Definition
 
-A recipe describes intended formulation and procedure.
+A recipe describes intended formulation, materials, process, and target outcomes.
 
-A recipe SHOULD include:
+A recipe MUST NOT use batch-execution fields to represent observations of what actually occurred.
 
-- identity;
-- revision;
-- ingredients;
+A recipe SHOULD support:
+
+- a stable logical recipe identity;
+- a revision identifier or revision relationship;
+- planned ingredient or material uses;
 - planned quantities;
-- planned process steps;
-- targets;
-- expected yield;
-- expected measurements;
+- planned process definitions;
+- target values and acceptable ranges;
+- expected yield or output;
 - tolerances;
-- scaling information.
+- scaling information;
+- provenance.
 
-### 12.2 Recipe versions and lineage
+Targets and expected outcomes are specifications or predictions, not measurements.
 
-A recipe MAY identify:
+### 12.2 Recipe revisions
 
-- parent recipe;
-- derived recipe;
-- cloned recipe;
-- scaled recipe;
-- revision;
-- revision history;
-- source publication;
-- related recipes.
+A recipe revision MUST be distinguishable from other revisions of the same logical recipe.
 
-### 12.3 Recipe immutability
+When a recipe revision is referenced by a batch, the reference MUST identify the exact revision used.
 
-A profile MAY require published or referenced recipe revisions to be immutable.
+A published or otherwise fixed recipe revision SHOULD be immutable. A substantive change to an immutable revision SHOULD produce a new revision.
 
-Changes to an immutable recipe SHOULD produce a new revision identifier.
+A revision MAY identify:
+
+- its parent revision;
+- the reason for revision;
+- the author or software that produced it;
+- the revision timestamp;
+- source publications or external references.
+
+### 12.3 Derived and scaled recipes
+
+A recipe MAY be derived, cloned, translated, or scaled from another recipe.
+
+A derived or scaled recipe SHOULD preserve:
+
+- the source recipe and revision;
+- the transformation or scaling method;
+- relevant assumptions;
+- the resulting planned values.
+
+Scaling or derivation MUST NOT alter the preserved source revision.
+
+### 12.4 Ingredient and material use
+
+A recipe SHOULD distinguish an ingredient or material definition from its planned use in the recipe.
+
+A planned use MAY include:
+
+- a reference to the ingredient or material;
+- planned quantity;
+- process stage or step;
+- timing or trigger;
+- purpose;
+- preparation or form;
+- addition-specific instructions.
+
+A recipe MAY embed a material definition or reference an external definition as permitted by the applicable profile.
 
 ---
 
@@ -700,51 +730,80 @@ Changes to an immutable recipe SHOULD produce a new revision identifier.
 
 ### 13.1 Definition
 
-A batch records what actually occurred during a production run.
+A batch is a production record for a specific execution of a recipe, process, or ad hoc production plan.
+
+A batch MUST remain distinct from the recipe or process definition from which it was executed.
 
 A batch SHOULD identify:
 
 - batch identifier;
-- recipe or process reference;
-- scheduled dates;
-- actual dates;
-- operators;
-- actual ingredient lots;
-- actual quantities;
-- equipment used;
-- process events;
-- measurements;
-- deviations;
-- interventions;
+- lifecycle status;
+- recipe revision or process reference when applicable;
+- scheduled dates when applicable;
+- actual start and completion dates when known;
+- responsible operators or organization;
+- actual material lots and quantities used;
+- equipment instances used;
+- process execution records;
+- measurements and observations;
+- deviations and interventions;
 - transfers;
-- yields;
-- losses;
+- yields and losses;
 - packaging output;
 - quality disposition.
 
-### 13.2 Planned and actual values
+A batch MAY exist without a recipe reference when the production run was not executed from a formal recipe.
 
-Planned and actual values MUST remain distinguishable.
+### 13.2 Recipe and process references
 
-An implementation MUST NOT overwrite a planned value with an actual value.
+When a batch was executed from a recipe, the batch SHOULD reference the exact recipe revision.
 
-### 13.3 Deviations
+For reproducibility, a batch SHOULD preserve sufficient information to identify the referenced revision even if the recipe is stored externally. This MAY include a persistent identifier, version, checksum, or embedded snapshot.
 
-A production record SHOULD support:
+A batch MUST NOT silently follow later changes to a mutable recipe reference.
 
-- the planned condition;
-- the actual condition;
-- time of deviation;
+### 13.3 Planned and actual information
+
+Planned and actual information MUST remain distinguishable.
+
+An implementation MUST NOT overwrite a planned value with an actual value or replace a source observation with a target value.
+
+Actual quantities and conditions SHOULD be represented as measurements, observations, material-use records, process-execution records, or derived results according to their meaning.
+
+### 13.4 Lifecycle status
+
+A batch MAY have lifecycle states such as:
+
+- planned;
+- scheduled;
+- in progress;
+- completed;
+- aborted;
+- rejected;
+- archived.
+
+A lifecycle state MUST NOT imply that required measurements or process steps occurred unless those records are present.
+
+### 13.5 Deviations and interventions
+
+A production record SHOULD be able to represent a deviation or intervention with:
+
+- the affected process step or condition;
+- the planned state or target;
+- the observed or actual state;
+- time;
 - reason;
-- operator;
+- responsible person or system;
 - corrective action;
 - outcome.
 
-### 13.4 Batch genealogy
+A deviation or intervention SHOULD reference the underlying measurements or events rather than duplicating them when practical.
 
-A batch MAY reference parent and child batches.
+### 13.6 Batch genealogy
 
-Later profiles MAY define:
+A batch MAY reference parent or child production records.
+
+Profiles or optional modules MAY define:
 
 - splits;
 - combinations;
@@ -754,15 +813,28 @@ Later profiles MAY define:
 - partial transfers;
 - recovered material;
 - barrel allocation;
-- package allocation.
+- package allocation;
+- other material transformations.
+
+Genealogy relationships SHOULD preserve source quantities and destination quantities where known.
 
 ---
 
 ## 14. Process model
 
-### 14.1 Structure
+### 14.1 Process definitions and executions
 
-The process model SHOULD support:
+FermentationJSON MUST distinguish a process definition from a process execution.
+
+A process definition describes intended operations, sequence, targets, conditions, and triggers.
+
+A process execution records the operations and events that actually occurred.
+
+A process execution MAY reference a process definition or a specific process step.
+
+### 14.2 Process structure
+
+A process definition SHOULD support:
 
 - process;
 - stage;
@@ -778,15 +850,32 @@ The process model SHOULD support:
 - dependency;
 - resource.
 
-### 14.2 Timing and triggers
+A step that may be referenced independently SHOULD have a stable identifier within the process definition.
 
-A process step MAY be triggered by:
+### 14.3 Ordering and dependencies
+
+A process definition MAY express:
+
+- ordered steps;
+- dependencies;
+- repeated operations;
+- optional operations;
+- conditional operations;
+- parallel operations.
+
+Profiles MAY restrict these capabilities to a simpler subset.
+
+A dependency MUST identify its prerequisite unambiguously.
+
+### 14.4 Timing and triggers
+
+A planned process step MAY be triggered by:
 
 - elapsed time;
 - absolute time;
 - completion of another step;
 - temperature threshold;
-- gravity threshold;
+- gravity or extract threshold;
 - pH threshold;
 - pressure threshold;
 - volume threshold;
@@ -795,26 +884,30 @@ A process step MAY be triggered by:
 - operator decision;
 - calculated progress.
 
-### 14.3 Execution
+The planned trigger and the actual event that satisfied or bypassed the trigger MUST remain distinguishable.
+
+### 14.5 Process execution
 
 A process execution MAY record:
 
-- planned start;
-- planned end;
-- actual start;
-- actual end;
-- setpoint;
-- observed trajectory;
+- referenced process definition or step;
+- actual start and end;
+- actual duration;
+- setpoints;
+- measured conditions;
 - completion state;
-- equipment;
-- operator;
-- deviation;
+- equipment instance;
+- operator or controlling system;
+- deviations;
+- interventions;
 - notes;
-- attached measurements.
+- related measurements and events.
 
-### 14.4 Operations
+Observed trajectories are measurements or time-series data and SHOULD be referenced rather than encoded as target values.
 
-Profiles MAY define operations including:
+### 14.6 Operations
+
+Profiles MAY define controlled operation vocabularies including:
 
 - cleaning;
 - sanitizing;
@@ -834,6 +927,7 @@ Profiles MAY define operations including:
 - oxygenation;
 - aeration;
 - degassing;
+- inoculation;
 - fermentation;
 - conditioning;
 - filtration;
@@ -848,92 +942,145 @@ Profiles MAY define operations including:
 - pasteurization;
 - sampling.
 
+Operation vocabularies SHOULD be extensible without requiring changes to unrelated core schemas.
+
 ---
 
-## 15. Ingredients and materials
+## 15. Ingredients, materials, and lots
 
-### 15.1 Common properties
+### 15.1 Material definitions
 
-Ingredient and material records SHOULD support:
+A material definition describes the identity and relatively stable characteristics of a material.
+
+A material definition SHOULD support, as applicable:
 
 - identifier;
 - name;
-- category;
-- subtype;
-- producer;
-- supplier;
+- category and subtype;
+- producer or manufacturer;
 - product identifier;
-- lot;
-- origin;
+- biological or chemical identity;
+- geographic origin;
 - crop or production year;
 - form;
 - processing method;
 - composition;
-- analysis;
+- specification or typical analysis;
 - allergens;
 - certifications;
 - storage requirements;
 - shelf life;
-- provenance;
-- substitutions.
+- provenance.
 
-### 15.2 Domain-specific ingredients
+Supplier, purchasing, cost, and inventory state are not intrinsic material identity and SHOULD be represented separately when needed.
 
-Profiles MAY define specialized structures for:
+### 15.2 Material lots
+
+A material lot represents a specific produced, received, harvested, propagated, or otherwise traceable quantity of a material.
+
+A lot SHOULD support, as applicable:
+
+- lot identifier;
+- material definition reference;
+- producer or supplier lot code;
+- production, harvest, or receipt date;
+- lot-specific analysis;
+- quantity;
+- storage condition;
+- expiration or best-use date;
+- quality status;
+- provenance.
+
+Lot-specific analysis MUST remain distinguishable from a material specification or typical analysis.
+
+### 15.3 Ingredient and process roles
+
+A material's use as an ingredient, processing aid, cleaning agent, treatment chemical, packaging material, or other process input is a contextual role and SHOULD NOT require redefining the material itself.
+
+Profiles MAY define specialized material types for:
 
 - fermentables;
-- hops;
+- hops and hop-derived products;
 - cultures;
 - fruit;
-- juice;
-- must;
+- juice and must;
 - honey;
 - rice;
 - botanicals;
 - enzymes;
 - nutrients;
-- finings;
-- clarifiers;
+- finings and clarifiers;
 - preservatives;
-- acids;
-- bases;
+- acids and bases;
 - salts;
 - gases;
+- cleaning or sanitizing agents;
 - processing aids.
 
-### 15.3 Lot references
+### 15.4 Planned and actual material use
 
-A production batch SHOULD reference actual material lots where traceability is required.
+A recipe SHOULD reference planned material uses.
 
-Inventory and purchasing information MAY be maintained separately.
+A batch SHOULD reference actual material lots and quantities where traceability is required.
+
+A planned material use and an actual material consumption record MUST remain distinguishable.
 
 ---
 
 ## 16. Cultures and microbiology
 
-Culture records SHOULD support:
+### 16.1 Culture definitions
 
-- species;
+A culture definition describes a microbial culture, commercial culture product, strain, defined blend, mixed culture, spontaneous culture, or other inoculum class.
+
+A culture definition SHOULD support, where known:
+
+- organism species;
 - subspecies;
 - strain;
 - taxonomic identifier;
-- commercial strain name;
+- commercial strain or product name;
 - producer;
 - product identifier;
-- composition;
-- attenuation;
-- temperature range;
+- culture type;
+- defined composition;
+- expected attenuation or fermentation characteristics;
+- recommended temperature range;
 - alcohol tolerance;
-- flocculation;
-- viability;
+- flocculation or equivalent behavior;
+- provenance.
+
+A culture record MUST NOT imply known taxonomic identity or composition when the culture is spontaneous, unknown, or incompletely characterized.
+
+### 16.2 Culture lots and inocula
+
+Lot- or inoculum-specific properties SHOULD be represented separately from stable culture-definition properties.
+
+Such properties MAY include:
+
+- lot identifier;
 - cell concentration;
+- viability;
+- vitality;
 - generation number;
+- harvest count;
 - storage age;
-- propagation history.
+- storage medium;
+- storage temperature;
+- propagation history;
+- contamination status;
+- analysis date;
+- provenance.
 
-Mixed cultures MAY identify component organisms and proportions when known.
+Viability, cell concentration, and similar condition-dependent values SHOULD be represented as measurements or observations with their temporal context.
 
-A culture record MUST NOT imply known composition when the culture is spontaneous, unknown, or incompletely characterized.
+### 16.3 Mixed and spontaneous cultures
+
+A defined mixed culture MAY identify component organisms and proportions when known.
+
+An undefined or spontaneous culture MAY identify known components without implying that the list is complete.
+
+Component proportions MUST NOT be invented when they are unknown.
 
 ---
 
@@ -1062,13 +1209,28 @@ Any such conversion or estimate MUST be represented as derived information with 
 
 Conductivity MAY include a reference temperature. A reference temperature MUST NOT be invented when the source does not provide one.
 
-### 17.6 Regulatory and specification values
+### 17.6 Target-water profiles
+
+A target-water profile describes desired chemistry or acceptable chemistry ranges. It MUST remain distinguishable from source-water observations and treated-liquor results.
+
+A target-water profile MAY originate from:
+
+- a user-defined target;
+- a style or product specification;
+- a published brewery or locality profile;
+- a historical reference;
+- a prior successful batch;
+- another cited source.
+
+A target derived from historical or published data SHOULD preserve the provenance and reported form of that source while keeping the target interpretation distinct from the source observation.
+
+### 17.7 Regulatory and specification values
 
 Regulatory limits, treatment targets, product specifications, and other limits MUST remain distinguishable from observed source-water chemistry.
 
 A regulatory maximum or action level MUST NOT be imported as though it were an observed concentration.
 
-### 17.7 Water blending
+### 17.8 Water blending
 
 A water blend SHOULD record:
 
@@ -1082,30 +1244,47 @@ A water blend SHOULD record:
 
 The calculated blended profile is derived information and MUST NOT alter the preserved source-water profiles.
 
-### 17.8 Treatment plans
+If a blend is physically executed in a batch, the actual amounts used SHOULD be recorded in the batch execution record separately from the planned blend.
 
-A water-treatment plan SHOULD record:
+### 17.9 Water-treatment plans and execution
+
+A water-treatment plan describes intended transformation of source water into treated liquor.
+
+A treatment plan SHOULD record:
 
 - source waters;
-- blend;
+- planned blend;
 - treatment steps;
 - treatment order;
-- chemical additions;
+- treatment materials and planned amounts;
+- chemical identity;
 - hydration state;
 - purity;
-- concentration;
-- target liquor;
-- predicted result;
-- measured result;
+- solution concentration;
+- target-water profile;
+- predicted treated-liquor profile;
 - assumptions;
 - constraints;
 - warnings.
 
+A batch execution SHOULD record actual treatment materials, actual amounts, execution events, and resulting measurements separately from the plan.
+
 Reported chemical identities and hydration states MUST NOT be silently normalized to a different chemical form.
 
-### 17.9 Optimization results
+### 17.10 Treated-liquor profiles
 
-Optimization results MUST be represented as calculation results and MUST NOT silently modify the source profile, target profile, or recipe.
+A treated-liquor profile describes water after blending or treatment.
+
+A treated-liquor profile MUST distinguish:
+
+- predicted or calculated chemistry;
+- measured chemistry.
+
+Predicted chemistry is derived information. Measured chemistry is observational information and MUST preserve measurement provenance and conditions.
+
+### 17.11 Optimization results
+
+Optimization results MUST be represented as calculation results and MUST NOT silently modify the source profile, target profile, treatment plan, or recipe.
 
 An optimization result MAY include:
 
@@ -1124,56 +1303,119 @@ An optimization result MAY include:
 
 ## 18. Equipment
 
-Equipment records SHOULD support:
+### 18.1 Equipment definitions and instances
 
-- identifier;
+FermentationJSON SHOULD distinguish an equipment definition or model from a specific physical equipment instance.
+
+An equipment definition describes relatively stable properties shared by a class, model, or configured design.
+
+An equipment instance represents a particular physical asset used in production.
+
+### 18.2 Equipment definitions
+
+An equipment definition MAY include:
+
 - equipment class;
 - manufacturer;
 - model;
-- serial number;
-- location;
-- status;
 - material;
-- capacity;
-- working capacity;
-- dimensions;
+- nominal capacity;
+- geometry or dimensions;
 - pressure rating;
 - heating capability;
 - cooling capability;
-- dead space;
-- losses;
+- nominal dead space;
+- nominal losses;
+- other model-level specifications.
+
+### 18.3 Equipment instances
+
+An equipment instance SHOULD include:
+
+- stable identifier;
+- equipment definition reference where applicable;
+- serial or asset number where applicable;
+- installation or location information;
+- current configuration;
+- operational status;
+- instance-specific calibrated capacity or geometry;
 - calibration references;
 - maintenance references.
 
-Later modules MAY define equipment topology, ports, fittings, hoses, valves, manifolds, flow paths, heating zones, and cooling zones.
+Mutable state, calibration history, and maintenance history SHOULD NOT be represented as immutable model specifications.
+
+### 18.4 Equipment use in production
+
+A batch SHOULD reference the actual equipment instance used when that identity affects reproducibility, traceability, or process interpretation.
+
+If a referenced equipment configuration may change over time, the production record SHOULD preserve a version, configuration identifier, or sufficient snapshot to identify the configuration used.
+
+### 18.5 Advanced equipment modeling
+
+Optional modules MAY define:
+
+- ports and fittings;
+- hoses and pipes;
+- valves and manifolds;
+- pumps;
+- flow paths;
+- heating zones;
+- cooling zones;
+- calibrated vessel-volume tables;
+- sensors and instruments;
+- equipment topology.
 
 ---
 
-## 19. Calculations
+## 19. Calculations and model results
 
-A calculation result MUST be distinguishable from a measurement.
+### 19.1 Distinction from observations
 
-A calculation result SHOULD include:
+A calculation or model result MUST remain distinguishable from a measurement, observation, reported source value, or target.
 
-- calculation type;
-- inputs;
-- outputs;
+Unit conversion and canonicalization alone do not transform a measurement or reported value into a calculation result.
+
+### 19.2 Calculation record
+
+A calculation result SHOULD include, as applicable:
+
+- calculation or model type;
+- input values or input references;
+- output values;
 - formula or model identifier;
-- version;
-- software;
+- formula or model version;
+- implementation or software identity;
+- implementation version;
 - assumptions;
 - coefficients;
 - constraints;
-- rounding;
-- uncertainty;
+- rounding policy;
+- uncertainty or sensitivity information;
 - warnings;
 - timestamp;
-- acceptance status.
+- acceptance or selection status.
 
-Potential calculation types include:
+### 19.3 Reproducibility
 
-- gravity conversion;
-- extract conversion;
+A calculation result intended to be reproducible SHOULD preserve sufficient information to identify the exact inputs and model used.
+
+If an input is referenced externally, the record SHOULD preserve a stable identifier, version, checksum, snapshot, or other mechanism sufficient to prevent silent changes to the calculation inputs.
+
+A calculation MUST NOT modify the preserved source inputs.
+
+### 19.4 Derived values
+
+A derived value produced by a calculation MAY be embedded in another object when permitted by the applicable schema.
+
+When embedded, the value MUST remain identifiable as derived and SHOULD reference or include the derivation provenance required by Section 11.
+
+Selecting or accepting a calculated result MUST NOT cause it to be represented as a measurement or source-reported value.
+
+### 19.5 Potential calculation types
+
+Profiles and optional modules MAY define calculations including:
+
+- gravity or extract conversion;
 - alcohol;
 - attenuation;
 - bitterness;
@@ -1181,17 +1423,17 @@ Potential calculation types include:
 - mash water;
 - heat requirements;
 - water blending;
-- salt additions;
-- acid additions;
+- salt or acid additions;
 - mash pH;
-- yeast pitch rate;
+- culture pitch rate;
 - fermentation modeling;
 - carbonation;
 - priming;
 - draft balancing;
 - equipment sizing;
 - yield;
-- losses.
+- losses;
+- optimization.
 
 ---
 
