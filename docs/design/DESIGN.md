@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.5  
+**Document version:** 0.6  
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -1437,96 +1437,145 @@ Profiles and optional modules MAY define calculations including:
 
 ---
 
-## 20. Profiles
+## 20. Profiles and optional modules
 
 ### 20.1 Purpose
 
-Profiles define coherent sets of requirements for a domain or use case.
+A profile defines a coherent set of requirements for a fermentation domain or interoperability use case.
 
-A profile MAY:
+An optional module defines an independently adoptable capability that may be used by one or more profiles.
 
-- require specific core fields;
-- define controlled vocabularies;
-- add domain-specific object types;
-- constrain units;
-- define additional validation rules;
+A profile or module MAY:
+
+- require fields that are optional in a core schema;
+- define domain-specific object types;
+- define or constrain controlled vocabularies;
+- restrict permitted units or quantity kinds;
+- impose additional semantic or validation requirements;
+- define domain-specific reference rules;
 - define compatibility behavior.
 
-### 20.2 Profile declaration
+A profile or module MUST NOT weaken a normative core requirement.
 
-A document conforming to a profile MUST declare the profile and version.
+### 20.2 Identification and versioning
 
-### 20.3 Multiple profiles
+Every normative profile and module MUST have a stable identifier and an explicit version.
 
-A document MAY declare multiple compatible profiles.
+A document claiming conformance to a profile or module MUST declare the exact identifier and version.
 
-When two declared profiles conflict, validation MUST fail unless the applicable specification defines precedence.
+A published identifier MUST NOT be reassigned to incompatible content.
 
-### 20.4 Initial profiles
+### 20.3 Multiple profiles and modules
 
-The initial stable profile is expected to be beer-oriented.
+A document MAY declare more than one compatible profile or module.
 
-Future profiles may include wine, cider, perry, mead, sake, kombucha, vinegar, and other fermentation domains.
+All declared requirements apply cumulatively unless the applicable specification explicitly defines another composition rule.
+
+If two declared normative requirements conflict and no explicit composition rule resolves the conflict, the document is nonconforming.
+
+### 20.4 Profile scope
+
+Profiles SHOULD contain requirements specific to their domain or interoperability purpose rather than duplicate reusable core definitions.
+
+The initial stable domain profile is expected to be brewing-oriented.
+
+Later profiles MAY define wine, cider, perry, mead, sake, kombucha, vinegar, and other fermentation domains.
 
 ---
 
 ## 21. Extensions
 
-### 21.1 General rules
+### 21.1 Purpose
 
-Extensions MUST use a collision-resistant namespace or identifier.
+Extensions provide a controlled mechanism for representing information that is not defined by the applicable normative schemas or profiles.
+
+Extensions are not a substitute for profiles when a capability requires shared interoperability rules.
+
+### 21.2 Identification and collision avoidance
+
+Every extension MUST use a collision-resistant identifier or namespace.
+
+An extension identifier SHOULD be globally unique and SHOULD be URI-compatible.
 
 An extension MUST NOT:
 
-- redefine a normative core field;
+- redefine a normative field;
 - change the meaning of a normative value;
-- bypass a required validation rule;
-- claim conformance to a profile it violates.
+- bypass a required validation or conformance rule;
+- shadow a normative identifier;
+- claim conformance to a profile that it violates.
 
-### 21.2 Unknown extensions
+### 21.3 Optional and required extensions
 
-A conforming implementation SHOULD preserve unknown extensions when reading and writing a document without modification.
+An extension MUST declare whether understanding it is optional or required for correct interpretation of the containing document.
 
-An implementation MAY ignore an extension it does not understand, unless the extension declares that it is required for interpretation.
+An implementation MAY ignore an optional extension it does not understand.
 
-### 21.3 Required extensions
+An implementation that does not understand a required extension MUST report that it cannot fully interpret the document and MUST NOT claim full conformance for processing that document.
 
-A required extension MUST be declared explicitly.
+### 21.4 Preservation of unknown extensions
 
-An implementation that does not understand a required extension MUST report that it cannot fully interpret the document.
+A processor that reads and rewrites a document without intentionally transforming an unknown extension SHOULD preserve that extension without semantic alteration.
 
-### 21.4 Promotion
+If an implementation cannot preserve a required unknown extension during a transformation, the transformation MUST fail or report the loss as required by Section 23.
 
-Experimental extensions MAY be promoted into a normative schema or profile after:
+Preservation of unknown extension data does not imply validation or semantic understanding.
 
-- documented implementation experience;
+### 21.5 Extension validation
+
+An extension MAY publish its own schema, vocabulary, or conformance requirements.
+
+A document MUST NOT claim conformance to an extension unless it satisfies that extension's declared requirements.
+
+### 21.6 Promotion into the specification
+
+An experimental extension MAY be proposed for promotion into a normative schema, profile, module, or vocabulary.
+
+Promotion SHOULD require:
+
+- a documented interoperability problem;
+- implementation experience;
 - compatibility analysis;
-- review;
-- conformance tests;
-- an approved proposal or decision record.
+- defined migration behavior;
+- conformance fixtures or tests;
+- review through the applicable proposal or decision process.
+
+Promotion MUST NOT silently change the meaning of existing extension data.
 
 ---
 
 ## 22. External-format compatibility
 
-Compatibility with an external format MUST be defined by a versioned compatibility profile.
+### 22.1 Compatibility profiles
+
+A normative compatibility claim with an external format MUST be defined by a versioned compatibility profile.
 
 A compatibility profile MUST specify:
 
-- the supported source or target format and version;
-- import guarantees;
-- export guarantees;
+- the external format and applicable version;
+- whether import, export, or both are supported;
 - field and type mappings;
-- unit-handling behavior;
-- preservation of unknown or extension data;
+- unit and quantity handling;
+- preservation requirements;
+- treatment of unknown or extension data;
 - round-trip expectations;
 - known limitations;
 - required conformance fixtures;
 - loss-reporting behavior.
 
-### 22.1 BeerJSON 1.0
+Compatibility claims MUST identify the exact compatibility-profile version being implemented.
 
-Every valid BeerJSON 1.0 document MUST be importable without loss of BeerJSON-defined information.
+### 22.2 Semantic and lexical preservation
+
+Unless a compatibility profile explicitly states otherwise, "lossless" refers to preservation of defined information and meaning, not byte-for-byte reproduction of the source serialization.
+
+Whitespace, object-member ordering that has no defined semantic meaning, XML formatting, comments, and other purely lexical details need not be preserved unless the compatibility profile requires them.
+
+Original source values, units, qualifiers, identifiers, and other defined information MUST be preserved when required by the compatibility profile.
+
+### 22.3 BeerJSON 1.0
+
+Every valid BeerJSON 1.0 document MUST be importable into FermentationJSON without loss of BeerJSON-defined information.
 
 The BeerJSON 1.0 compatibility profile MUST preserve:
 
@@ -1534,186 +1583,321 @@ The BeerJSON 1.0 compatibility profile MUST preserve:
 - original values and units;
 - identifiers and references;
 - optional metadata;
-- ordering where semantically meaningful;
+- ordering where BeerJSON assigns semantic meaning to ordering;
 - source-format and version information.
+
+Canonicalization or normalization performed during import MUST NOT erase the BeerJSON source representation required for lossless preservation.
 
 The project MUST maintain documented mappings and conformance fixtures for BeerJSON 1.0.
 
-A round trip through FermentationJSON MUST preserve all BeerJSON-defined information when the document remains within the BeerJSON-representable subset.
+For content representable in both formats, a BeerJSON-to-FermentationJSON-to-BeerJSON round trip MUST preserve all BeerJSON-defined information.
 
-Export to BeerJSON 1.0 MAY be supported. Any FermentationJSON information that cannot be represented MUST be identified in a loss report or cause the export to fail explicitly.
+Export to BeerJSON 1.0 MAY be supported. Information not representable in BeerJSON 1.0 MUST cause the export to fail explicitly or MUST be identified by a loss report.
 
-### 22.2 BeerXML 1.0
+### 22.4 BeerXML 1.0
 
 Every valid BeerXML 1.0 document MUST be importable while preserving all standard-defined information present in the source document.
 
+The compatibility profile MUST distinguish BeerXML-defined information from application-specific extensions.
+
 Unknown application-specific elements SHOULD be retained opaquely where practical. Opaque preservation does not imply semantic understanding.
 
-An importer MUST NOT claim to reconstruct information that the source document did not contain.
+An importer MUST NOT claim to reconstruct information that the BeerXML source did not contain, including information normalized or omitted by the source application before export.
 
-Implementations MAY provide a compatibility mode for common nonstandard BeerXML output. Compatibility mode SHOULD report each detected deviation from the BeerXML specification.
+Implementations MAY provide a compatibility mode for common nonstandard BeerXML output. Compatibility mode SHOULD report each detected deviation from BeerXML 1.0.
+
+---
 
 ## 23. Loss reporting
 
-A loss report SHOULD identify:
+### 23.1 Requirement
 
-- source format;
-- target format;
-- source path;
-- omitted data;
-- transformed data;
-- approximated data;
-- unsupported units;
-- unsupported object types;
-- dropped extensions;
+A transformation that omits, approximates, reinterprets, or otherwise cannot preserve information required by the source representation or applicable compatibility profile is lossy.
+
+A lossy transformation MUST either:
+
+- fail explicitly before producing a target document; or
+- produce a machine-readable loss report.
+
+A lossy transformation MUST NOT be described as lossless.
+
+### 23.2 Loss entries
+
+A loss report MUST identify the source format or profile and target format or profile.
+
+Each loss entry SHOULD identify, when applicable:
+
+- the source path or object identifier;
+- the affected value or concept;
+- the loss category;
 - severity;
+- transformation performed;
 - explanation;
 - remediation guidance.
 
-Loss severity MAY include:
+Loss categories MAY include:
+
+- omitted information;
+- unsupported object or field;
+- unsupported extension;
+- unsupported semantic qualifier;
+- unsupported unit or reporting basis;
+- precision reduction or rounding;
+- approximation;
+- many-to-one mapping;
+- ambiguous mapping.
+
+### 23.3 Non-lossy transformations
+
+A change in serialization form is not inherently lossy.
+
+Examples of transformations that MAY be non-lossy when meaning and required source information are preserved include:
+
+- exact unit conversion;
+- canonicalization;
+- member reordering where ordering has no defined meaning;
+- whitespace changes;
+- normalization that retains the source representation required by the applicable profile.
+
+### 23.4 Severity
+
+A loss-report vocabulary MAY define severities such as:
 
 - informational;
 - warning;
 - error;
 - fatal.
 
-A lossy export MUST NOT be described as lossless.
+Severity MUST NOT be used to conceal the fact that a transformation is lossy.
 
 ---
 
 ## 24. Versioning and evolution
 
-### 23.1 Versioned artifacts
+### 24.1 Versioned normative artifacts
 
-The project SHOULD version independently:
+The project MUST version normative artifacts whose evolution can affect conformance or interpretation, including:
 
 - the overall specification;
 - schemas;
 - profiles;
+- optional modules;
 - vocabularies;
-- compatibility mappings;
-- reference implementations.
+- compatibility profiles.
 
-### 23.2 Compatibility
+Tools and reference implementations SHOULD be versioned independently from the specification.
 
-A versioning policy MUST define:
+### 24.2 Release versioning
 
-- backward compatibility;
-- forward compatibility;
-- breaking changes;
-- additive changes;
-- deprecation;
-- removal;
-- migration.
+Published FermentationJSON specification releases MUST use semantic versioning.
 
-### 23.3 Stable identifiers
+A major version change indicates an incompatible change to normative behavior or document interpretation.
 
-Published schema identifiers MUST remain stable.
+A minor version change MAY add backward-compatible capabilities, schemas, profiles, modules, vocabulary terms, or optional fields.
 
-A schema identifier MUST NOT be reused for incompatible content.
+A patch version change MUST NOT intentionally change the set or meaning of conforming documents. Patch releases MAY correct documentation, tests, examples, or defects where the intended normative behavior is unchanged.
 
-### 23.4 Deprecation
+Pre-1.0 development releases MAY change incompatibly. Such changes MUST be identified in release notes.
 
-Deprecated fields or vocabularies SHOULD remain documented for an announced transition period.
+### 24.3 Artifact identifiers
 
-Deprecation SHOULD include migration guidance.
+Every published normative schema, profile, module, vocabulary, and compatibility profile MUST have a stable versioned identifier.
 
-### 23.5 Unknown fields
+A versioned identifier MUST NOT be reused for different normative content.
 
-The specification MUST define whether unknown fields are rejected, ignored, or preserved for each schema context.
+Where an unversioned convenience identifier is provided, it MUST resolve according to a documented policy and MUST NOT be used when an immutable version reference is required for reproducibility.
 
-A uniform global policy is not required, but behavior MUST be explicit.
+### 24.4 Backward and forward compatibility
+
+The versioning policy MUST define, for each class of normative artifact:
+
+- what constitutes a breaking change;
+- what constitutes an additive compatible change;
+- how unknown future fields or vocabulary values are handled;
+- migration requirements;
+- deprecation and removal behavior.
+
+Compatibility MUST NOT be inferred solely from numeric version ordering.
+
+### 24.5 Deprecation and removal
+
+A deprecated field, object type, vocabulary term, or behavior SHOULD remain documented for an announced transition period.
+
+Deprecation SHOULD include:
+
+- the replacement, if any;
+- migration guidance;
+- the version in which deprecation began;
+- the earliest version in which removal may occur.
+
+Removal of previously conforming normative behavior requires a major-version change unless the behavior was explicitly experimental or otherwise outside the compatibility guarantee.
+
+### 24.6 Unknown fields and vocabulary values
+
+Each normative schema or profile MUST define how unknown fields and unknown vocabulary values are handled.
+
+The behavior MAY differ by context, but it MUST be explicit.
+
+Extension fields governed by Section 21 are not considered unknown core fields when they are represented through the defined extension mechanism.
 
 ---
 
 ## 25. Conformance
 
-### 23.1 Conforming document
+### 25.1 Levels of validation
 
-A conforming document:
+FermentationJSON distinguishes structural validation from full conformance.
 
-- validates against the declared schema or profile;
-- uses the declared specification version;
-- satisfies all applicable normative requirements;
-- declares required extensions;
-- maintains reference integrity required by the profile.
+**Structural validation** determines whether a document satisfies the applicable machine-readable schema constraints.
 
-### 23.2 Conforming validator
+**Full conformance** additionally includes normative semantic and behavioral requirements that may not be expressible in JSON Schema, including reference integrity, compatibility preservation, derivation rules, required extension handling, and loss-reporting behavior.
 
-A conforming validator MUST:
+A document MUST NOT be described as fully conforming solely because it passes JSON Schema validation.
 
-- evaluate the declared schema and profile;
+### 25.2 Conforming document
+
+A conforming document MUST:
+
+- be syntactically valid JSON;
+- validate against its declared normative schema and profile constraints;
+- declare the applicable specification, profile, and module versions;
+- satisfy all applicable semantic requirements;
+- declare required extensions;
+- satisfy required reference-integrity rules.
+
+### 25.3 Conforming validator
+
+A validator MAY perform structural validation only or full conformance validation.
+
+A validator MUST accurately state which level it performs.
+
+A structural validator MUST:
+
+- evaluate the declared machine-readable schema constraints;
 - report validation failures;
-- distinguish errors from warnings where defined;
-- avoid silently accepting violations of normative requirements.
+- avoid claiming that structural validity establishes full conformance.
 
-### 23.3 Conforming importer
+A full-conformance validator MUST additionally evaluate all normative requirements within its declared conformance scope.
 
-A conforming importer MUST satisfy the applicable compatibility profile.
+### 25.4 Conforming importer
 
-### 23.4 Conforming exporter
+An importer claiming compatibility with an external format MUST identify the compatibility-profile version it implements and MUST satisfy all applicable import requirements and conformance fixtures.
 
-A conforming exporter MUST:
+An importer MUST NOT claim lossless import when required source information is discarded, approximated, or silently reinterpreted.
 
-- produce valid target documents;
-- report lossy transformations;
-- preserve required source information where the target format supports it.
+### 25.5 Conforming exporter
 
-### 23.5 Partial implementations
+An exporter claiming compatibility with an external format MUST:
 
-An implementation MAY support only selected profiles or modules.
+- identify the compatibility-profile version it implements;
+- produce structurally valid target documents;
+- satisfy applicable target-format semantic requirements;
+- preserve information required by the compatibility profile;
+- fail explicitly or report every required lossy transformation.
 
-A partial implementation MUST accurately declare what it supports.
+### 25.6 Partial implementations
+
+An implementation MAY support only selected schemas, profiles, modules, compatibility profiles, or operations.
+
+A partial implementation MUST accurately declare its supported conformance scope and MUST NOT imply support for unimplemented capabilities.
+
+### 25.7 Conformance fixtures
+
+Normative compatibility profiles and profiles with behavior not fully expressible in schema SHOULD publish conformance fixtures or test vectors.
+
+A conformance claim SHOULD identify the version of the conformance suite used for verification.
 
 ---
 
-## 26. Security, privacy, and safety considerations
+## 26. Security, privacy, and operational safety
 
-### 23.1 Untrusted input
+### 26.1 Untrusted input
 
-Implementations MUST treat imported documents as untrusted input.
+Implementations MUST treat imported FermentationJSON and external-format documents as untrusted input.
 
-Validators and importers SHOULD defend against:
+Parsers, validators, importers, and processors SHOULD defend against:
 
 - excessive nesting;
-- oversized arrays;
-- oversized strings;
-- malicious references;
+- oversized arrays or strings;
+- resource-exhaustion inputs;
+- malicious or cyclic references;
 - path traversal;
 - remote-reference abuse;
-- resource exhaustion;
-- malformed numbers;
-- parser discrepancies.
+- parser discrepancies;
+- duplicate JSON object member names;
+- malformed numeric or Unicode input.
 
-### 23.2 External resources
+Processors SHOULD reject duplicate object member names before semantic interpretation because parser behavior may differ.
 
-Applications SHOULD apply explicit policies to dereferencing external URIs.
+### 26.2 External references
+
+Implementations SHOULD apply explicit policies to dereferencing external URIs.
 
 Validation SHOULD NOT require unrestricted network access.
 
-### 23.3 Personal information
+Implementations SHOULD support limits on:
 
-Documents MAY contain personal or organizational information.
+- URI schemes;
+- network destinations;
+- redirects;
+- response size;
+- recursion depth;
+- retrieval time;
+- cached-content lifetime.
 
-Applications SHOULD minimize collection and disclosure of unnecessary personal data.
+External resources used for reproducibility SHOULD support integrity verification where practical.
 
-### 23.4 Equipment control
+### 26.3 XML import
 
-FermentationJSON documents may describe controllers, setpoints, alarms, or equipment operations.
+BeerXML and other XML importers SHOULD disable external entity resolution and other parser features that permit unintended local-file or network access unless explicitly required and safely sandboxed.
 
-A document MUST NOT be treated as safe executable control logic solely because it validates.
+### 26.4 Personal and organizational information
 
-Systems that translate documents into physical control actions MUST apply independent authorization, safety limits, and operational validation.
+FermentationJSON documents MAY contain names, contact details, locations, operator records, laboratory information, or other potentially sensitive metadata.
+
+Applications SHOULD minimize collection, retention, and disclosure of personal information not required for the interchange purpose.
+
+Profiles SHOULD NOT require personal information unless it is necessary for the domain use case.
+
+### 26.5 Operational safety
+
+FermentationJSON MAY describe equipment, controllers, setpoints, alarms, process instructions, or calculated operating conditions.
+
+Successful validation establishes data conformance only. It does not establish that an instruction, setpoint, treatment, recipe, or control action is physically safe.
+
+Systems that translate FermentationJSON data into physical actions MUST apply independent authorization, equipment limits, interlocks, process validation, and safety controls.
+
+A FermentationJSON document MUST NOT be treated as executable safety logic solely because it conforms to the specification.
 
 ---
 
-## 27. Specification artifacts
+## 27. Normative and supporting specification artifacts
 
-A FermentationJSON release SHOULD include the artifacts required to implement and test the published behavior:
+### 27.1 Artifact status
 
-- normative schemas and documentation;
-- versioned profiles and vocabularies;
-- compatibility mappings;
+Every published specification artifact SHOULD clearly identify whether it is:
+
+- normative;
+- informative;
+- experimental;
+- deprecated.
+
+An informative example, design note, proposal, or reference implementation MUST NOT override a normative requirement.
+
+### 27.2 Normative release artifacts
+
+A FermentationJSON release SHOULD include the normative artifacts required to implement and test the published behavior, including:
+
+- normative schemas;
+- normative specification documentation;
+- versioned profiles and optional modules;
+- versioned vocabularies;
+- compatibility profiles and mappings where applicable.
+
+### 27.3 Supporting artifacts
+
+A release SHOULD also include supporting materials as appropriate:
+
 - conformance fixtures and tests;
 - valid and invalid examples;
 - migration guidance;
@@ -1721,7 +1905,17 @@ A FermentationJSON release SHOULD include the artifacts required to implement an
 
 Importers, exporters, validators, documentation generators, and reference implementations MAY be published with the specification but MUST be identified separately from normative artifacts.
 
-Interoperable behavior is defined by the schemas together with normative documentation, compatibility profiles, and conformance tests.
+### 27.4 Consistency of normative artifacts
+
+Normative prose and normative machine-readable artifacts MUST be maintained consistently.
+
+JSON Schemas define machine-validatable structural constraints. Normative documentation defines semantic and behavioral requirements, including requirements that cannot be expressed in JSON Schema.
+
+A contradiction between normative artifacts is a specification defect and SHOULD be resolved through an erratum or subsequent release rather than by relying on undocumented implementation precedence.
+
+Conformance tests MAY clarify intended behavior but MUST NOT introduce a normative requirement that is absent from the published normative specification.
+
+---
 
 ## 28. Development staging
 
