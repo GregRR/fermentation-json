@@ -1,0 +1,30 @@
+{
+  "artifact": "fermentationjson.compatibility_profile",
+  "identifier": "https://gregrr.github.io/fermentation-json/compatibility/beerjson-1.0/0.1.0/profile.json",
+  "version": "0.1.0",
+  "status": "pre-release_mapping_baseline",
+  "external_format": {
+    "name": "BeerJSON",
+    "document_version": "1.0",
+    "repository_tag": "v1.0.2"
+  },
+  "directions": {
+    "import": "required_target",
+    "export": "planned"
+  },
+  "source_manifest": "source-manifest.v0.1.0.json",
+  "inventory": "inventory/beerjson-v1.0.2-inventory.json",
+  "field_mapping": "mappings/field-mapping.v0.1.0.json",
+  "unit_mapping": "mappings/unit-tokens.v0.1.0.json",
+  "preservation_requirements": [
+    "all BeerJSON-defined fields",
+    "original numeric and string values",
+    "original BeerJSON unit tokens",
+    "optional BeerJSON metadata",
+    "array item ordering",
+    "BeerJSON source format and document version"
+  ],
+  "strict_unknown_field_policy": "A document that violates the pinned BeerJSON schemas is outside the strict BeerJSON 1.0 compatibility guarantee. A pragmatic importer MAY preserve nonstandard fields opaquely but MUST report that the source is nonconforming.",
+  "lossless_definition": "Preservation of all BeerJSON-defined information and semantics, not byte-for-byte JSON reproduction.",
+  "claim_status": "No FermentationJSON implementation may claim completed BeerJSON 1.0 compatibility from this baseline alone. Concrete domain mappings, import fixtures, and round-trip tests remain required."
+}

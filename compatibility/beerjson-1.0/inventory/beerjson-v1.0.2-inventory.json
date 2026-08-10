@@ -1,0 +1,2122 @@
+{
+  "artifact": "fermentationjson.beerjson_inventory",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_manifest": "../source-manifest.v0.1.0.json",
+  "external_standard": {
+    "name": "BeerJSON",
+    "document_version": "1.0",
+    "repository_tag": "v1.0.2"
+  },
+  "counts": {
+    "schema_files": 20,
+    "named_types": 105,
+    "object_types": 67,
+    "declared_object_fields": 335,
+    "enum_types": 36,
+    "scalar_types": 2
+  },
+  "inventory_semantics": {
+    "declared_fields": "Fields are listed once where declared. Inherited fields apply through the inherits relationship.",
+    "root": "BeerJSONRoot represents fields inside the required top-level beerjson object.",
+    "field_order": "JSON object member order is not treated as semantic. Array item order must be preserved on import and round trip."
+  },
+  "types": {
+    "beer.json#BeerJSONRoot": {
+      "kind": "object",
+      "fields": {
+        "version": {
+          "type": "VersionType",
+          "required": true
+        },
+        "fermentables": {
+          "type": "array<FermentableType>",
+          "required": false
+        },
+        "miscellaneous_ingredients": {
+          "type": "array<MiscellaneousType>",
+          "required": false
+        },
+        "hop_varieties": {
+          "type": "array<VarietyInformation>",
+          "required": false
+        },
+        "cultures": {
+          "type": "array<CultureInformation>",
+          "required": false
+        },
+        "profiles": {
+          "type": "array<WaterBase>",
+          "required": false
+        },
+        "styles": {
+          "type": "array<StyleType>",
+          "required": false
+        },
+        "mashes": {
+          "type": "array<MashProcedureType>",
+          "required": false
+        },
+        "fermentations": {
+          "type": "array<FermentationProcedureType>",
+          "required": false
+        },
+        "recipes": {
+          "type": "array<RecipeType>",
+          "required": false
+        },
+        "equipments": {
+          "type": "array<EquipmentType>",
+          "required": false
+        },
+        "boil": {
+          "type": "array<BoilProcedureType>",
+          "required": false
+        },
+        "packaging": {
+          "type": "array<PackagingProcedureType>",
+          "required": false
+        }
+      },
+      "notes": "Fields inside the required top-level beerjson object."
+    },
+    "boil.json#BoilProcedureType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "pre_boil_size": {
+          "type": "VolumeType",
+          "required": false
+        },
+        "boil_time": {
+          "type": "TimeType",
+          "required": true
+        },
+        "boil_steps": {
+          "type": "array<BoilStepType>",
+          "required": false
+        }
+      }
+    },
+    "boil_step.json#BoilStepType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "start_temperature": {
+          "type": "TemperatureType",
+          "required": false
+        },
+        "end_temperature": {
+          "type": "TemperatureType",
+          "required": false
+        },
+        "ramp_time": {
+          "type": "TimeType",
+          "required": false
+        },
+        "step_time": {
+          "type": "TimeType",
+          "required": false
+        },
+        "start_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "end_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "start_ph": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "end_ph": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "chilling_type": {
+          "type": "enum<batch|inline>",
+          "required": false
+        }
+      }
+    },
+    "culture.json#CultureBase": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "CultureTypeEnum",
+          "required": true
+        },
+        "form": {
+          "type": "CultureFormEnum",
+          "required": true
+        },
+        "producer": {
+          "type": "string",
+          "required": false
+        },
+        "product_id": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "culture.json#CultureInformation": {
+      "kind": "object",
+      "fields": {
+        "temperature_range": {
+          "type": "TemperatureRangeType",
+          "required": false
+        },
+        "alcohol_tolerance": {
+          "type": "PercentType",
+          "required": false
+        },
+        "flocculation": {
+          "type": "QualitativeRangeType",
+          "required": false
+        },
+        "attenuation_range": {
+          "type": "PercentRangeType",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "best_for": {
+          "type": "string",
+          "required": false
+        },
+        "max_reuse": {
+          "type": "integer",
+          "required": false
+        },
+        "pof": {
+          "type": "boolean",
+          "required": false
+        },
+        "glucoamylase": {
+          "type": "boolean",
+          "required": false
+        },
+        "inventory": {
+          "type": "CultureInventoryType",
+          "required": false
+        },
+        "zymocide": {
+          "type": "Zymocide",
+          "required": false
+        }
+      },
+      "inherits": [
+        "culture.json#CultureBase"
+      ]
+    },
+    "culture.json#CultureAdditionType": {
+      "kind": "object",
+      "fields": {
+        "attenuation": {
+          "type": "PercentType",
+          "required": false
+        },
+        "times_cultured": {
+          "type": "integer",
+          "required": false
+        },
+        "timing": {
+          "type": "TimingType",
+          "required": false
+        },
+        "cell_count_billions": {
+          "type": "integer",
+          "required": false
+        },
+        "amount": {
+          "type": "VolumeType|MassType|UnitType",
+          "required": true
+        }
+      },
+      "inherits": [
+        "culture.json#CultureBase"
+      ]
+    },
+    "culture.json#CultureInventoryType": {
+      "kind": "object",
+      "fields": {
+        "liquid": {
+          "type": "VolumeType",
+          "required": false
+        },
+        "dry": {
+          "type": "MassType",
+          "required": false
+        },
+        "slant": {
+          "type": "VolumeType",
+          "required": false
+        },
+        "culture": {
+          "type": "VolumeType",
+          "required": false
+        }
+      }
+    },
+    "culture.json#Zymocide": {
+      "kind": "object",
+      "fields": {
+        "no1": {
+          "type": "boolean",
+          "required": false
+        },
+        "no2": {
+          "type": "boolean",
+          "required": false
+        },
+        "no28": {
+          "type": "boolean",
+          "required": false
+        },
+        "klus": {
+          "type": "boolean",
+          "required": false
+        },
+        "neutral": {
+          "type": "boolean",
+          "required": false
+        }
+      }
+    },
+    "culture.json#CultureTypeEnum": {
+      "kind": "enum",
+      "values": [
+        "ale",
+        "bacteria",
+        "brett",
+        "champagne",
+        "kveik",
+        "lacto",
+        "lager",
+        "malolactic",
+        "mixed-culture",
+        "other",
+        "pedio",
+        "spontaneous",
+        "wine"
+      ]
+    },
+    "culture.json#CultureFormEnum": {
+      "kind": "enum",
+      "values": [
+        "liquid",
+        "dry",
+        "slant",
+        "culture",
+        "dregs"
+      ]
+    },
+    "equipment.json#EquipmentBase": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "string",
+          "required": false
+        },
+        "form": {
+          "type": "EquipmentFormEnum",
+          "required": true
+        },
+        "maximum_volume": {
+          "type": "VolumeType",
+          "required": true
+        }
+      }
+    },
+    "equipment.json#EquipmentItemType": {
+      "kind": "object",
+      "fields": {
+        "loss": {
+          "type": "VolumeType",
+          "required": true
+        },
+        "grain_absorption_rate": {
+          "type": "SpecificVolumeType",
+          "required": false
+        },
+        "boil_rate_per_hour": {
+          "type": "VolumeType",
+          "required": false
+        },
+        "drain_rate_per_minute": {
+          "type": "VolumeType",
+          "required": false
+        },
+        "weight": {
+          "type": "MassType",
+          "required": false
+        },
+        "specific_heat": {
+          "type": "SpecificHeatType",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "inherits": [
+        "equipment.json#EquipmentBase"
+      ]
+    },
+    "equipment.json#EquipmentType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "equipment_items": {
+          "type": "array<EquipmentItemType>",
+          "required": true
+        }
+      }
+    },
+    "equipment.json#EquipmentFormEnum": {
+      "kind": "enum",
+      "values": [
+        "HLT",
+        "Mash Tun",
+        "Lauter Tun",
+        "Brew Kettle",
+        "Fermenter",
+        "Aging Vessel",
+        "Packaging Vessel"
+      ]
+    },
+    "fermentable.json#FermentableBase": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "FermentableTypeEnum",
+          "required": true
+        },
+        "origin": {
+          "type": "string",
+          "required": false
+        },
+        "producer": {
+          "type": "string",
+          "required": false
+        },
+        "product_id": {
+          "type": "string",
+          "required": false
+        },
+        "grain_group": {
+          "type": "GrainGroupEnum",
+          "required": false
+        },
+        "yield": {
+          "type": "YieldType",
+          "required": true
+        },
+        "color": {
+          "type": "ColorType",
+          "required": true
+        }
+      }
+    },
+    "fermentable.json#FermentableType": {
+      "kind": "object",
+      "fields": {
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "moisture": {
+          "type": "PercentType",
+          "required": false
+        },
+        "alpha_amylase": {
+          "type": "number",
+          "required": false
+        },
+        "diastatic_power": {
+          "type": "DiastaticPowerType",
+          "required": false
+        },
+        "protein": {
+          "type": "PercentType",
+          "required": false
+        },
+        "kolbach_index": {
+          "type": "PercentType",
+          "required": false
+        },
+        "max_in_batch": {
+          "type": "PercentType",
+          "required": false
+        },
+        "recommend_mash": {
+          "type": "boolean",
+          "required": false
+        },
+        "inventory": {
+          "type": "FermentableInventoryType",
+          "required": false
+        },
+        "glassy": {
+          "type": "PercentType",
+          "required": false
+        },
+        "plump": {
+          "type": "PercentType",
+          "required": false
+        },
+        "half": {
+          "type": "PercentType",
+          "required": false
+        },
+        "mealy": {
+          "type": "PercentType",
+          "required": false
+        },
+        "thru": {
+          "type": "PercentType",
+          "required": false
+        },
+        "friability": {
+          "type": "PercentType",
+          "required": false
+        },
+        "di_ph": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "viscosity": {
+          "type": "ViscosityType",
+          "required": false
+        },
+        "dms_p": {
+          "type": "ConcentrationType",
+          "required": false
+        },
+        "fan": {
+          "type": "ConcentrationType",
+          "required": false
+        },
+        "fermentability": {
+          "type": "PercentType",
+          "required": false
+        },
+        "beta_glucan": {
+          "type": "ConcentrationType",
+          "required": false
+        }
+      },
+      "inherits": [
+        "fermentable.json#FermentableBase"
+      ]
+    },
+    "fermentable.json#FermentableAdditionType": {
+      "kind": "object",
+      "fields": {
+        "timing": {
+          "type": "TimingType",
+          "required": false
+        },
+        "amount": {
+          "type": "VolumeType|MassType",
+          "required": true
+        }
+      },
+      "inherits": [
+        "fermentable.json#FermentableBase"
+      ]
+    },
+    "fermentable.json#YieldType": {
+      "kind": "object",
+      "fields": {
+        "fine_grind": {
+          "type": "PercentType",
+          "required": false
+        },
+        "coarse_grind": {
+          "type": "PercentType",
+          "required": false
+        },
+        "fine_coarse_difference": {
+          "type": "PercentType",
+          "required": false
+        },
+        "potential": {
+          "type": "GravityType",
+          "required": false
+        }
+      },
+      "notes": "BeerJSON requires at least one property."
+    },
+    "fermentable.json#FermentableInventoryType": {
+      "kind": "object",
+      "fields": {
+        "amount": {
+          "type": "VolumeType|MassType",
+          "required": false
+        }
+      }
+    },
+    "fermentable.json#FermentableTypeEnum": {
+      "kind": "enum",
+      "values": [
+        "dry extract",
+        "extract",
+        "grain",
+        "sugar",
+        "fruit",
+        "juice",
+        "honey",
+        "other"
+      ]
+    },
+    "fermentable.json#GrainGroupEnum": {
+      "kind": "enum",
+      "values": [
+        "base",
+        "caramel",
+        "flaked",
+        "roasted",
+        "specialty",
+        "smoked",
+        "adjunct"
+      ]
+    },
+    "fermentation.json#FermentationProcedureType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "fermentation_steps": {
+          "type": "array<FermentationStepType>",
+          "required": true
+        }
+      }
+    },
+    "fermentation_step.json#FermentationStepType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "start_temperature": {
+          "type": "TemperatureType",
+          "required": false
+        },
+        "end_temperature": {
+          "type": "TemperatureType",
+          "required": false
+        },
+        "step_time": {
+          "type": "TimeType",
+          "required": false
+        },
+        "free_rise": {
+          "type": "boolean",
+          "required": false
+        },
+        "start_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "end_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "start_ph": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "end_ph": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "vessel": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "hop.json#HopVarietyBase": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "producer": {
+          "type": "string",
+          "required": false
+        },
+        "product_id": {
+          "type": "string",
+          "required": false
+        },
+        "origin": {
+          "type": "string",
+          "required": false
+        },
+        "year": {
+          "type": "string",
+          "required": false
+        },
+        "form": {
+          "type": "HopFormEnum",
+          "required": false
+        },
+        "alpha_acid": {
+          "type": "PercentType",
+          "required": true
+        },
+        "beta_acid": {
+          "type": "PercentType",
+          "required": false
+        }
+      }
+    },
+    "hop.json#VarietyInformation": {
+      "kind": "object",
+      "fields": {
+        "type": {
+          "type": "HopUseTypeEnum",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "percent_lost": {
+          "type": "PercentType",
+          "required": false
+        },
+        "substitutes": {
+          "type": "string",
+          "required": false
+        },
+        "oil_content": {
+          "type": "OilContentType",
+          "required": false
+        },
+        "inventory": {
+          "type": "HopInventoryType",
+          "required": false
+        }
+      },
+      "inherits": [
+        "hop.json#HopVarietyBase"
+      ]
+    },
+    "hop.json#HopAdditionType": {
+      "kind": "object",
+      "fields": {
+        "timing": {
+          "type": "TimingType",
+          "required": true
+        },
+        "amount": {
+          "type": "VolumeType|MassType",
+          "required": true
+        }
+      },
+      "inherits": [
+        "hop.json#HopVarietyBase"
+      ]
+    },
+    "hop.json#IBUEstimateType": {
+      "kind": "object",
+      "fields": {
+        "method": {
+          "type": "IBUMethodType",
+          "required": false
+        }
+      }
+    },
+    "hop.json#IBUMethodType": {
+      "kind": "enum",
+      "values": [
+        "Rager",
+        "Tinseth",
+        "Garetz",
+        "Other"
+      ]
+    },
+    "hop.json#OilContentType": {
+      "kind": "object",
+      "fields": {
+        "total_oil_ml_per_100g": {
+          "type": "number",
+          "required": false
+        },
+        "humulene": {
+          "type": "PercentType",
+          "required": false
+        },
+        "caryophyllene": {
+          "type": "PercentType",
+          "required": false
+        },
+        "cohumulone": {
+          "type": "PercentType",
+          "required": false
+        },
+        "myrcene": {
+          "type": "PercentType",
+          "required": false
+        },
+        "farnesene": {
+          "type": "PercentType",
+          "required": false
+        },
+        "geraniol": {
+          "type": "PercentType",
+          "required": false
+        },
+        "b_pinene": {
+          "type": "PercentType",
+          "required": false
+        },
+        "linalool": {
+          "type": "PercentType",
+          "required": false
+        },
+        "limonene": {
+          "type": "PercentType",
+          "required": false
+        },
+        "nerol": {
+          "type": "PercentType",
+          "required": false
+        },
+        "pinene": {
+          "type": "PercentType",
+          "required": false
+        },
+        "polyphenols": {
+          "type": "PercentType",
+          "required": false
+        },
+        "xanthohumol": {
+          "type": "PercentType",
+          "required": false
+        }
+      }
+    },
+    "hop.json#HopInventoryType": {
+      "kind": "object",
+      "fields": {
+        "amount": {
+          "type": "VolumeType|MassType",
+          "required": false
+        }
+      }
+    },
+    "hop.json#HopFormEnum": {
+      "kind": "enum",
+      "values": [
+        "extract",
+        "leaf",
+        "leaf (wet)",
+        "pellet",
+        "powder",
+        "plug"
+      ]
+    },
+    "hop.json#HopUseTypeEnum": {
+      "kind": "enum",
+      "values": [
+        "aroma",
+        "bittering",
+        "flavor",
+        "aroma/bittering",
+        "bittering/flavor",
+        "aroma/flavor",
+        "aroma/bittering/flavor"
+      ]
+    },
+    "mash.json#MashProcedureType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "grain_temperature": {
+          "type": "TemperatureType",
+          "required": true
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "mash_steps": {
+          "type": "array<MashStepType>",
+          "required": true
+        }
+      }
+    },
+    "mash_step.json#MashStepType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "MashStepTypeEnum",
+          "required": true
+        },
+        "amount": {
+          "type": "VolumeType",
+          "required": false
+        },
+        "step_temperature": {
+          "type": "TemperatureType",
+          "required": true
+        },
+        "step_time": {
+          "type": "TimeType",
+          "required": true
+        },
+        "ramp_time": {
+          "type": "TimeType",
+          "required": false
+        },
+        "end_temperature": {
+          "type": "TemperatureType",
+          "required": false
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "water_grain_ratio": {
+          "type": "SpecificVolumeType",
+          "required": false
+        },
+        "infuse_temperature": {
+          "type": "TemperatureType",
+          "required": false
+        },
+        "start_ph": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "end_ph": {
+          "type": "AcidityType",
+          "required": false
+        }
+      }
+    },
+    "mash_step.json#MashStepTypeEnum": {
+      "kind": "enum",
+      "values": [
+        "infusion",
+        "temperature",
+        "decoction",
+        "souring mash",
+        "souring wort",
+        "drain mash tun",
+        "sparge"
+      ]
+    },
+    "misc.json#MiscellaneousBase": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "producer": {
+          "type": "string",
+          "required": false
+        },
+        "product_id": {
+          "type": "string",
+          "required": false
+        },
+        "type": {
+          "type": "MiscellaneousTypeEnum",
+          "required": true
+        }
+      }
+    },
+    "misc.json#MiscellaneousType": {
+      "kind": "object",
+      "fields": {
+        "use_for": {
+          "type": "string",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "inventory": {
+          "type": "MiscellaneousInventoryType",
+          "required": false
+        }
+      },
+      "inherits": [
+        "misc.json#MiscellaneousBase"
+      ]
+    },
+    "misc.json#MiscellaneousAdditionType": {
+      "kind": "object",
+      "fields": {
+        "timing": {
+          "type": "TimingType",
+          "required": false
+        },
+        "amount": {
+          "type": "VolumeType|MassType|UnitType",
+          "required": true
+        }
+      },
+      "inherits": [
+        "misc.json#MiscellaneousBase"
+      ]
+    },
+    "misc.json#MiscellaneousInventoryType": {
+      "kind": "object",
+      "fields": {
+        "amount": {
+          "type": "VolumeType|MassType|UnitType",
+          "required": true
+        }
+      }
+    },
+    "misc.json#MiscellaneousTypeEnum": {
+      "kind": "enum",
+      "values": [
+        "spice",
+        "fining",
+        "water agent",
+        "herb",
+        "flavor",
+        "wood",
+        "other"
+      ]
+    },
+    "packaging.json#PackagingProcedureType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "packaged_volume": {
+          "type": "VolumeType",
+          "required": false
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "packaging_vessels": {
+          "type": "array<PackagingVesselType>",
+          "required": false
+        }
+      }
+    },
+    "packaging_vessel.json#PackagingVesselType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "PackagingVesselTypeEnum",
+          "required": false
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "package_date": {
+          "type": "DateType",
+          "required": false
+        },
+        "start_temperature": {
+          "type": "TemperatureType",
+          "required": false
+        },
+        "end_temperature": {
+          "type": "TemperatureType",
+          "required": false
+        },
+        "step_time": {
+          "type": "TimeType",
+          "required": false
+        },
+        "start_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "end_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "start_ph": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "end_ph": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "carbonation": {
+          "type": "number",
+          "required": false
+        },
+        "vessel_volume": {
+          "type": "VolumeType",
+          "required": false
+        },
+        "vessel_quantity": {
+          "type": "number",
+          "required": false
+        },
+        "graphics": {
+          "type": "array<PackagingGraphicType>",
+          "required": false
+        }
+      }
+    },
+    "packaging_vessel.json#PackagingVesselTypeEnum": {
+      "kind": "enum",
+      "values": [
+        "keg",
+        "bottle",
+        "cask",
+        "tank",
+        "firkin",
+        "other"
+      ]
+    },
+    "packaging_graphic.json#PackagingGraphicType": {
+      "kind": "object",
+      "fields": {
+        "position": {
+          "type": "PackagingGraphicPositionEnum",
+          "required": true
+        },
+        "type": {
+          "type": "PackagingGraphicFileTypeEnum",
+          "required": true
+        },
+        "base64_data": {
+          "type": "string",
+          "required": false
+        },
+        "URLS": {
+          "type": "array<string>",
+          "required": false
+        },
+        "dpi": {
+          "type": "number",
+          "required": false
+        },
+        "width": {
+          "type": "number",
+          "required": false
+        },
+        "height": {
+          "type": "number",
+          "required": false
+        },
+        "units": {
+          "type": "PackagingGraphicUnitsEnum",
+          "required": false
+        }
+      }
+    },
+    "packaging_graphic.json#PackagingGraphicPositionEnum": {
+      "kind": "enum",
+      "values": [
+        "body front",
+        "body back",
+        "body wrap around",
+        "neck front",
+        "neck back",
+        "neck wrap around",
+        "cap",
+        "carrier"
+      ]
+    },
+    "packaging_graphic.json#PackagingGraphicFileTypeEnum": {
+      "kind": "enum",
+      "values": [
+        "svg",
+        "svgz",
+        "ai",
+        "cdr",
+        "cdx",
+        "odg",
+        "eps",
+        "pdf",
+        "png",
+        "jpg",
+        "gif"
+      ]
+    },
+    "packaging_graphic.json#PackagingGraphicUnitsEnum": {
+      "kind": "enum",
+      "values": [
+        "mm",
+        "in"
+      ]
+    },
+    "recipe.json#RecipeType": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "RecipeTypeEnum",
+          "required": true
+        },
+        "author": {
+          "type": "string",
+          "required": true
+        },
+        "coauthor": {
+          "type": "string",
+          "required": false
+        },
+        "created": {
+          "type": "DateType",
+          "required": false
+        },
+        "batch_size": {
+          "type": "VolumeType",
+          "required": true
+        },
+        "efficiency": {
+          "type": "EfficiencyType",
+          "required": true
+        },
+        "style": {
+          "type": "RecipeStyleType",
+          "required": false
+        },
+        "ingredients": {
+          "type": "IngredientsType",
+          "required": true
+        },
+        "mash": {
+          "type": "MashProcedureType",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "original_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "final_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "alcohol_by_volume": {
+          "type": "PercentType",
+          "required": false
+        },
+        "ibu_estimate": {
+          "type": "IBUEstimateType",
+          "required": false
+        },
+        "color_estimate": {
+          "type": "ColorType",
+          "required": false
+        },
+        "beer_pH": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "carbonation": {
+          "type": "number",
+          "required": false
+        },
+        "apparent_attenuation": {
+          "type": "PercentType",
+          "required": false
+        },
+        "fermentation": {
+          "type": "FermentationProcedureType",
+          "required": false
+        },
+        "packaging": {
+          "type": "PackagingProcedureType",
+          "required": false
+        },
+        "boil": {
+          "type": "BoilProcedureType",
+          "required": false
+        },
+        "taste": {
+          "type": "TasteType",
+          "required": false
+        },
+        "calories_per_pint": {
+          "type": "number",
+          "required": false
+        }
+      }
+    },
+    "recipe.json#EfficiencyType": {
+      "kind": "object",
+      "fields": {
+        "conversion": {
+          "type": "PercentType",
+          "required": false
+        },
+        "lauter": {
+          "type": "PercentType",
+          "required": false
+        },
+        "mash": {
+          "type": "PercentType",
+          "required": false
+        },
+        "brewhouse": {
+          "type": "PercentType",
+          "required": true
+        }
+      }
+    },
+    "recipe.json#IngredientsType": {
+      "kind": "object",
+      "fields": {
+        "fermentable_additions": {
+          "type": "array<FermentableAdditionType>",
+          "required": true
+        },
+        "hop_additions": {
+          "type": "array<HopAdditionType>",
+          "required": false
+        },
+        "miscellaneous_additions": {
+          "type": "array<MiscellaneousAdditionType>",
+          "required": false
+        },
+        "culture_additions": {
+          "type": "array<CultureAdditionType>",
+          "required": false
+        },
+        "water_additions": {
+          "type": "array<WaterAdditionType>",
+          "required": false
+        }
+      }
+    },
+    "recipe.json#TasteType": {
+      "kind": "object",
+      "fields": {
+        "notes": {
+          "type": "string",
+          "required": true
+        },
+        "rating": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "recipe.json#RecipeTypeEnum": {
+      "kind": "enum",
+      "values": [
+        "cider",
+        "kombucha",
+        "soda",
+        "other",
+        "mead",
+        "wine",
+        "extract",
+        "partial mash",
+        "all grain"
+      ]
+    },
+    "style.json#StyleBase": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "category": {
+          "type": "string",
+          "required": true
+        },
+        "category_number": {
+          "type": "integer",
+          "required": false
+        },
+        "style_letter": {
+          "type": "string[A-Z ] length=1",
+          "required": false
+        },
+        "style_guide": {
+          "type": "string",
+          "required": true
+        },
+        "type": {
+          "type": "StyleCategories",
+          "required": true
+        }
+      }
+    },
+    "style.json#StyleType": {
+      "kind": "object",
+      "fields": {
+        "original_gravity": {
+          "type": "GravityRangeType",
+          "required": false
+        },
+        "final_gravity": {
+          "type": "GravityRangeType",
+          "required": false
+        },
+        "international_bitterness_units": {
+          "type": "BitternessRangeType",
+          "required": false
+        },
+        "color": {
+          "type": "ColorRangeType",
+          "required": false
+        },
+        "carbonation": {
+          "type": "CarbonationRangeType",
+          "required": false
+        },
+        "alcohol_by_volume": {
+          "type": "PercentRangeType",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        },
+        "aroma": {
+          "type": "string",
+          "required": false
+        },
+        "appearance": {
+          "type": "string",
+          "required": false
+        },
+        "flavor": {
+          "type": "string",
+          "required": false
+        },
+        "mouthfeel": {
+          "type": "string",
+          "required": false
+        },
+        "overall_impression": {
+          "type": "string",
+          "required": false
+        },
+        "ingredients": {
+          "type": "string",
+          "required": false
+        },
+        "examples": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "inherits": [
+        "style.json#StyleBase"
+      ]
+    },
+    "style.json#RecipeStyleType": {
+      "kind": "object",
+      "fields": {},
+      "inherits": [
+        "style.json#StyleBase"
+      ]
+    },
+    "style.json#StyleCategories": {
+      "kind": "enum",
+      "values": [
+        "beer",
+        "cider",
+        "kombucha",
+        "mead",
+        "other",
+        "soda",
+        "wine"
+      ]
+    },
+    "timing.json#UseType": {
+      "kind": "enum",
+      "values": [
+        "add_to_mash",
+        "add_to_boil",
+        "add_to_fermentation",
+        "add_to_package"
+      ]
+    },
+    "timing.json#TimingType": {
+      "kind": "object",
+      "fields": {
+        "time": {
+          "type": "TimeType",
+          "required": false
+        },
+        "duration": {
+          "type": "TimeType",
+          "required": false
+        },
+        "continuous": {
+          "type": "boolean",
+          "required": false
+        },
+        "specific_gravity": {
+          "type": "GravityType",
+          "required": false
+        },
+        "pH": {
+          "type": "AcidityType",
+          "required": false
+        },
+        "step": {
+          "type": "integer",
+          "required": false
+        },
+        "use": {
+          "type": "UseType",
+          "required": false
+        }
+      }
+    },
+    "water.json#WaterBase": {
+      "kind": "object",
+      "fields": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "producer": {
+          "type": "string",
+          "required": false
+        },
+        "calcium": {
+          "type": "ConcentrationType",
+          "required": true
+        },
+        "bicarbonate": {
+          "type": "ConcentrationType",
+          "required": true
+        },
+        "carbonate": {
+          "type": "ConcentrationType",
+          "required": false
+        },
+        "potassium": {
+          "type": "ConcentrationType",
+          "required": false
+        },
+        "iron": {
+          "type": "ConcentrationType",
+          "required": false
+        },
+        "nitrate": {
+          "type": "ConcentrationType",
+          "required": false
+        },
+        "nitrite": {
+          "type": "ConcentrationType",
+          "required": false
+        },
+        "flouride": {
+          "type": "ConcentrationType",
+          "required": false
+        },
+        "sulfate": {
+          "type": "ConcentrationType",
+          "required": true
+        },
+        "chloride": {
+          "type": "ConcentrationType",
+          "required": true
+        },
+        "sodium": {
+          "type": "ConcentrationType",
+          "required": true
+        },
+        "magnesium": {
+          "type": "ConcentrationType",
+          "required": true
+        }
+      }
+    },
+    "water.json#WaterType": {
+      "kind": "object",
+      "fields": {
+        "pH": {
+          "type": "number",
+          "required": false
+        },
+        "notes": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "inherits": [
+        "water.json#WaterBase"
+      ]
+    },
+    "water.json#WaterAdditionType": {
+      "kind": "object",
+      "fields": {
+        "amount": {
+          "type": "VolumeType",
+          "required": false
+        }
+      },
+      "inherits": [
+        "water.json#WaterBase"
+      ]
+    },
+    "measureable_units.json#VolumeType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "VolumeUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#MassType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "MassUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#DiastaticPowerType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "DiastaticPowerUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#TemperatureType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "TemperatureUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#PressureType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "PressureUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#AcidityType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "AcidityUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#TimeType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "TimeUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "integer",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#ColorType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "ColorUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#CarbonationType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "CarbonationUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#BitternessType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "BitternessUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#GravityType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "GravityUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#SpecificHeatType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "SpecificHeatUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#ConcentrationType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "ConcentrationUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#SpecificVolumeType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "SpecificVolumeUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#UnitType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "UnitUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#ViscosityType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "ViscosityUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#CarbonationRangeType": {
+      "kind": "object",
+      "fields": {
+        "minimum": {
+          "type": "CarbonationType",
+          "required": true
+        },
+        "maximum": {
+          "type": "CarbonationType",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#BitternessRangeType": {
+      "kind": "object",
+      "fields": {
+        "minimum": {
+          "type": "BitternessType",
+          "required": true
+        },
+        "maximum": {
+          "type": "BitternessType",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#TemperatureRangeType": {
+      "kind": "object",
+      "fields": {
+        "minimum": {
+          "type": "TemperatureType",
+          "required": true
+        },
+        "maximum": {
+          "type": "TemperatureType",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#ColorRangeType": {
+      "kind": "object",
+      "fields": {
+        "minimum": {
+          "type": "ColorType",
+          "required": true
+        },
+        "maximum": {
+          "type": "ColorType",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#GravityRangeType": {
+      "kind": "object",
+      "fields": {
+        "minimum": {
+          "type": "GravityType",
+          "required": true
+        },
+        "maximum": {
+          "type": "GravityType",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#PercentRangeType": {
+      "kind": "object",
+      "fields": {
+        "minimum": {
+          "type": "PercentType",
+          "required": true
+        },
+        "maximum": {
+          "type": "PercentType",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#VolumeUnitType": {
+      "kind": "enum",
+      "values": [
+        "ml",
+        "l",
+        "tsp",
+        "tbsp",
+        "floz",
+        "cup",
+        "pt",
+        "qt",
+        "gal",
+        "bbl",
+        "ifloz",
+        "ipt",
+        "iqt",
+        "igal",
+        "ibbl"
+      ]
+    },
+    "measureable_units.json#MassUnitType": {
+      "kind": "enum",
+      "values": [
+        "mg",
+        "g",
+        "kg",
+        "lb",
+        "oz"
+      ]
+    },
+    "measureable_units.json#DiastaticPowerUnitType": {
+      "kind": "enum",
+      "values": [
+        "Lintner",
+        "WK"
+      ]
+    },
+    "measureable_units.json#TemperatureUnitType": {
+      "kind": "enum",
+      "values": [
+        "C",
+        "F"
+      ]
+    },
+    "measureable_units.json#AcidityUnitType": {
+      "kind": "enum",
+      "values": [
+        "pH"
+      ]
+    },
+    "measureable_units.json#PressureUnitType": {
+      "kind": "enum",
+      "values": [
+        "kPa",
+        "psi",
+        "bar"
+      ]
+    },
+    "measureable_units.json#TimeUnitType": {
+      "kind": "enum",
+      "values": [
+        "sec",
+        "min",
+        "hr",
+        "day",
+        "week"
+      ]
+    },
+    "measureable_units.json#ColorUnitType": {
+      "kind": "enum",
+      "values": [
+        "EBC",
+        "Lovi",
+        "SRM"
+      ]
+    },
+    "measureable_units.json#CarbonationUnitType": {
+      "kind": "enum",
+      "values": [
+        "vols",
+        "g/l"
+      ]
+    },
+    "measureable_units.json#BitternessUnitType": {
+      "kind": "enum",
+      "values": [
+        "IBUs"
+      ]
+    },
+    "measureable_units.json#GravityUnitType": {
+      "kind": "enum",
+      "values": [
+        "sg",
+        "plato",
+        "brix"
+      ]
+    },
+    "measureable_units.json#DensityUnitType": {
+      "kind": "enum",
+      "values": [
+        "sg",
+        "plato",
+        "brix"
+      ]
+    },
+    "measureable_units.json#ConcentrationUnitType": {
+      "kind": "enum",
+      "values": [
+        "ppm",
+        "ppb",
+        "mg/l"
+      ]
+    },
+    "measureable_units.json#SpecificHeatUnitType": {
+      "kind": "enum",
+      "values": [
+        "Cal/(g C)",
+        "J/(kg K)",
+        "BTU/(lb F)"
+      ]
+    },
+    "measureable_units.json#SpecificVolumeUnitType": {
+      "kind": "enum",
+      "values": [
+        "qt/lb",
+        "gal/lb",
+        "gal/oz",
+        "l/g",
+        "l/kg",
+        "floz/oz",
+        "m^3/kg",
+        "ft^3/lb"
+      ]
+    },
+    "measureable_units.json#UnitUnitType": {
+      "kind": "enum",
+      "values": [
+        "1",
+        "unit",
+        "each",
+        "dimensionless",
+        "pkg"
+      ]
+    },
+    "measureable_units.json#DateType": {
+      "kind": "scalar",
+      "type": "string",
+      "pattern": "\\d{4}-\\d{2}-\\d{2}|\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}"
+    },
+    "measureable_units.json#PercentType": {
+      "kind": "object",
+      "fields": {
+        "unit": {
+          "type": "PercentUnitType",
+          "required": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "measureable_units.json#PercentUnitType": {
+      "kind": "enum",
+      "values": [
+        "%"
+      ]
+    },
+    "measureable_units.json#QualitativeRangeType": {
+      "kind": "enum",
+      "values": [
+        "very low",
+        "low",
+        "medium low",
+        "medium",
+        "medium high",
+        "high",
+        "very high"
+      ]
+    },
+    "measureable_units.json#VersionType": {
+      "kind": "scalar",
+      "type": "number"
+    },
+    "measureable_units.json#ViscosityUnitType": {
+      "kind": "enum",
+      "values": [
+        "cP",
+        "mPa-s"
+      ]
+    }
+  }
+}

@@ -186,14 +186,14 @@ Development within this phase should be iterative. Pre-1.0 releases may expose p
 
 BeerJSON compatibility should be developed **before or alongside** the brewing schemas, not bolted on afterward.
 
-- [ ] Preserve a versioned copy/reference of the BeerJSON 1.0 specification used for compatibility work.
-- [ ] Inventory all BeerJSON 1.0 object types and fields.
-- [ ] Define FermentationJSON mappings for every BeerJSON 1.0 field.
+- [x] Preserve a versioned reference to the BeerJSON 1.0 `v1.0.2` specification snapshot used for compatibility work.
+- [x] Inventory all BeerJSON 1.0 named types and declared object fields from the pinned snapshot.
+- [ ] Resolve every BeerJSON 1.0 field mapping to a concrete FermentationJSON target path (mapping framework is complete; domain mappings remain pending).
 - [ ] Preserve original BeerJSON values and units.
 - [ ] Preserve identifiers and references.
 - [ ] Preserve optional metadata.
 - [ ] Preserve semantically meaningful ordering.
-- [ ] Define unknown/extension-data handling.
+- [x] Define strict and pragmatic unknown/extension-data handling for BeerJSON imports.
 - [ ] Build representative BeerJSON import fixtures.
 - [ ] Build round-trip fixtures for the BeerJSON-representable subset.
 - [ ] Build loss-report fixtures for FermentationJSON-to-BeerJSON export.

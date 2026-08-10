@@ -1,0 +1,104 @@
+{
+  "artifact": "fermentationjson.beerjson_source_baseline",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "external_standard": {
+    "name": "BeerJSON",
+    "document_version": "1.0",
+    "repository_tag": "v1.0.2"
+  },
+  "repository": "https://github.com/beerjson/beerjson",
+  "tag_url": "https://github.com/beerjson/beerjson/tree/v1.0.2",
+  "tag_commit": "fbe84b007f22205094493cce232b61d770ab8088",
+  "tag_date": "2021-10-12",
+  "schema_dialect": "http://json-schema.org/draft-07/schema#",
+  "schema_directory": "json/",
+  "schema_files": [
+    {
+      "name": "beer.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/beer.json"
+    },
+    {
+      "name": "boil.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/boil.json"
+    },
+    {
+      "name": "boil_step.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/boil_step.json"
+    },
+    {
+      "name": "culture.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/culture.json"
+    },
+    {
+      "name": "equipment.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/equipment.json"
+    },
+    {
+      "name": "fermentable.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/fermentable.json"
+    },
+    {
+      "name": "fermentation.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/fermentation.json"
+    },
+    {
+      "name": "fermentation_step.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/fermentation_step.json"
+    },
+    {
+      "name": "hop.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/hop.json"
+    },
+    {
+      "name": "mash.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/mash.json"
+    },
+    {
+      "name": "mash_step.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/mash_step.json"
+    },
+    {
+      "name": "measureable_units.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/measureable_units.json"
+    },
+    {
+      "name": "misc.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/misc.json"
+    },
+    {
+      "name": "packaging.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/packaging.json"
+    },
+    {
+      "name": "packaging_graphic.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/packaging_graphic.json"
+    },
+    {
+      "name": "packaging_vessel.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/packaging_vessel.json"
+    },
+    {
+      "name": "recipe.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/recipe.json"
+    },
+    {
+      "name": "style.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/style.json"
+    },
+    {
+      "name": "timing.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/timing.json"
+    },
+    {
+      "name": "water.json",
+      "source_url": "https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/water.json"
+    }
+  ],
+  "notes": [
+    "This manifest pins compatibility work to the immutable v1.0.2 tag rather than the mutable main branch.",
+    "The v1.0.2 tag commit changes package.json from 1.0.1 to 1.0.2; the compatibility target remains BeerJSON document version 1.0.",
+    "BeerJSON v1.0.2 schema $id values point at the repository master branch. FermentationJSON does not use those embedded mutable IDs as the version pin.",
+    "The upstream schema is referenced, not vendored, in this batch. A future test-fixture snapshot may be added with its upstream MIT license notice if needed for offline validation."
+  ]
+}

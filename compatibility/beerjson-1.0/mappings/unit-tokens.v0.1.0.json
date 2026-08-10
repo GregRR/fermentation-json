@@ -1,0 +1,318 @@
+{
+  "artifact": "fermentationjson.beerjson_unit_token_mapping",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_inventory": "../inventory/beerjson-v1.0.2-inventory.json",
+  "rules": [
+    "The BeerJSON unit token and numeric value MUST be preserved as source representation during import.",
+    "An exact FermentationJSON unit ID may coexist with the preserved BeerJSON token.",
+    "A pending mapping MUST NOT be guessed.",
+    "BeerJSON ppm and ppb tokens are preserved as reported ratio units; conversion to mass concentration requires explicit analyte/context assumptions."
+  ],
+  "unit_types": {
+    "VolumeUnitType": {
+      "ml": {
+        "fermentationjson_unit": "milliliter",
+        "status": "exact"
+      },
+      "l": {
+        "fermentationjson_unit": "liter",
+        "status": "exact"
+      },
+      "tsp": {
+        "fermentationjson_unit": "us_teaspoon",
+        "status": "exact"
+      },
+      "tbsp": {
+        "fermentationjson_unit": "us_tablespoon",
+        "status": "exact"
+      },
+      "floz": {
+        "fermentationjson_unit": "us_fluid_ounce",
+        "status": "exact"
+      },
+      "cup": {
+        "fermentationjson_unit": "us_cup",
+        "status": "exact"
+      },
+      "pt": {
+        "fermentationjson_unit": "us_liquid_pint",
+        "status": "exact"
+      },
+      "qt": {
+        "fermentationjson_unit": "us_liquid_quart",
+        "status": "exact"
+      },
+      "gal": {
+        "fermentationjson_unit": "us_liquid_gallon",
+        "status": "exact"
+      },
+      "bbl": {
+        "fermentationjson_unit": "us_beer_barrel",
+        "status": "exact"
+      },
+      "ifloz": {
+        "fermentationjson_unit": "imperial_fluid_ounce",
+        "status": "exact"
+      },
+      "ipt": {
+        "fermentationjson_unit": "imperial_pint",
+        "status": "exact"
+      },
+      "iqt": {
+        "fermentationjson_unit": "imperial_quart",
+        "status": "exact"
+      },
+      "igal": {
+        "fermentationjson_unit": "imperial_gallon",
+        "status": "exact"
+      },
+      "ibbl": {
+        "fermentationjson_unit": null,
+        "status": "semantic_definition_pending"
+      }
+    },
+    "MassUnitType": {
+      "mg": {
+        "fermentationjson_unit": "milligram",
+        "status": "exact"
+      },
+      "g": {
+        "fermentationjson_unit": "gram",
+        "status": "exact"
+      },
+      "kg": {
+        "fermentationjson_unit": "kilogram",
+        "status": "exact"
+      },
+      "lb": {
+        "fermentationjson_unit": "pound_avoirdupois",
+        "status": "exact"
+      },
+      "oz": {
+        "fermentationjson_unit": "ounce_avoirdupois",
+        "status": "exact"
+      }
+    },
+    "DiastaticPowerUnitType": {
+      "Lintner": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "WK": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      }
+    },
+    "TemperatureUnitType": {
+      "C": {
+        "fermentationjson_unit": "degree_celsius",
+        "status": "exact"
+      },
+      "F": {
+        "fermentationjson_unit": "degree_fahrenheit",
+        "status": "exact"
+      }
+    },
+    "AcidityUnitType": {
+      "pH": {
+        "fermentationjson_unit": "ph_scale",
+        "status": "exact"
+      }
+    },
+    "PressureUnitType": {
+      "kPa": {
+        "fermentationjson_unit": "kilopascal",
+        "status": "exact"
+      },
+      "psi": {
+        "fermentationjson_unit": "pound_force_per_square_inch",
+        "status": "exact"
+      },
+      "bar": {
+        "fermentationjson_unit": "bar",
+        "status": "exact"
+      }
+    },
+    "TimeUnitType": {
+      "sec": {
+        "fermentationjson_unit": "second",
+        "status": "exact"
+      },
+      "min": {
+        "fermentationjson_unit": "minute",
+        "status": "exact"
+      },
+      "hr": {
+        "fermentationjson_unit": "hour",
+        "status": "exact"
+      },
+      "day": {
+        "fermentationjson_unit": "day",
+        "status": "exact"
+      },
+      "week": {
+        "fermentationjson_unit": "week",
+        "status": "exact"
+      }
+    },
+    "ColorUnitType": {
+      "EBC": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "Lovi": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "SRM": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      }
+    },
+    "CarbonationUnitType": {
+      "vols": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "g/l": {
+        "fermentationjson_unit": "gram_per_liter",
+        "status": "unit_exact_quantity_semantics_pending"
+      }
+    },
+    "BitternessUnitType": {
+      "IBUs": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      }
+    },
+    "GravityUnitType": {
+      "sg": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "plato": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "brix": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      }
+    },
+    "DensityUnitType": {
+      "sg": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "plato": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "brix": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      }
+    },
+    "ConcentrationUnitType": {
+      "ppm": {
+        "fermentationjson_unit": "part_per_million",
+        "status": "reported_ratio_preserved_canonical_context_required"
+      },
+      "ppb": {
+        "fermentationjson_unit": "part_per_billion",
+        "status": "reported_ratio_preserved_canonical_context_required"
+      },
+      "mg/l": {
+        "fermentationjson_unit": "milligram_per_liter",
+        "status": "exact"
+      }
+    },
+    "SpecificHeatUnitType": {
+      "Cal/(g C)": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "J/(kg K)": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "BTU/(lb F)": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      }
+    },
+    "SpecificVolumeUnitType": {
+      "qt/lb": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "gal/lb": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "gal/oz": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "l/g": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "l/kg": {
+        "fermentationjson_unit": "liter_per_kilogram",
+        "status": "exact"
+      },
+      "floz/oz": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "m^3/kg": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      },
+      "ft^3/lb": {
+        "fermentationjson_unit": null,
+        "status": "core_unit_pending"
+      }
+    },
+    "UnitUnitType": {
+      "1": {
+        "fermentationjson_unit": "one",
+        "status": "exact"
+      },
+      "unit": {
+        "fermentationjson_unit": null,
+        "status": "count_semantics_pending"
+      },
+      "each": {
+        "fermentationjson_unit": null,
+        "status": "count_semantics_pending"
+      },
+      "dimensionless": {
+        "fermentationjson_unit": "one",
+        "status": "exact"
+      },
+      "pkg": {
+        "fermentationjson_unit": null,
+        "status": "package_count_semantics_pending"
+      }
+    },
+    "PercentUnitType": {
+      "%": {
+        "fermentationjson_unit": "percent",
+        "status": "exact"
+      }
+    },
+    "ViscosityUnitType": {
+      "cP": {
+        "fermentationjson_unit": "centipoise",
+        "status": "exact"
+      },
+      "mPa-s": {
+        "fermentationjson_unit": "millipascal_second",
+        "status": "exact"
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.13
+**Document version:** 0.14
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -2127,6 +2127,8 @@ Original source values, units, qualifiers, identifiers, and other defined inform
 
 ### 22.3 BeerJSON 1.0
 
+The compatibility baseline is pinned to upstream BeerJSON tag `v1.0.2` and commit `fbe84b007f22205094493cce232b61d770ab8088` as defined by ADR-0008. The BeerJSON document version remains 1.0. Compatibility work MUST NOT silently substitute a mutable upstream development branch for this pinned snapshot.
+
 Every valid BeerJSON 1.0 document MUST be importable into FermentationJSON without loss of BeerJSON-defined information.
 
 The BeerJSON 1.0 compatibility profile MUST preserve:
@@ -2139,6 +2141,16 @@ The BeerJSON 1.0 compatibility profile MUST preserve:
 - source-format and version information.
 
 Canonicalization or normalization performed during import MUST NOT erase the BeerJSON source representation required for lossless preservation.
+
+BeerJSON compatibility MUST NOT force FermentationJSON to reproduce a BeerJSON source schema shape when that shape does not directly model the underlying semantic concept. Nontrivial mappings MUST distinguish the exact source representation, semantic interpretation, native FermentationJSON representation, and reverse/export rule. Native FermentationJSON schemas SHOULD model the underlying concept directly; source preservation, rather than structural imitation, provides compatibility.
+
+The project MUST maintain a machine-readable inventory and mapping entry for every BeerJSON-defined object field. A mapping MAY remain explicitly pending while a required FermentationJSON domain schema is still under development.
+
+BeerJSON source values and unit tokens required for round trip MUST be preserved even when canonical FermentationJSON quantities are also produced. Array item ordering MUST be preserved.
+
+A mapping MUST NOT infer a missing unit or other semantic qualifier from convention alone. BeerJSON `ppm` and `ppb` source tokens MUST NOT be silently reinterpreted as mass-per-volume units.
+
+The strict compatibility guarantee applies to documents valid under the pinned BeerJSON schema snapshot. A pragmatic importer MAY preserve nonstandard application fields opaquely, but MUST report that the source deviates from the BeerJSON compatibility baseline.
 
 The project MUST maintain documented mappings and conformance fixtures for BeerJSON 1.0.
 
