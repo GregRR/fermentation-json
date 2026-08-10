@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.6  
+**Document version:** 0.9  
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -227,6 +227,31 @@ The initial specification is expected to define document types for:
 
 Profiles MAY define additional document types. The normative schema for a document type MUST define its required root content.
 
+
+### 7.4 Document envelope
+
+All normative FermentationJSON document types MUST use the common document envelope.
+
+The envelope uses the following top-level fields:
+
+- `specification_version` — REQUIRED FermentationJSON specification version;
+- `document_type` — REQUIRED document-type identifier;
+- `schema_id` — REQUIRED identifier of the normative schema used to validate the document;
+- `document_id` — REQUIRED globally unique document identifier;
+- `profiles` — OPTIONAL array of declared profile identifiers and versions;
+- `modules` — OPTIONAL array of declared optional-module identifiers and versions;
+- `metadata` — OPTIONAL document metadata;
+- `content` — REQUIRED document-type-specific payload;
+- `extensions` — OPTIONAL controlled extension container.
+
+Document-type-specific data MUST be placed under `content` rather than adding arbitrary top-level fields.
+
+The `metadata` object MAY contain creation and modification timestamps, title, description, generator information, authorship or responsible organization, language, locale, licensing, tags, revision information, citations, and source relationships as permitted by the applicable schema.
+
+Published schemas MAY add further required envelope fields only through a versioned specification change or applicable profile requirement.
+
+During pre-release development, `schema_id`, profile identifiers, and module identifiers MAY use repository-relative URI references. Published normative releases MUST use stable absolute identifiers.
+
 ## 8. Identifiers and references
 
 ### 8.1 Document identifiers
@@ -277,6 +302,36 @@ Two references to the same identifier assert identity of the referenced logical 
 
 Copying an object does not preserve identity unless its identifier and revision rules explicitly state that it remains the same logical object.
 
+
+### 8.6 Identifier and reference serialization
+
+`document_id` MUST be an absolute URI. A UUID URN is the RECOMMENDED default for newly created documents when no existing persistent URI is appropriate.
+
+`object_id` is a stable opaque string scoped to the containing document. It MUST be unique within that document. Applications MUST NOT derive semantic meaning from the lexical form of an `object_id`.
+
+A FermentationJSON data reference is an object that contains one or both of:
+
+- `document_id`;
+- `object_id`.
+
+The following interpretations apply:
+
+- `object_id` without `document_id` references an object in the current document;
+- `document_id` without `object_id` references another document as a whole;
+- both fields together reference an object within the identified document.
+
+A reference MAY additionally contain:
+
+- `expected_type`;
+- `schema_id`;
+- `media_type`;
+- `checksum`;
+- `label`.
+
+Data references MUST NOT use JSON Pointer paths as persistent object identity. Structural paths may be retained as provenance locators, but object references must remain valid when unrelated document structure changes.
+
+External object references SHOULD include both `document_id` and `object_id` rather than constructing an undocumented fragment identifier from the two values.
+
 ---
 
 ## 9. Universal quantity model
@@ -291,7 +346,8 @@ A quantity may contain several independent dimensions of information:
 - an optional reported representation;
 - value form, such as exact value, bound, range, or non-detect;
 - source or derivation status;
-- uncertainty or statistical summary;
+- reported statistic;
+- uncertainty or measurement-quality information;
 - chemical or reporting basis;
 - reference conditions;
 - provenance.
@@ -350,15 +406,28 @@ An implementation MUST NOT fabricate a reported representation when no original 
 
 Canonicalization MUST NOT overwrite, replace, or reinterpret the reported representation.
 
-### 9.4 Representation and derivation are independent
+### 9.4 Representation, epistemic state, and derivation are independent
 
-`canonical` and `reported` describe representations of a quantity. They do not by themselves state whether a value came from a source or was derived.
+`canonical` and `reported` describe representations of a quantity. They do not by themselves state whether a value came from a source, was observed, or was derived.
 
-The data model MUST distinguish source-supplied information from derived information.
+The data model MUST be able to distinguish, where relevant:
+
+- reported;
+- measured or observed;
+- user-entered;
+- calculated;
+- derived;
+- estimated;
+- inferred;
+- predicted;
+- target or specification;
+- nominal or default.
+
+A single value MAY have more than one applicable characterization when the applicable schema defines their relationship. For example, an instrument measurement may also be a reported value imported from a laboratory report.
 
 Derived information includes values produced by:
 
-- unit-independent mathematical derivation;
+- mathematical derivation;
 - interpolation;
 - midpoint calculation;
 - averaging or aggregation not explicitly reported by the source;
@@ -371,7 +440,7 @@ A derived value MUST identify its derivation method or calculation provenance wh
 
 A derived value MUST NOT be serialized as though it had been reported by the source.
 
-### 9.5 Value forms
+### 9.5 Value forms and qualified endpoints
 
 The quantity model MUST support, as applicable:
 
@@ -383,6 +452,7 @@ The quantity model MUST support, as applicable:
 - numerical ranges;
 - non-detects;
 - detection limits;
+- reporting limits;
 - quantification limits;
 - uncertainty;
 - tolerance;
@@ -391,35 +461,42 @@ The quantity model MUST support, as applicable:
 
 The representations of these forms MUST remain distinguishable.
 
-A range or bound endpoint MAY itself carry a qualifier when required to preserve source meaning.
+A range endpoint MUST be capable of preserving the endpoint's own result form when required by the source. An endpoint MAY therefore be exact, bounded, or non-detected.
+
+Examples such as `ND–11.1 mg/L` and `<3–14 mg/L` MUST be representable without inventing a numerical value for the qualified endpoint.
 
 ### 9.6 Non-detects and analytical limits
 
 A non-detect is a statement about an analytical result and is not numerically equivalent to zero.
 
-If a source reports only a non-detect, FermentationJSON MUST preserve the non-detect without inventing a detection limit.
+If a source reports only a non-detect, FermentationJSON MUST preserve the non-detect without inventing a detection, reporting, or quantification limit.
 
-If a detection limit or quantification limit is explicitly reported, it SHOULD be preserved separately from the result status.
+If a detection limit, reporting limit, or quantification limit is explicitly supplied, it SHOULD be preserved separately from the result status or bound.
 
-A statement such as "ND", "<5", and "0" therefore represents three different conditions and MUST NOT be treated as interchangeable.
+Statements such as `ND`, `<5`, and `0` represent different conditions and MUST NOT be treated as interchangeable.
 
 ### 9.7 Reported statistics and derived statistics
 
-A statistical value MUST identify the statistic it represents when that distinction is material.
+Result form and reported statistic are separate concepts.
 
-Examples include:
+The reported-statistic model MUST be able to distinguish at least:
 
-- average or mean;
-- median;
-- minimum;
-- maximum;
-- percentile;
-- standard deviation;
-- confidence interval.
+- single observation;
+- ordinary reported average or mean;
+- running annual average;
+- locational running annual average;
+- percentile, including the percentile rank when known;
+- highest result;
+- lowest result;
+- other explicitly named statistics while retaining the source label.
 
-An average explicitly supplied by a source MAY be preserved as a reported average.
+Profiles MAY define additional statistics.
 
-A value calculated by an importer or consuming application MUST NOT be labeled or represented as a reported average.
+An ordinary average explicitly supplied by a source MAY be preserved as a reported average.
+
+An ordinary reported-average concept MUST NOT be used as a generic container for a running annual average, locational running annual average, percentile, highest result, lowest result, or another separately named statistic.
+
+A value calculated by an importer or consuming application MUST NOT be labeled or represented as a reported statistic unless the source itself reported that statistic.
 
 Reported minimum and maximum values over an observation period MUST NOT automatically be interpreted as uncertainty bounds, specification limits, or confidence limits.
 
@@ -429,11 +506,13 @@ Some applications require a single representative scalar for calculations even w
 
 For linearly scaled quantities, an applicable profile MAY define a default representative-value policy. Unless the profile specifies otherwise, the recommended precedence is:
 
-1. an average explicitly reported by the source;
+1. an ordinary average explicitly reported by the source;
 2. an exact reported value;
-3. an on-demand midpoint of a numerical minimum/maximum range.
+3. an on-demand midpoint of a numerical range whose endpoints are both exact.
 
 A midpoint calculated from a range is derived information. It MUST NOT be serialized as a reported value or reported average.
+
+A qualified or censored range has no automatic midpoint unless an applicable profile defines a scientifically justified method.
 
 A representative value derived for calculation MUST NOT replace the preserved source range or source statistics.
 
@@ -479,6 +558,7 @@ Examples include:
 
 - alkalinity reported as CaCO3;
 - hardness reported as CaCO3;
+- disinfectant concentration reported as Cl2;
 - concentration reported as an ion;
 - concentration reported as an element;
 - percent by mass;
@@ -489,6 +569,14 @@ Examples include:
 Dimensionally compatible representations MUST NOT be treated as semantically interchangeable when their chemical or reporting bases differ.
 
 A conversion or estimate between chemically different reporting forms MUST be represented as derived information and MUST identify the assumptions or chemical model used.
+
+If `ppm` or `ppb` is permitted by a profile, the applicable mass, volume, or solution-density basis MUST be defined or otherwise unambiguous. An implementation MUST NOT silently assume that all uses of `ppm` or `ppb` are equivalent to `mg/L` or `µg/L`.
+
+### 9.12 Unit identifiers
+
+Normative persisted unit identifiers MUST be unambiguous.
+
+Where a customary unit name has materially different definitions, the identifier MUST distinguish the applicable definition. For example, a stored gallon or fluid-ounce unit MUST distinguish US customary and Imperial forms.
 
 Implementations MAY use external unit libraries for parsing, conversion, validation, and display. Normative unit identifiers and semantics remain defined by FermentationJSON artifacts.
 
@@ -502,23 +590,29 @@ A measurement or observation SHOULD identify:
 - the result;
 - the subject, material, or sample;
 - the observation time or observation period when known;
+- observation or sampling location when known and material;
+- process or material stage when known and material;
 - provenance;
 - measurement or reference conditions when relevant.
 
 A report publication date MUST NOT be used as a substitute for an observation date or observation period.
 
-### 10.2 Temporal applicability
+### 10.2 Temporal applicability and coverage
 
 The data model MUST be able to distinguish:
 
 - a single observation time or date;
 - an observation period;
 - a report or publication date;
-- a profile intended to represent typical, historical, reference, or otherwise aggregated conditions.
+- a profile or result intended to represent typical, historical, reference, or otherwise aggregated conditions.
 
-Where a schema provides both a single observation field and an observation-period field, they SHOULD be mutually exclusive unless the profile defines a specific combined meaning.
+Where a schema provides both a single observation field and an observation-period field for the same scope, they SHOULD be mutually exclusive unless the profile defines a specific combined meaning.
 
 An observation period SHOULD identify its start and end when known.
+
+An individual measurement or reported result MUST be able to carry a more specific observation time or period than its enclosing document, report, or profile.
+
+A calendar year, report year, or publication year MUST NOT be converted into an invented observation date merely to satisfy a schema.
 
 ### 10.3 Result status
 
@@ -529,6 +623,7 @@ A measurement result MAY carry status including:
 - missing;
 - not detected;
 - below detection limit;
+- below reporting limit;
 - below quantification limit;
 - above instrument range;
 - provisional;
@@ -545,13 +640,19 @@ A directly observed or instrument-derived result MUST NOT be represented as a ca
 
 A value produced by a scientific model, interpolation, aggregation, conversion between chemical reporting bases, optimization, or other derivation MUST identify its calculation or derivation provenance.
 
-### 10.5 Measurement conditions
+### 10.5 Measurement context
+
+Sample location, process stage, water stage, vessel, or other observation context MUST remain separate from the identity of the measured material when the distinction is relevant.
+
+A context value MUST NOT be inferred when the source does not identify it.
+
+### 10.6 Measurement conditions
 
 When a result depends materially on conditions such as temperature, pressure, sample preparation, analytical basis, or instrument configuration, those conditions SHOULD be preserved.
 
 A reference condition SHOULD be omitted rather than guessed when the source does not provide it, unless a governing analytical method or profile supplies a normative default.
 
-### 10.6 Time series
+### 10.7 Time series
 
 Compact time series MAY be embedded.
 
@@ -566,7 +667,7 @@ Large or high-frequency time series SHOULD be referenced as external datasets wi
 - sampling interval;
 - quality flags.
 
-## 11. Provenance
+## 11. Provenance and source-document metadata
 
 ### 11.1 General requirements
 
@@ -578,7 +679,7 @@ Provenance SHOULD identify, where applicable:
 - source location or field;
 - person;
 - organization;
-- laboratory;
+- laboratory or analysis provider;
 - instrument;
 - analytical method;
 - software;
@@ -610,7 +711,24 @@ The provenance model SHOULD support at least:
 
 Derived or reconstructed values SHOULD identify the source information from which they were derived when traceable.
 
-### 11.3 Imported data
+### 11.3 Source-document metadata
+
+Source-document metadata MUST be capable of distinguishing the document or report from the physical material, product, source, or sample described by that document.
+
+Source-document metadata SHOULD support, where known:
+
+- publisher;
+- analysis provider or laboratory;
+- document title;
+- publication date;
+- source URI or external reference;
+- retrieval date;
+- page, table, section, record, or field locator;
+- notes.
+
+Publisher and analysis provider are separate concepts. An implementation MUST NOT infer that the publisher performed the analysis, or infer the publisher from the analytical laboratory, unless the source explicitly establishes that relationship.
+
+### 11.4 Imported data
 
 Imported data MUST preserve the source format and source-format version when known.
 
@@ -618,7 +736,7 @@ An importer SHOULD preserve source paths, source field names, source text, page 
 
 Canonicalization during import MUST NOT erase the source representation.
 
-### 11.4 Automated extraction and interpretation
+### 11.5 Automated extraction and interpretation
 
 Automated extraction from documents, images, PDF files, natural-language reports, or other semi-structured sources MAY be used as an ingestion aid.
 
@@ -627,14 +745,16 @@ Automatically extracted or interpreted data SHOULD retain:
 - the original source reference;
 - a locator to the supporting source material when practical;
 - the extraction software or method;
-- extraction or review status;
-- warnings or confidence information where available.
+- extraction confidence when available;
+- validation status;
+- human-review status;
+- warnings.
 
 A system MUST NOT represent an inferred or guessed value as though it were explicitly reported by the source.
 
-If automated extraction cannot determine a value, unit, reporting basis, qualifier, or reference condition with sufficient confidence, the unresolved information SHOULD remain unresolved pending review rather than being silently inferred.
+If automated extraction cannot determine a value, unit, reporting basis, qualifier, reference condition, observation date, stage, source identity, or other semantic field with sufficient confidence, the unresolved information SHOULD remain unresolved pending review rather than being silently inferred.
 
-### 11.5 Derived and calculated data
+### 11.6 Derived and calculated data
 
 A derived or calculated value SHOULD record, as applicable:
 
@@ -1086,44 +1206,58 @@ Component proportions MUST NOT be invented when they are unknown.
 
 ## 17. Water profiles and treatment
 
-### 17.1 Water object types
+### 17.1 Scope and domain neutrality
+
+The water model is a reusable scientific and engineering capability. Its source-water, target-water, blend, treatment, treated-water, provenance, and calculation structures MUST NOT encode an assumption that the water is used only for beer.
+
+The same source-water profile MAY be evaluated or treated for brewing, mead, distilling, coffee, tea, bread, sourdough, cleaning, boiler feed, or another application without duplicating or mutating the source-water chemistry.
+
+Support for a non-fermentation water-use context does not imply that FermentationJSON defines the complete recipe or process model for that external domain.
+
+### 17.2 Water object types
 
 The water model MUST distinguish:
 
 - source-water profile;
 - target-water profile;
-- treated-liquor profile;
+- treated-liquor or treated-water profile;
 - water blend;
-- water-treatment plan.
+- treatment ingredient or treatment material;
+- water-treatment plan;
+- calculation or optimization result;
+- regulatory or advisory reference.
 
-These object types represent different states or purposes and MUST NOT be treated as semantically equivalent.
+The architecture MUST also permit future treatment-operation objects for non-additive treatments.
 
-### 17.2 Source-water identity
+These concepts represent different states, identities, or purposes and MUST NOT be treated as semantically equivalent.
 
-A source-water profile SHOULD support distinct fields for:
+### 17.3 Source-water identity and physical source
+
+A source-water profile SHOULD support distinct information for:
 
 - provider or utility;
-- brand or product, where applicable;
-- physical source or source system, where known;
-- source type;
+- brand, where applicable;
+- product name or water type, where applicable;
+- high-level source or water classification;
+- one or more physical water sources, where known;
 - geographic area;
-- treatment plant or bottling location;
-- report title;
-- report date;
-- observation date or observation period;
-- laboratory or reporting organization;
-- citation;
+- treatment plant, facility, spring, well, reservoir, aquifer, or bottling location where known;
 - provenance.
 
-Provider, brand or product, source type, and physical source MUST NOT be treated as interchangeable concepts.
+Provider, brand, product, water type, treatment facility, and physical source MUST NOT be treated as interchangeable concepts.
+
+A source-water profile MUST permit multiple physical sources because a supplied water may be drawn from or blended from multiple sources.
 
 Source types MAY include:
 
 - municipal;
 - well;
 - spring;
+- artesian;
+- mineral;
 - rainwater;
 - reverse osmosis;
+- purified;
 - distilled;
 - bottled;
 - laboratory-prepared;
@@ -1131,46 +1265,93 @@ Source types MAY include:
 - reused water;
 - blended water.
 
-### 17.3 Temporal basis and profile character
+Unknown source identity MUST remain unknown rather than being inferred.
 
-A source-water profile MUST be able to distinguish a single observation from an observation period.
+### 17.4 Source-document metadata
 
-A single observation date and an observation period SHOULD be mutually exclusive.
+A source-water profile MAY reference one or more source documents using the provenance and source-document metadata model in Section 11.
 
-The profile MAY identify itself as:
+Water-report metadata SHOULD distinguish:
 
-- observed;
-- period summary;
-- typical;
-- representative;
-- seasonal;
-- historical;
-- reference.
+- publisher;
+- analysis provider or laboratory;
+- document title;
+- publication date;
+- source URI or external reference;
+- retrieval date;
+- page, table, section, or result locator;
+- notes.
 
-A report date MUST remain distinct from the period or date represented by the chemistry.
+A source document is not the water itself. Document identity MUST remain separate from provider, brand, physical water source, treatment facility, and sample location.
 
-### 17.4 Source-reported chemistry
+### 17.5 Temporal basis and coverage
+
+A source-water profile MUST be able to distinguish:
+
+- a single observation;
+- an observation-period summary;
+- a typical or representative analysis;
+- a seasonal profile;
+- a historical or reference profile.
+
+A profile MAY contain an observation date, an observation period, or neither when the source provides only looser coverage semantics.
+
+A single observation date and an observation period for the same profile scope SHOULD be mutually exclusive.
+
+An individual reported result MUST be able to carry a more specific observation date, observation period, or coverage statement than the enclosing profile.
+
+A report year or publication year MUST NOT be converted into an invented sample date.
+
+### 17.6 Water stage and sampling context
+
+A source-water profile or individual result MUST be able to identify water stage or sampling context when explicitly reported.
+
+Supported contexts SHOULD include:
+
+- raw source water;
+- finished water;
+- treatment-plant output;
+- distribution-system water;
+- customer-tap water;
+- bottled finished product;
+- other explicitly identified stages.
+
+A result MAY identify a sample location independently of the profile's general geographic or source identity.
+
+Water stage and sample location MUST NOT be inferred when the source does not identify them.
+
+### 17.7 Source-reported chemistry and statistics
 
 Source-water chemistry MUST preserve source-reported semantics.
 
-For an analyte or property, a source profile MAY contain:
+For an analyte or property, a source profile or result MUST be able to represent:
 
 - an exact reported value;
-- a reported minimum and maximum;
-- a one-sided reported bound;
+- a numerical range;
+- a one-sided bound;
 - a non-detect;
-- an explicitly reported average;
-- other explicitly identified reported statistics.
+- qualified or censored range endpoints;
+- an explicitly reported ordinary average;
+- running annual average;
+- locational running annual average;
+- percentile with percentile rank where known;
+- highest result;
+- lowest result;
+- another explicitly named source statistic.
 
-A derived midpoint, converted chemical species concentration, inferred reference condition, or other calculated value MUST NOT be serialized as source-reported data.
+Result form and reported statistic MUST remain separate concepts.
 
-For linearly scaled quantities, software MAY derive a representative scalar according to the policy in Section 9.8. That value remains derived.
+A derived midpoint, converted chemical species concentration, inferred reference condition, inferred source identity, or other calculated value MUST NOT be serialized as source-reported data.
 
-For pH, the restrictions in Section 9.9 apply.
+For linearly scaled quantities, software MAY derive a representative scalar according to Section 9.8. That value remains derived.
 
-### 17.5 Chemistry
+For pH, the restrictions in Section 9.9 and Section 17.18 apply.
 
-The schema SHOULD support common brewing analytes and properties and MUST permit additional analytes without requiring a core schema revision.
+### 17.8 Analytes and water properties
+
+The water schema MUST permit additional analytes and properties without requiring a core schema revision.
+
+Stable analyte or property identifiers SHOULD be used where available while preserving source labels and synonyms.
 
 Common analytes and properties include:
 
@@ -1189,115 +1370,332 @@ Common analytes and properties include:
 - nitrate;
 - nitrite;
 - phosphate;
-- silicate;
+- silica or silicate;
 - fluoride;
 - ammonium;
+- lithium and other reported trace minerals;
+- arsenic;
+- lead;
+- cadmium;
+- chromium;
+- nickel;
+- selenium;
+- aluminum;
 - alkalinity;
 - total hardness;
 - total dissolved solids;
 - conductivity;
 - pH;
 - dissolved oxygen;
-- chlorine;
-- chloramine.
+- hydrogen sulfide;
+- trihalomethanes;
+- turbidity;
+- odor;
+- color;
+- disinfectants.
 
-Reporting basis MUST be explicit where required for interpretation. In particular, alkalinity or hardness reported as CaCO3 MUST remain identified as such.
+Preserving an analyte or property MUST NOT imply that a consuming calculator has a validated treatment, sensory, health, or process model for it.
 
-An implementation MUST NOT silently reinterpret reported alkalinity as bicarbonate concentration or reported hardness as a specific dissolved-ion concentration.
+### 17.9 Reporting basis, alkalinity, hardness, TDS, and conductivity
 
-Any such conversion or estimate MUST be represented as derived information with its assumptions.
+Reporting basis MUST be explicit where required for interpretation.
 
-Conductivity MAY include a reference temperature. A reference temperature MUST NOT be invented when the source does not provide one.
+In particular:
 
-### 17.6 Target-water profiles
+- total alkalinity and bicarbonate concentration MUST remain distinct;
+- total hardness and component hardness MUST preserve their stated reporting basis;
+- alkalinity or hardness reported as CaCO3 MUST remain identified as such;
+- elemental, ionic, and molecular concentrations MUST remain distinguishable when the distinction affects meaning.
 
-A target-water profile describes desired chemistry or acceptable chemistry ranges. It MUST remain distinguishable from source-water observations and treated-liquor results.
+An implementation MUST NOT silently reinterpret total alkalinity as bicarbonate concentration or total hardness as a specific dissolved-ion concentration.
 
-A target-water profile MAY originate from:
+If a source explicitly identifies bicarbonate alkalinity on a CaCO3 equivalent basis, a normalized bicarbonate value MAY coexist as a derived representation when the relationship and assumptions are explicit. This permission MUST NOT be generalized to total alkalinity.
 
-- a user-defined target;
-- a style or product specification;
-- a published brewery or locality profile;
-- a historical reference;
-- a prior successful batch;
-- another cited source.
+Conductivity MUST permit an optional measurement or reference temperature. A reference temperature MUST NOT be invented when the source does not provide one.
 
-A target derived from historical or published data SHOULD preserve the provenance and reported form of that source while keeping the target interpretation distinct from the source observation.
+Total dissolved solids SHOULD permit analytical method or conversion-basis metadata where supplied by the source.
 
-### 17.7 Regulatory and specification values
+### 17.10 Disinfectants
 
-Regulatory limits, treatment targets, product specifications, and other limits MUST remain distinguishable from observed source-water chemistry.
+Chloride concentration and disinfectant residuals are different chemical concepts and MUST NOT be substituted for one another.
 
-A regulatory maximum or action level MUST NOT be imported as though it were an observed concentration.
+The water model MUST be able to preserve at least:
 
-### 17.8 Water blending
+- free chlorine;
+- total chlorine;
+- combined chlorine;
+- chloramine reported generically;
+- named chloramine species when explicitly identified;
+- chlorine dioxide.
+
+The reported analytical label, method, and reporting basis, including a basis such as `as Cl2`, SHOULD be preserved when supplied.
+
+An implementation MUST NOT derive combined chlorine or chloramine by subtracting free chlorine from total chlorine unless it applies an explicit documented analytical rule. Any such result is derived information.
+
+A treatment model MAY predict disinfectant removal or transformation. Predicted removal MUST remain distinct from a measured post-treatment residual.
+
+### 17.11 Target-water profiles
+
+A target-water profile describes desired, acceptable, or reference chemistry. It MUST remain distinguishable from source-water observations and treated-water results.
+
+A target-water profile MUST support exact target values and acceptable ranges where applicable.
+
+A target MAY also include:
+
+- a preferred or nominal value within an acceptable range;
+- hard minimum or maximum constraints;
+- optimization weight or priority;
+- flavor, process, or application priority;
+- required or prohibited conditions;
+- notes.
+
+A target-water profile MUST identify its target or reference role where material. Roles MAY include:
+
+- custom target;
+- prior successful batch or treated-water state;
+- style recommendation;
+- published brewery profile;
+- historical city or regional profile;
+- application-provided recommendation;
+- other referenced target.
+
+A target derived from historical or published data MUST preserve source attribution.
+
+Conflicting published versions of a historical or locality profile MUST remain separately attributable records and MUST NOT be silently averaged into a single target.
+
+A historical locality profile SHOULD NOT be represented as source water unless it actually describes a specific measured source-water analysis.
+
+### 17.12 Intended water use and process context
+
+Intended use belongs to the calculation, treatment, target, recipe, batch, or process context. It is not part of immutable source-water identity.
+
+The water model SHOULD provide an extensible intended-use concept capable of representing, as applicable:
+
+- general brewing liquor;
+- mash water;
+- sparge water;
+- dilution or high-gravity brewing water;
+- fermentation or process water;
+- spirit-proofing water;
+- coffee-brewing water;
+- tea-brewing water;
+- bread-dough water;
+- sourdough starter or dough water;
+- service or cleaning water;
+- CIP water;
+- boiler-feed water;
+- another defined use.
+
+Use context MAY select different targets, requirements, warnings, or calculation models without changing the source-water profile.
+
+A treatment plan or treated-water state SHOULD be referenceable from a recipe, batch, or process stage.
+
+### 17.13 Regulatory and advisory references
+
+Regulatory limits, treatment targets, product specifications, action levels, notification levels, advisory values, and other reference thresholds MUST remain distinguishable from observed source-water chemistry.
+
+A regulatory or advisory value MUST NOT be imported as though it were an observed concentration.
+
+The reference model MUST permit source-specific labels and SHOULD support commonly encountered threshold categories.
+
+A regulatory or advisory reference SHOULD identify its issuing authority, source document, and effective period when known.
+
+### 17.14 Water blending
+
+A water blend MUST support two or more source-water references.
+
+Each component MUST be able to carry an actual amount when known. Fractions MAY also be stored or derived.
 
 A water blend SHOULD record:
 
 - source-water references;
 - amount of each source;
-- blending order where relevant;
-- calculated blended profile;
+- fraction of each source when useful;
+- blending order where operationally relevant;
+- derived blended profile;
 - uncertainty;
 - assumptions;
 - provenance.
 
-The calculated blended profile is derived information and MUST NOT alter the preserved source-water profiles.
+The derived blended profile MUST NOT alter the preserved source-water profiles.
 
-If a blend is physically executed in a batch, the actual amounts used SHOULD be recorded in the batch execution record separately from the planned blend.
+A blend calculation MUST NOT imply that every property was linearly averaged merely because conservative ion concentrations were linearly combined. In particular, pH and censored values MUST obey their applicable quantity-specific rules.
 
-### 17.9 Water-treatment plans and execution
+A blend or treatment workflow SHOULD permit explicit pre-treatment and post-treatment states.
 
-A water-treatment plan describes intended transformation of source water into treated liquor.
+If a blend is physically executed in a batch, actual amounts used SHOULD be recorded separately from the planned blend.
 
-A treatment plan SHOULD record:
+### 17.15 Treatment ingredients and additions
 
-- source waters;
-- planned blend;
-- treatment steps;
-- treatment order;
-- treatment materials and planned amounts;
-- chemical identity;
-- hydration state;
-- purity;
-- solution concentration;
+A treatment ingredient is a material used in a water-treatment role. Chemical identity MUST remain separate from product packaging, inventory, or supplier information.
+
+A treatment ingredient MUST be able to identify, where applicable:
+
+- stable chemical or material identity;
+- display name;
+- chemical formula or composition;
+- hydration state or exact chemical form;
+- molar or stoichiometric identity;
+- composition evidence or provenance;
+- purity or assay;
+- solution concentration or strength.
+
+A liquid treatment product SHOULD permit density when mass-to-volume dosing depends on it.
+
+Hydration state is part of chemical identity and MUST NOT be treated as a unit conversion.
+
+A treatment addition MUST be able to record:
+
+- treatment-ingredient reference;
+- planned amount;
+- actual amount when executed;
+- target liquor or water state;
+- intended water use or process stage;
+- timing or order when relevant;
+- mathematically ideal dose when applicable;
+- practical rounded dose when different;
+- expected contribution;
+- measured post-treatment result when later observed.
+
+Planned and actual additions MUST remain distinguishable.
+
+### 17.16 Non-additive treatment operations
+
+The architecture MUST remain capable of representing non-additive water-treatment operations without redesigning source-water or treatment-plan semantics.
+
+Optional or future treatment-operation definitions MAY include:
+
+- dilution;
+- reverse osmosis;
+- activated-carbon filtration;
+- dechlorination;
+- boiling;
+- lime softening;
+- ion exchange;
+- acidification;
+- alkalization;
+- deaeration;
+- mineral removal;
+- staged treatment.
+
+A treatment operation MUST distinguish, when represented:
+
+- declared or actual process settings;
+- modeled expected effect;
+- measured post-operation result;
+- model or method;
+- assumptions.
+
+### 17.17 Water-treatment plans
+
+A water-treatment plan describes intended transformation of source water into treated water or liquor.
+
+A plan SHOULD be able to record:
+
+- source-water references;
+- source-water amounts or blend fractions;
+- required final or batch volume when applicable;
 - target-water profile;
-- predicted treated-liquor profile;
+- intended water use or process context;
+- treatment additions;
+- treatment operations when supported;
+- predicted final profile;
+- target deviations;
+- objective components;
+- constraint outcomes;
 - assumptions;
-- constraints;
-- warnings.
+- warnings and explanation codes;
+- calculation status;
+- chemistry-model version;
+- optimization-policy version;
+- solver or implementation version;
+- reference-data version;
+- relevant schema or adapter compatibility versions.
 
-A batch execution SHOULD record actual treatment materials, actual amounts, execution events, and resulting measurements separately from the plan.
+For additive ion modeling, the plan or associated calculation result MUST be able to expose a contribution matrix or equivalent structured explanation showing, for each modeled ion:
 
-Reported chemical identities and hydration states MUST NOT be silently normalized to a different chemical form.
+- initial source-water contribution;
+- blend-component contribution where applicable;
+- contribution from each treatment ingredient;
+- final modeled total.
 
-### 17.10 Treated-liquor profiles
+A treatment plan and its optimization results are derived planning information. They MUST NOT silently mutate source-water profiles or be represented as measured reality.
 
-A treated-liquor profile describes water after blending or treatment.
+### 17.18 Treated-water profiles and pH
 
-A treated-liquor profile MUST distinguish:
+A treated-water or treated-liquor profile describes water after blending or treatment.
+
+It MUST distinguish:
 
 - predicted or calculated chemistry;
 - measured chemistry.
 
 Predicted chemistry is derived information. Measured chemistry is observational information and MUST preserve measurement provenance and conditions.
 
-### 17.11 Optimization results
+Calculated working-water pH MUST remain distinct from reported source-water pH and measured post-treatment pH.
 
-Optimization results MUST be represented as calculation results and MUST NOT silently modify the source profile, target profile, treatment plan, or recipe.
+A calculated working-water pH SHOULD identify:
 
-An optimization result MAY include:
+- model name and version;
+- assumptions;
+- source or input references;
+- relevant temperature or reference conditions;
+- warning or approximation status;
+- insufficient-data status when applicable.
 
-- objective;
-- constraints;
-- ranked alternatives;
-- target deviations;
-- exact-match solution;
-- minimal-addition solution;
-- minimal-number-of-additions solution;
-- blend-first solution;
-- practical rounded solution;
-- infeasible-target report.
+Mash-pH prediction is a recipe- and process-dependent calculation and MUST remain distinct from working-water pH and from measured mash pH.
+
+### 17.19 Optimization results
+
+Water optimization MUST support multiple distinct ranked candidate plans when the optimizer produces more than one meaningful solution.
+
+An optimization result MUST be able to identify a versioned named policy or explicit objective and constraint definitions.
+
+Policies MAY include:
+
+- closest match;
+- fewest treatment products;
+- lowest total addition;
+- least dilution;
+- no dilution;
+- water-only;
+- permitted ingredients only;
+- another explicitly defined policy.
+
+An optimization result MUST permit objective components to be represented separately rather than only as an opaque aggregate score.
+
+Objective components MAY include:
+
+- weighted analyte deviation;
+- hard-constraint violation penalty;
+- number of treatment products;
+- total treatment mass;
+- dilution-water usage;
+- dose-rounding deviation;
+- application-provided cost.
+
+Constraint outcomes MUST be able to state whether a constraint was satisfied, violated, or not evaluated.
+
+A result-status vocabulary MUST be able to distinguish, as applicable:
+
+- exact within declared numerical tolerance;
+- all target ranges satisfied;
+- closest feasible under constraints;
+- mathematically feasible but operationally impractical;
+- infeasible with supplied sources or treatments;
+- solver failure;
+- indeterminate or insufficient-data result.
+
+Machine-readable warnings or explanation codes SHOULD be able to identify causes such as:
+
+- source concentration already above target;
+- coupled-ion tradeoff prevents simultaneous target satisfaction;
+- required treatment ingredient excluded;
+- practical dose rounding causes a constraint violation;
+- insufficient source data;
+- unsupported or unvalidated model.
+
+A consuming application MUST NOT imply that target matching guarantees flavor, extraction quality, fermentation performance, food quality, or safety.
 
 ---
 
@@ -1371,7 +1769,7 @@ Optional modules MAY define:
 
 ### 19.1 Distinction from observations
 
-A calculation or model result MUST remain distinguishable from a measurement, observation, reported source value, or target.
+A calculation or model result MUST remain distinguishable from a measurement, observation, reported source value, target, or specification.
 
 Unit conversion and canonicalization alone do not transform a measurement or reported value into a calculation result.
 
@@ -1386,18 +1784,26 @@ A calculation result SHOULD include, as applicable:
 - formula or model version;
 - implementation or software identity;
 - implementation version;
+- named policy or policy version;
 - assumptions;
 - coefficients;
 - constraints;
+- constraint outcomes;
+- objective components;
 - rounding policy;
 - uncertainty or sensitivity information;
-- warnings;
+- warnings or explanation codes;
+- status;
 - timestamp;
 - acceptance or selection status.
 
+A calculation that depends on independently versioned reference data SHOULD identify that reference-data version.
+
+Profiles MAY require additional independently versioned artifacts, such as scientific-model versions, optimizer-policy versions, solver versions, or compatibility-adapter versions.
+
 ### 19.3 Reproducibility
 
-A calculation result intended to be reproducible SHOULD preserve sufficient information to identify the exact inputs and model used.
+A calculation result intended to be reproducible SHOULD preserve sufficient information to identify the exact inputs, model, policy, assumptions, and independently versioned reference data used.
 
 If an input is referenced externally, the record SHOULD preserve a stable identifier, version, checksum, snapshot, or other mechanism sufficient to prevent silent changes to the calculation inputs.
 
@@ -1411,7 +1817,43 @@ When embedded, the value MUST remain identifiable as derived and SHOULD referenc
 
 Selecting or accepting a calculated result MUST NOT cause it to be represented as a measurement or source-reported value.
 
-### 19.5 Potential calculation types
+### 19.5 Indeterminate and failed calculations
+
+A calculation-result model MUST permit a calculation to terminate without a numeric result when the requested output cannot be determined scientifically or computationally.
+
+Applicable statuses MAY include:
+
+- successful;
+- exact within declared tolerance;
+- feasible;
+- closest feasible;
+- infeasible;
+- operationally impractical;
+- indeterminate;
+- insufficient data;
+- unsupported model;
+- solver or implementation failure.
+
+An implementation MUST NOT invent a numeric result merely because a result field would otherwise be empty.
+
+A failed, infeasible, or indeterminate result SHOULD preserve enough warnings, explanation codes, or missing-input information for a consumer to understand why no valid result was produced.
+
+### 19.6 Multiple candidate results
+
+A calculation or optimization MAY produce multiple candidate results.
+
+When candidates are ranked, the result SHOULD preserve:
+
+- rank;
+- named policy or objective;
+- objective components;
+- constraint outcomes;
+- selection or rejection status;
+- warnings.
+
+The format MUST NOT require a multi-objective calculation to collapse all objective information into one opaque score.
+
+### 19.7 Potential calculation types
 
 Profiles and optional modules MAY define calculations including:
 
@@ -1541,6 +1983,26 @@ Promotion SHOULD require:
 - review through the applicable proposal or decision process.
 
 Promotion MUST NOT silently change the meaning of existing extension data.
+
+
+### 21.7 Unknown fields and extension serialization
+
+Concrete normative FermentationJSON object schemas MUST reject undeclared fields unless the applicable schema explicitly defines an open property set.
+
+Reusable base schemas intended for composition SHOULD NOT close themselves. The final concrete schema or profile SHOULD apply `unevaluatedProperties: false` after composition so that properties introduced by composed schemas are recognized before unknown fields are rejected.
+
+Application-specific data MUST use the defined `extensions` container rather than arbitrary undeclared properties.
+
+The `extensions` container is an object keyed by collision-resistant extension identifiers. Each extension entry MUST contain:
+
+- `required` — boolean indicating whether understanding the extension is required for correct interpretation;
+- `data` — the extension payload.
+
+An extension entry MAY contain additional metadata defined by the extension's own schema.
+
+An unknown extension identifier is not an unknown core field. It is handled according to Sections 21.3 through 21.5.
+
+A newer specification version MAY define fields unknown to an older implementation. An older implementation MUST NOT silently accept such fields as though it understood their semantics. Version negotiation, declared conformance scope, or the extension mechanism MUST determine how they are handled.
 
 ---
 
@@ -1807,6 +2269,34 @@ Normative compatibility profiles and profiles with behavior not fully expressibl
 
 A conformance claim SHOULD identify the version of the conformance suite used for verification.
 
+### 25.8 Scientific pressure-test fixtures
+
+Profiles whose semantics include ranges, censored results, logarithmic values, derived states, or optimization behavior SHOULD publish fixtures that exercise those semantics rather than testing only ordinary scalar values.
+
+The water capability SHOULD include conformance fixtures covering at least:
+
+- exact values and ordinary reported averages;
+- exact-ended ranges with an independently reported average;
+- qualified ranges such as `ND–11.1`;
+- one-sided bounds such as `<0.30`;
+- non-detects without an invented detection limit;
+- running annual average, locational running annual average, percentile, highest, and lowest statistics;
+- result-specific timing that differs from the enclosing report period;
+- separation of water identity, physical source, source-document publisher, analysis provider, and sample location;
+- raw, finished, distribution, tap, or bottled stage context;
+- separately reported alkalinity and bicarbonate;
+- pH ranges without an invented midpoint;
+- conductivity with and without an explicitly stated reference temperature;
+- chloride and multiple disinfectant concepts coexisting without conflation;
+- conflicting published target profiles remaining separate;
+- multi-source blends with derived chemistry and nonlinearly treated properties;
+- distinct treatment chemical forms such as anhydrous and hydrated salts;
+- predicted treatment chemistry versus later measured chemistry;
+- ranked optimization plans with policy, objective components, constraints, statuses, warnings, contribution explanations, and versions;
+- explicit indeterminate or insufficient-data calculation results;
+- external-format export with structured loss reporting;
+- reuse of one source-water profile under different intended-use contexts.
+
 ---
 
 ## 26. Security, privacy, and operational safety
@@ -1915,44 +2405,109 @@ A contradiction between normative artifacts is a specification defect and SHOULD
 
 Conformance tests MAY clarify intended behavior but MUST NOT introduce a normative requirement that is absent from the published normative specification.
 
+
+### 27.5 JSON Schema dialect and authoring conventions
+
+FermentationJSON normative schemas MUST use JSON Schema Draft 2020-12 unless a later FermentationJSON specification version deliberately adopts another dialect.
+
+Each schema resource MUST declare the Draft 2020-12 dialect using `$schema`.
+
+Published normative schema resources MUST define a stable absolute `$id`. During pre-release development, a schema MAY omit `$id` until the project's canonical schema-identifier namespace is selected. Relative `$ref` values MAY be used within the repository during this period.
+
+Schemas SHOULD:
+
+- use `$defs` for reusable local definitions;
+- use `$anchor` when a location-independent schema reference is useful;
+- avoid JSON Pointer references that cross schema-resource boundaries;
+- use `unevaluatedProperties` rather than duplicating property declarations solely to close composed schemas;
+- avoid custom JSON Schema vocabularies in the initial foundation unless a requirement cannot be expressed interoperably through standard Draft 2020-12 mechanisms.
+
+The default Draft 2020-12 dialect treats `format` primarily as annotation. FermentationJSON schemas MAY use standard `format` annotations, but full conformance tooling MUST enforce any date-time, URI, UUID, or other formatted-string semantics that FermentationJSON makes normative. Structural validation alone MUST NOT be assumed to enforce every `format` annotation.
+
+The canonical public URI namespace for published FermentationJSON schemas, profiles, modules, vocabularies, and compatibility profiles MUST be selected before the first normative schema release. Once published, an identifier MUST follow the immutability requirements in Section 24.
+
 ---
 
-## 28. Development staging
+## 28. Development sequence
 
-Development is organized by dependency and implementation risk:
+This section is informative. It describes the intended order of implementation and does not define release conformance.
 
-1. **Foundation** — document architecture, identifiers, references, quantities, measurements, provenance, profiles, extensions, compatibility, versioning, validation, and conformance.
-2. **Core brewing** — recipes, batches, ingredients, cultures, equipment, brewing processes, packaging, water, measurements, calculations, and external-format compatibility tooling.
-3. **Engineering modules** — laboratory data, sampling, sensors, calibration, telemetry, automation, detailed process execution, batch genealogy, advanced water treatment, and serving-system engineering.
-4. **Additional domains** — wine, cider, perry, mead, sake, kombucha, vinegar, and other fermentation profiles.
+Development is organized by technical dependency:
 
-Release scope and milestones are maintained in `ROADMAP.md`. Roadmap entries do not become normative until incorporated into a versioned specification artifact.
+1. **Foundation**  
+   Define document architecture, identifiers, references, quantities, measurements, provenance, profiles, extensions, compatibility, versioning, validation, and conformance.
 
-## 29. Open design questions
+2. **Core brewing**  
+   Define brewing recipes and batches, ingredients and cultures, equipment, brewing processes, packaging, water, measurements, calculations, and external-format compatibility tooling.
 
-The following topics require separate proposals or architecture decisions:
+3. **Engineering modules**  
+   Add laboratory data, sampling, sensors, calibration, telemetry, automation, detailed process execution, batch genealogy, advanced water treatment, and serving-system engineering.
 
-- exact document-envelope structure;
-- canonical-unit and unit-vocabulary policy;
-- object-reference syntax and resolution;
-- unknown-field handling by schema layer;
-- stable schema and profile identifiers;
-- package or multi-document container format;
-- attachment and external-dataset packaging;
-- namespace and vocabulary governance;
-- digital signatures and integrity metadata;
+4. **Additional fermentation domains**  
+   Add domain profiles for wine, cider, perry, mead, sake, kombucha, vinegar, and other fermentation processes.
+
+Detailed milestones, release targets, and sequencing are maintained in `ROADMAP.md`.
+
+A roadmap item is not part of the normative specification until it is incorporated into a published, versioned normative artifact.
+
+---
+
+## 29. Open design decisions
+
+The following topics remain unresolved and require a proposal, architecture decision, implementation experiment, or combination of these before they become normative:
+
+- canonical-unit selection and the versioned unit-vocabulary policy;
+- canonical public URI namespace and final URI structure for published schemas, profiles, modules, vocabularies, and compatibility profiles;
+- multi-document packaging or container format, if one is required;
+- attachment and external-dataset representation;
+- extension namespace registration and vocabulary governance;
+- digital-signature and integrity mechanisms beyond basic checksums;
 - JSON-LD or ontology integration;
-- streaming telemetry;
-- long-term archival guidance.
+- streaming or high-frequency telemetry representation;
+- long-term archival and preservation guidance.
 
-Open questions are not normative requirements.
+The existence of an open design decision MUST NOT be interpreted as permission for incompatible implementations to assign conflicting normative meanings to the same FermentationJSON identifier.
 
-## 30. Design status
+Experimental implementations MAY explore unresolved areas through the extension and proposal mechanisms defined by this specification.
 
-This document is a working engineering design.
+Open design decisions are not normative requirements.
 
-Sections describing foundation architecture, compatibility guarantees, recipe and batch separation, quantity semantics, provenance, extension rules, and conformance represent the current intended direction.
+---
 
-Detailed field names, schema identifiers, vocabulary values, and profile-specific structures remain subject to implementation and review.
+## 30. Document status and change control
 
-No section of this working draft should be interpreted as a final compatibility commitment until published as part of a versioned FermentationJSON release.
+This document is a working engineering design for the modern FermentationJSON specification.
+
+Normative terms in this working draft state the current intended requirements, but they do not constitute a released compatibility guarantee until incorporated into a published FermentationJSON specification version.
+
+During pre-release development:
+
+- field names and schema structures MAY change;
+- unresolved design decisions MAY result in incompatible revisions;
+- normative requirements SHOULD change only with documented rationale;
+- significant architectural changes SHOULD be recorded through an architecture decision or proposal;
+- compatibility guarantees MUST NOT be advertised as final until corresponding schemas, mappings, fixtures, and conformance tests exist.
+
+The following architectural decisions are considered established design constraints unless deliberately revised:
+
+- recipes and executed batches are distinct concepts;
+- canonical and reported quantity representations are distinct;
+- source-reported and derived information are distinct;
+- semantic qualifiers, ranges, bounds, non-detects, and uncertainty are preserved;
+- logarithmic quantities such as pH require quantity-specific aggregation rules;
+- provenance is a cross-cutting capability;
+- external-format compatibility is versioned and testable;
+- lossy transformations are explicit;
+- profiles and extensions cannot weaken core requirements;
+- JSON Schema validation alone does not establish full conformance;
+- source-water identity is independent of intended use;
+- water-report document identity, physical water source, water stage, and sample location are distinct concepts;
+- regulatory or advisory thresholds are distinct from observed chemistry;
+- predicted treatment results are distinct from measured treated-water results;
+- treatment-chemical identity includes chemically meaningful form such as hydration state.
+
+Implementation-blocking architectural decisions SHOULD be recorded in `docs/decisions/` and reflected in this design document when they become established constraints.
+
+Detailed vocabulary contents, the final public schema-identifier namespace, and profile-specific structures remain subject to implementation and review until published.
+
+A released version of this document MUST identify its specification version and normative status unambiguously.
