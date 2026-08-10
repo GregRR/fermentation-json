@@ -76,6 +76,7 @@ Decision records:
 - [`docs/decisions/ADR-0001-json-schema-dialect-and-composition.md`](docs/decisions/ADR-0001-json-schema-dialect-and-composition.md)
 - [`docs/decisions/ADR-0002-document-envelope-identity-and-references.md`](docs/decisions/ADR-0002-document-envelope-identity-and-references.md)
 - [`docs/decisions/ADR-0003-closed-objects-and-extensions.md`](docs/decisions/ADR-0003-closed-objects-and-extensions.md)
+- [`docs/decisions/ADR-0005-public-schema-identifiers.md`](docs/decisions/ADR-0005-public-schema-identifiers.md)
 
 ## 1.3 Initial foundation schemas
 
@@ -121,11 +122,11 @@ The normative standard must remain independent of any particular unit library.
 
 ### Published schema identifiers
 
-- [ ] Select a canonical public schema URI namespace controlled by the project.
-- [ ] Define immutable versioned `$id` structure.
-- [ ] Define convenience/unversioned identifier policy, if any.
-- [ ] Add `$id` values to schemas once the public namespace is stable.
-- [ ] Verify resolution using at least one clean external validator workflow.
+- [x] Select a canonical public schema URI namespace controlled by the project.
+- [x] Define immutable versioned `$id` structure.
+- [x] Define convenience/unversioned identifier policy: none initially.
+- [x] Add versioned `$id` values to core schemas.
+- [x] Verify canonical-ID resolution with registry-based Draft 2020-12 validator tests.
 
 ### Reusable semantic schemas
 
@@ -695,27 +696,22 @@ They should remain proposals or design notes until a concrete interoperability r
 
 The next development sequence is:
 
-1. **Public schema namespace**
-   - select canonical namespace;
-   - assign versioned `$id` values;
-   - verify external reference resolution.
-
-2. **Foundation vocabulary and declaration policy**
+1. **Foundation vocabulary and declaration policy**
    - define closed versus extensible vocabulary rules;
    - define vocabulary versioning and unknown-value behavior;
    - add profile/module declaration structures beyond envelope identifiers.
 
-3. **Foundation semantic conformance**
+2. **Foundation semantic conformance**
    - reference integrity;
    - required-extension handling;
    - source-versus-derived invariants;
    - loss-report and interchange-report behavior;
    - machine-readable conformance-suite versioning.
 
-4. **BeerJSON 1.0 compatibility inventory and mapping**
+3. **BeerJSON 1.0 compatibility inventory and mapping**
    - begin before the brewing object model is considered stable.
 
-5. **First concrete domain schemas**
+4. **First concrete domain schemas**
    - shared materials/cultures/process/equipment;
    - recipe and batch;
    - water schemas as an early scientific pressure test.

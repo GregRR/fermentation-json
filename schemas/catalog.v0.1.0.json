@@ -1,0 +1,104 @@
+{
+  "catalog": "fermentationjson.schema_catalog",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "public_namespace": "https://gregrr.github.io/fermentation-json/schemas/",
+  "schema_set_namespace": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/",
+  "schemas": [
+    {
+      "name": "calculation_result",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/calculation-result.schema.json",
+      "path": "core/calculation-result.schema.json"
+    },
+    {
+      "name": "constraint_outcome",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/constraint-outcome.schema.json",
+      "path": "core/constraint-outcome.schema.json"
+    },
+    {
+      "name": "constraint",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/constraint.schema.json",
+      "path": "core/constraint.schema.json"
+    },
+    {
+      "name": "diagnostic",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/diagnostic.schema.json",
+      "path": "core/diagnostic.schema.json"
+    },
+    {
+      "name": "document_metadata",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document-metadata.schema.json",
+      "path": "core/document-metadata.schema.json"
+    },
+    {
+      "name": "document",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
+      "path": "core/document.schema.json"
+    },
+    {
+      "name": "extension",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/extension.schema.json",
+      "path": "core/extension.schema.json"
+    },
+    {
+      "name": "format_descriptor",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/format-descriptor.schema.json",
+      "path": "core/format-descriptor.schema.json"
+    },
+    {
+      "name": "identity",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/identity.schema.json",
+      "path": "core/identity.schema.json"
+    },
+    {
+      "name": "interchange_report",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/interchange-report.schema.json",
+      "path": "core/interchange-report.schema.json"
+    },
+    {
+      "name": "loss_report",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/loss-report.schema.json",
+      "path": "core/loss-report.schema.json"
+    },
+    {
+      "name": "measurement",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/measurement.schema.json",
+      "path": "core/measurement.schema.json"
+    },
+    {
+      "name": "provenance",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/provenance.schema.json",
+      "path": "core/provenance.schema.json"
+    },
+    {
+      "name": "quantity",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/quantity.schema.json",
+      "path": "core/quantity.schema.json"
+    },
+    {
+      "name": "reference",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/reference.schema.json",
+      "path": "core/reference.schema.json"
+    },
+    {
+      "name": "reported_statistic",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/reported-statistic.schema.json",
+      "path": "core/reported-statistic.schema.json"
+    },
+    {
+      "name": "result_form",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/result-form.schema.json",
+      "path": "core/result-form.schema.json"
+    },
+    {
+      "name": "source_document",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/source-document.schema.json",
+      "path": "core/source-document.schema.json"
+    },
+    {
+      "name": "vocabulary_identifier",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/vocabulary-identifier.schema.json",
+      "path": "core/vocabulary-identifier.schema.json"
+    }
+  ]
+}

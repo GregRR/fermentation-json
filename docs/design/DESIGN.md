@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.10
+**Document version:** 0.11
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -250,7 +250,7 @@ The `metadata` object MAY contain creation and modification timestamps, title, d
 
 Published schemas MAY add further required envelope fields only through a versioned specification change or applicable profile requirement.
 
-During pre-release development, `schema_id`, profile identifiers, and module identifiers MAY use repository-relative URI references. Published normative releases MUST use stable absolute identifiers.
+`schema_id`, profile identifiers, and module identifiers that claim normative conformance MUST use stable absolute identifiers. Repository-relative paths are not normative conformance identifiers.
 
 ## 8. Identifiers and references
 
@@ -2226,7 +2226,29 @@ Every published normative schema, profile, module, vocabulary, and compatibility
 
 A versioned identifier MUST NOT be reused for different normative content.
 
-Where an unversioned convenience identifier is provided, it MUST resolve according to a documented policy and MUST NOT be used when an immutable version reference is required for reproducibility.
+The canonical public namespace for FermentationJSON JSON Schema resources is:
+
+```text
+https://gregrr.github.io/fermentation-json/schemas/
+```
+
+Core schemas are published as coordinated schema sets. The current pre-release schema-set version is `0.1.0`, with core schema IDs under:
+
+```text
+https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/
+```
+
+The schema-set version is an artifact-set version and MUST NOT be interpreted as the FermentationJSON specification release version unless a release explicitly makes those versions equal.
+
+Each schema resource MUST declare its canonical absolute URI using `$id`.
+
+A fragment-only `$ref` MAY address an anchor in the same resource. A relative cross-schema `$ref` MAY be used only when it resolves, from the referring schema's canonical `$id`, to another resource in the same versioned schema-set namespace. It MUST NOT escape that namespace.
+
+Schema retrieval location is separate from schema identity. Conforming implementations MUST NOT require canonical schema URIs to be fetched over the network when the required resources are otherwise available through a registry, package, cache, or equivalent resolver.
+
+No unversioned convenience schema identifiers are currently defined.
+
+Where an unversioned convenience identifier is provided in the future, it MUST resolve according to a documented policy and MUST NOT be used when an immutable version reference is required for reproducibility.
 
 ### 24.4 Backward and forward compatibility
 
@@ -2471,7 +2493,7 @@ FermentationJSON normative schemas MUST use JSON Schema Draft 2020-12 unless a l
 
 Each schema resource MUST declare the Draft 2020-12 dialect using `$schema`.
 
-Published normative schema resources MUST define a stable absolute `$id`. During pre-release development, a schema MAY omit `$id` until the project's canonical schema-identifier namespace is selected. Relative `$ref` values MAY be used within the repository during this period.
+Normative schema resources MUST define a stable absolute `$id` using the versioned identifier policy in Section 24.3. Repository file paths and temporary retrieval URIs are not schema identity.
 
 Schemas SHOULD:
 
@@ -2483,7 +2505,7 @@ Schemas SHOULD:
 
 The default Draft 2020-12 dialect treats `format` primarily as annotation. FermentationJSON schemas MAY use standard `format` annotations, but full conformance tooling MUST enforce any date-time, URI, UUID, or other formatted-string semantics that FermentationJSON makes normative. Structural validation alone MUST NOT be assumed to enforce every `format` annotation.
 
-The canonical public URI namespace for published FermentationJSON schemas, profiles, modules, vocabularies, and compatibility profiles MUST be selected before the first normative schema release. Once published, an identifier MUST follow the immutability requirements in Section 24.
+The canonical JSON Schema URI namespace and schema-set resolution policy are defined in Section 24.3 and ADR-0005. Once published, an identifier MUST follow the immutability requirements in Section 24.
 
 ---
 
@@ -2565,9 +2587,11 @@ The following architectural decisions are considered established design constrai
 - treatment-chemical identity includes chemically meaningful form such as hydration state.
 - normative unit and quantity-kind identifiers are defined by versioned FermentationJSON vocabularies;
 - every registered core quantity kind has one declared canonical unit;
+- normative JSON Schema resources have versioned absolute canonical `$id` values;
+- schema resolution is independent of repository filesystem location and does not require network access;
 
 Implementation-blocking architectural decisions SHOULD be recorded in `docs/decisions/` and reflected in this design document when they become established constraints.
 
-Detailed vocabulary contents, the final public schema-identifier namespace, and profile-specific structures remain subject to implementation and review until published.
+Detailed vocabulary contents and profile-specific structures remain subject to implementation and review until published. The current schema identifier namespace is an accepted pre-release decision and remains changeable only through an explicit superseding decision before first normative publication.
 
 A released version of this document MUST identify its specification version and normative status unambiguously.

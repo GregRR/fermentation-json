@@ -3,7 +3,7 @@
   "instance": {
     "specification_version": "0.1.0",
     "document_type": "example",
-    "schema_id": "schemas/example.schema.json",
+    "schema_id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
     "document_id": "relative/document/id",
     "content": {}
   }

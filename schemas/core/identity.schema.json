@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/identity.schema.json",
   "title": "FermentationJSON identity primitives",
-  "description": "Reusable identifiers used by pre-release FermentationJSON schemas.",
+  "description": "Reusable identifiers used by FermentationJSON schemas and documents.",
   "$defs": {
     "document_id": {
       "$anchor": "documentId",
@@ -21,8 +22,10 @@
       "$anchor": "schemaId",
       "title": "Schema or profile identifier",
       "type": "string",
-      "format": "uri-reference",
-      "minLength": 1
+      "format": "uri",
+      "minLength": 1,
+      "description": "Absolute identifier of a normative schema, profile, module, compatibility profile, or other declared conformance artifact.",
+      "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
     },
     "media_type": {
       "$anchor": "mediaType",

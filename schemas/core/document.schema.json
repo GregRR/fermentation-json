@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
   "title": "FermentationJSON document envelope",
   "$anchor": "documentEnvelope",
   "description": "Reusable FermentationJSON document envelope. This base schema remains composable; concrete document schemas must close the root object.",

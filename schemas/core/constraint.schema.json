@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/constraint.schema.json",
   "title": "FermentationJSON constraint",
   "$anchor": "constraint",
   "description": "A named constraint whose detailed parameter semantics are defined by its constraint type and applicable profile or module.",

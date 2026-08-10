@@ -61,7 +61,10 @@ They currently cover:
 - transformation loss reports;
 - import, export, and transcode reports.
 
-The schemas use **JSON Schema Draft 2020-12**.
+The schemas use **JSON Schema Draft 2020-12**. Current core schemas carry
+versioned canonical `$id` values under
+`https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/` and can be resolved offline through the repository schema
+catalog.
 
 Passing JSON Schema validation establishes structural validity only. Full FermentationJSON conformance also includes semantic requirements that are not completely expressible in JSON Schema, such as reference integrity, scientific interpretation rules, compatibility preservation, and loss-reporting behavior.
 
@@ -156,12 +159,14 @@ Implemented so far:
 - the first core foundation schemas;
 - versioned unit, quantity-kind, and reporting-basis vocabularies;
 - reusable calculation, diagnostic, constraint, loss-report, and interchange-report schemas;
+- versioned canonical core-schema identifiers and an offline schema catalog;
 - positive and negative schema fixtures;
 - foundation schema tests.
 
 Important work still in progress includes:
 
-- public schema identifier namespace;
+- profile/module declaration and vocabulary-evolution policy;
+- foundation semantic-conformance rules;
 - concrete document-type schemas;
 - brewing production schemas and profile;
 - water-treatment schemas;

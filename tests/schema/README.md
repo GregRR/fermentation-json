@@ -38,3 +38,17 @@ boundaries and therefore are not fully expressible in the individual schemas:
 - ranked candidate numbers are unique;
 - an embedded loss report describes the same source and target formats as its
   enclosing interchange report.
+
+## Canonical schema identifier tests
+
+`test_schema_identifiers.py` verifies that:
+
+- every core schema has one cataloged canonical `$id`;
+- the schema IDs use the current versioned public namespace;
+- relative cross-schema references stay inside that exact schema set;
+- valid fixtures resolve through a canonical-ID registry without network or
+  filesystem-based reference retrieval.
+
+The older structural tests intentionally remain separate so that canonical-ID
+resolution and ordinary schema validation fail independently when either layer
+is broken.

@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/constraint-outcome.schema.json",
   "title": "FermentationJSON constraint outcome",
   "$anchor": "constraintOutcome",
   "type": "object",

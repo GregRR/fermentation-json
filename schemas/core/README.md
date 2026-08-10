@@ -2,7 +2,7 @@
 
 These are the first pre-release foundation schemas for FermentationJSON.
 
-They use JSON Schema Draft 2020-12 and implement ADR-0001 through ADR-0003.
+They use JSON Schema Draft 2020-12 and implement the accepted foundation ADRs as applicable.
 
 ## Current schemas
 
@@ -26,11 +26,21 @@ They use JSON Schema Draft 2020-12 and implement ADR-0001 through ADR-0003.
 - `loss-report.schema.json` — machine-readable transformation loss reports
 - `interchange-report.schema.json` — import, export, and transcode operation reports
 
-## Pre-release `$id` policy
+## Schema identifiers
 
-These schemas intentionally omit `$id` until FermentationJSON selects its
-canonical public schema namespace. Repository-relative `$ref` values are used
-during pre-release development.
+Every core schema now has a canonical versioned `$id` under:
+
+```text
+https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/
+```
+
+Relative cross-schema `$ref` values resolve against that canonical versioned
+base URI. The repository file path is not the schema's normative identity.
+
+The machine-readable mapping between canonical IDs and repository paths is in
+[`../catalog.v0.1.0.json`](../catalog.v0.1.0.json). See
+[`../README.md`](../README.md) and ADR-0005 for publication and immutability
+rules.
 
 ## Composition policy
 

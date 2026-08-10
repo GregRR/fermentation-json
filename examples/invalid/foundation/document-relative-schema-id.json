@@ -1,9 +1,9 @@
 {
   "_schema": "document.schema.json",
   "instance": {
-    "specification_version": "v0.1",
+    "specification_version": "0.1.0",
     "document_type": "example",
-    "schema_id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
+    "schema_id": "schemas/example.schema.json",
     "document_id": "urn:uuid:123e4567-e89b-12d3-a456-426614174000",
     "content": {}
   }
