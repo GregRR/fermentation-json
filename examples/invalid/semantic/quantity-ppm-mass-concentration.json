@@ -1,0 +1,22 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "mass_concentration",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 50
+      },
+      "unit": "milligram_per_liter"
+    },
+    "reported": {
+      "form": {
+        "type": "exact",
+        "value": 50
+      },
+      "unit": "part_per_million",
+      "original_unit_text": "ppm"
+    }
+  },
+  "_semantic_error": "reported_unit_dimension_mismatch"
+}

@@ -5,22 +5,18 @@
     "canonical": {
       "form": {
         "type": "exact",
-        "value": 37.85411784
+        "value": 3.785411784
       },
       "unit": "liter"
     },
     "reported": {
       "form": {
         "type": "exact",
-        "value": 10
+        "value": 1
       },
-      "unit": "us_liquid_gallon",
-      "original_text": "10 gal",
-      "original_unit_text": "gal"
-    },
-    "epistemic_state": [
-      "reported",
-      "user_entered"
-    ]
-  }
+      "unit": "gallon",
+      "original_text": "1 gallon"
+    }
+  },
+  "_semantic_error": "unknown_core_unit"
 }

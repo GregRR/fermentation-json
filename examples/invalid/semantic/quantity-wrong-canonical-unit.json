@@ -1,0 +1,14 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "volume",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 1000
+      },
+      "unit": "milliliter"
+    }
+  },
+  "_semantic_error": "wrong_canonical_unit"
+}

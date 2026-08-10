@@ -1,0 +1,122 @@
+{
+  "vocabulary": "fermentationjson.quantity_kinds",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "entries": [
+    {
+      "id": "fraction",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "description": "Dimensionless fraction or ratio."
+    },
+    {
+      "id": "mass_fraction",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "description": "Mass fraction."
+    },
+    {
+      "id": "volume_fraction",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "description": "Volume fraction."
+    },
+    {
+      "id": "mole_fraction",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "description": "Amount-of-substance fraction."
+    },
+    {
+      "id": "length",
+      "dimension": "length",
+      "canonical_unit": "meter"
+    },
+    {
+      "id": "volume",
+      "dimension": "volume",
+      "canonical_unit": "liter"
+    },
+    {
+      "id": "mass",
+      "dimension": "mass",
+      "canonical_unit": "kilogram"
+    },
+    {
+      "id": "duration",
+      "dimension": "time",
+      "canonical_unit": "second"
+    },
+    {
+      "id": "temperature",
+      "dimension": "temperature",
+      "canonical_unit": "degree_celsius"
+    },
+    {
+      "id": "temperature_difference",
+      "dimension": "temperature_difference",
+      "canonical_unit": "kelvin_difference"
+    },
+    {
+      "id": "pressure",
+      "dimension": "pressure",
+      "canonical_unit": "kilopascal"
+    },
+    {
+      "id": "density",
+      "dimension": "mass_per_volume",
+      "canonical_unit": "kilogram_per_liter"
+    },
+    {
+      "id": "mass_concentration",
+      "dimension": "mass_per_volume",
+      "canonical_unit": "milligram_per_liter"
+    },
+    {
+      "id": "treatment_dose_mass_per_volume",
+      "dimension": "mass_per_volume",
+      "canonical_unit": "gram_per_liter"
+    },
+    {
+      "id": "amount_concentration",
+      "dimension": "amount_per_volume",
+      "canonical_unit": "mole_per_liter"
+    },
+    {
+      "id": "equivalent_concentration",
+      "dimension": "equivalent_per_volume",
+      "canonical_unit": "milliequivalent_per_liter"
+    },
+    {
+      "id": "conductivity",
+      "dimension": "conductivity",
+      "canonical_unit": "microsiemens_per_centimeter"
+    },
+    {
+      "id": "ph",
+      "dimension": "ph_scale",
+      "canonical_unit": "ph_scale",
+      "aggregation_policy": "logarithmic_special_case"
+    },
+    {
+      "id": "specific_volume",
+      "dimension": "specific_volume",
+      "canonical_unit": "liter_per_kilogram"
+    },
+    {
+      "id": "volume_flow_rate",
+      "dimension": "volume_flow_rate",
+      "canonical_unit": "liter_per_minute"
+    },
+    {
+      "id": "electric_resistance",
+      "dimension": "electric_resistance",
+      "canonical_unit": "ohm"
+    },
+    {
+      "id": "dynamic_viscosity",
+      "dimension": "dynamic_viscosity",
+      "canonical_unit": "millipascal_second"
+    }
+  ]
+}

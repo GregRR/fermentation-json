@@ -5,18 +5,18 @@
     "canonical": {
       "form": {
         "type": "exact",
-        "value": 37.85411784
+        "value": 117.347765304
       },
       "unit": "liter"
     },
     "reported": {
       "form": {
         "type": "exact",
-        "value": 10
+        "value": 1
       },
-      "unit": "us_liquid_gallon",
-      "original_text": "10 gal",
-      "original_unit_text": "gal"
+      "unit": "us_beer_barrel",
+      "original_unit_text": "bbl",
+      "original_text": "1 bbl"
     },
     "epistemic_state": [
       "reported",

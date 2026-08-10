@@ -44,7 +44,7 @@
       ]
     },
     "observed_at": {
-      "oneOf": [
+      "anyOf": [
         {
           "type": "string",
           "format": "date"
@@ -97,7 +97,7 @@
       "type": "object",
       "properties": {
         "start": {
-          "oneOf": [
+          "anyOf": [
             {
               "type": "string",
               "format": "date"
@@ -109,7 +109,7 @@
           ]
         },
         "end": {
-          "oneOf": [
+          "anyOf": [
             {
               "type": "string",
               "format": "date"

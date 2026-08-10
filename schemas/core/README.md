@@ -7,6 +7,7 @@ They use JSON Schema Draft 2020-12 and implement ADR-0001 through ADR-0003.
 ## Current schemas
 
 - `identity.schema.json` — document IDs, object IDs, schema IDs, checksums
+- `vocabulary-identifier.schema.json` — core and extension vocabulary identifiers
 - `extension.schema.json` — controlled extension container
 - `reference.schema.json` — internal and external data references
 - `result-form.schema.json` — exact, approximate, bound, range, and non-detect forms
@@ -37,3 +38,10 @@ Passing JSON Schema validation establishes structural validity only. Full
 FermentationJSON conformance also requires semantic validation, including
 reference integrity and scientific rules that cannot be expressed completely
 in JSON Schema.
+
+## Vocabulary semantics
+
+`quantity.schema.json` validates vocabulary identifier syntax. Registry
+membership, dimensional compatibility, and canonical-unit selection are
+semantic conformance requirements checked by
+`tests/schema/test_vocabulary_semantics.py`.

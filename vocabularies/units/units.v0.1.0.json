@@ -1,0 +1,1021 @@
+{
+  "vocabulary": "fermentationjson.units",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "identifier_policy": "core_lower_snake_case_or_extension_absolute_uri",
+  "dimensions": {
+    "fraction": {
+      "reference_unit": "one"
+    },
+    "length": {
+      "reference_unit": "meter"
+    },
+    "volume": {
+      "reference_unit": "liter"
+    },
+    "mass": {
+      "reference_unit": "kilogram"
+    },
+    "time": {
+      "reference_unit": "second"
+    },
+    "temperature": {
+      "reference_unit": "degree_celsius"
+    },
+    "temperature_difference": {
+      "reference_unit": "kelvin_difference"
+    },
+    "pressure": {
+      "reference_unit": "kilopascal"
+    },
+    "mass_per_volume": {
+      "reference_unit": "milligram_per_liter"
+    },
+    "amount_per_volume": {
+      "reference_unit": "mole_per_liter"
+    },
+    "equivalent_per_volume": {
+      "reference_unit": "milliequivalent_per_liter"
+    },
+    "conductivity": {
+      "reference_unit": "microsiemens_per_centimeter"
+    },
+    "ph_scale": {
+      "reference_unit": "ph_scale"
+    },
+    "specific_volume": {
+      "reference_unit": "liter_per_kilogram"
+    },
+    "volume_flow_rate": {
+      "reference_unit": "liter_per_minute"
+    },
+    "electric_resistance": {
+      "reference_unit": "ohm"
+    },
+    "dynamic_viscosity": {
+      "reference_unit": "millipascal_second"
+    }
+  },
+  "entries": [
+    {
+      "id": "one",
+      "dimension": "fraction",
+      "symbol": "1",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "dimensionless"
+      ]
+    },
+    {
+      "id": "percent",
+      "dimension": "fraction",
+      "symbol": "%",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "100"
+      },
+      "aliases": [
+        "%"
+      ]
+    },
+    {
+      "id": "part_per_million",
+      "dimension": "fraction",
+      "symbol": "ppm",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000000"
+      },
+      "aliases": [
+        "ppm"
+      ]
+    },
+    {
+      "id": "part_per_billion",
+      "dimension": "fraction",
+      "symbol": "ppb",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000000000"
+      },
+      "aliases": [
+        "ppb"
+      ]
+    },
+    {
+      "id": "meter",
+      "dimension": "length",
+      "symbol": "m",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "m"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "centimeter",
+      "dimension": "length",
+      "symbol": "cm",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "100"
+      },
+      "aliases": [
+        "cm"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "millimeter",
+      "dimension": "length",
+      "symbol": "mm",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000"
+      },
+      "aliases": [
+        "mm"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "liter",
+      "dimension": "volume",
+      "symbol": "L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "L",
+        "l",
+        "liter",
+        "litre"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "milliliter",
+      "dimension": "volume",
+      "symbol": "mL",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000"
+      },
+      "aliases": [
+        "mL",
+        "ml"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "hectoliter",
+      "dimension": "volume",
+      "symbol": "hL",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "100",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "hL",
+        "hl"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "cubic_meter",
+      "dimension": "volume",
+      "symbol": "m³",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "m3",
+        "m^3"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "us_liquid_gallon",
+      "dimension": "volume",
+      "symbol": "US gal",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "473176473",
+        "factor_denominator": "125000000"
+      },
+      "aliases": [
+        "gal",
+        "US gal",
+        "US gallon"
+      ],
+      "definition": "Exactly 3.785411784 liters.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "us_liquid_quart",
+      "dimension": "volume",
+      "symbol": "US qt",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "473176473",
+        "factor_denominator": "500000000"
+      },
+      "aliases": [
+        "qt",
+        "US qt"
+      ],
+      "definition": "One quarter of a U.S. liquid gallon.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "us_liquid_pint",
+      "dimension": "volume",
+      "symbol": "US pt",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "473176473",
+        "factor_denominator": "1000000000"
+      },
+      "aliases": [
+        "pt",
+        "US pt"
+      ],
+      "definition": "One eighth of a U.S. liquid gallon.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "us_fluid_ounce",
+      "dimension": "volume",
+      "symbol": "US fl oz",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "473176473",
+        "factor_denominator": "16000000000"
+      },
+      "aliases": [
+        "fl oz",
+        "floz",
+        "US fl oz"
+      ],
+      "definition": "One 128th of a U.S. liquid gallon.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "us_cup",
+      "dimension": "volume",
+      "symbol": "US cup",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "473176473",
+        "factor_denominator": "2000000000"
+      },
+      "aliases": [
+        "cup",
+        "US cup"
+      ],
+      "definition": "Eight U.S. fluid ounces.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "us_tablespoon",
+      "dimension": "volume",
+      "symbol": "US tbsp",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "473176473",
+        "factor_denominator": "32000000000"
+      },
+      "aliases": [
+        "tbsp",
+        "US tbsp"
+      ],
+      "definition": "One half U.S. fluid ounce.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "us_teaspoon",
+      "dimension": "volume",
+      "symbol": "US tsp",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "157725491",
+        "factor_denominator": "32000000000"
+      },
+      "aliases": [
+        "tsp",
+        "US tsp"
+      ],
+      "definition": "One third U.S. tablespoon.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "imperial_gallon",
+      "dimension": "volume",
+      "symbol": "Imp gal",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "454609",
+        "factor_denominator": "100000"
+      },
+      "aliases": [
+        "Imperial gallon",
+        "imp gal",
+        "igal"
+      ],
+      "definition": "Exactly 4.54609 liters.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "imperial_quart",
+      "dimension": "volume",
+      "symbol": "Imp qt",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "454609",
+        "factor_denominator": "400000"
+      },
+      "aliases": [
+        "Imperial quart",
+        "iqt"
+      ],
+      "definition": "One quarter Imperial gallon.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "imperial_pint",
+      "dimension": "volume",
+      "symbol": "Imp pt",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "454609",
+        "factor_denominator": "800000"
+      },
+      "aliases": [
+        "Imperial pint",
+        "ipt"
+      ],
+      "definition": "One eighth Imperial gallon.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "imperial_fluid_ounce",
+      "dimension": "volume",
+      "symbol": "Imp fl oz",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "454609",
+        "factor_denominator": "16000000"
+      },
+      "aliases": [
+        "Imperial fluid ounce",
+        "ifloz"
+      ],
+      "definition": "One 160th Imperial gallon.",
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "us_beer_barrel",
+      "dimension": "volume",
+      "symbol": "US beer bbl",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "14668470663",
+        "factor_denominator": "125000000"
+      },
+      "aliases": [
+        "beer bbl",
+        "bbl"
+      ],
+      "definition": "Exactly 31 U.S. liquid gallons when used as a U.S. beer unit of measure.",
+      "source": "27_CFR_25_11"
+    },
+    {
+      "id": "kilogram",
+      "dimension": "mass",
+      "symbol": "kg",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "kg"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "gram",
+      "dimension": "mass",
+      "symbol": "g",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000"
+      },
+      "aliases": [
+        "g"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "milligram",
+      "dimension": "mass",
+      "symbol": "mg",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000000"
+      },
+      "aliases": [
+        "mg"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "microgram",
+      "dimension": "mass",
+      "symbol": "µg",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000000000"
+      },
+      "aliases": [
+        "ug",
+        "µg"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "pound_avoirdupois",
+      "dimension": "mass",
+      "symbol": "lb",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "45359237",
+        "factor_denominator": "100000000"
+      },
+      "aliases": [
+        "lb"
+      ],
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "ounce_avoirdupois",
+      "dimension": "mass",
+      "symbol": "oz",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "45359237",
+        "factor_denominator": "1600000000"
+      },
+      "aliases": [
+        "oz"
+      ],
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "grain_avoirdupois",
+      "dimension": "mass",
+      "symbol": "gr",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "6479891",
+        "factor_denominator": "100000000000"
+      },
+      "aliases": [
+        "gr",
+        "grain"
+      ],
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "second",
+      "dimension": "time",
+      "symbol": "s",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "s",
+        "sec"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "minute",
+      "dimension": "time",
+      "symbol": "min",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "60",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "min"
+      ]
+    },
+    {
+      "id": "hour",
+      "dimension": "time",
+      "symbol": "h",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "3600",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "h",
+        "hr"
+      ]
+    },
+    {
+      "id": "day",
+      "dimension": "time",
+      "symbol": "d",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "86400",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "day"
+      ]
+    },
+    {
+      "id": "week",
+      "dimension": "time",
+      "symbol": "wk",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "604800",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "week",
+        "wk"
+      ]
+    },
+    {
+      "id": "degree_celsius",
+      "dimension": "temperature",
+      "symbol": "°C",
+      "conversion_to_dimension_reference": {
+        "type": "affine",
+        "factor_numerator": "1",
+        "factor_denominator": "1",
+        "offset_numerator": "0",
+        "offset_denominator": "1"
+      },
+      "aliases": [
+        "C",
+        "°C"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "kelvin",
+      "dimension": "temperature",
+      "symbol": "K",
+      "conversion_to_dimension_reference": {
+        "type": "affine",
+        "factor_numerator": "1",
+        "factor_denominator": "1",
+        "offset_numerator": "-27315",
+        "offset_denominator": "100"
+      },
+      "aliases": [
+        "K"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "degree_fahrenheit",
+      "dimension": "temperature",
+      "symbol": "°F",
+      "conversion_to_dimension_reference": {
+        "type": "affine",
+        "factor_numerator": "5",
+        "factor_denominator": "9",
+        "offset_numerator": "-160",
+        "offset_denominator": "9"
+      },
+      "aliases": [
+        "F",
+        "°F"
+      ],
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "kelvin_difference",
+      "dimension": "temperature_difference",
+      "symbol": "K",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "K"
+      ]
+    },
+    {
+      "id": "degree_celsius_difference",
+      "dimension": "temperature_difference",
+      "symbol": "Δ°C",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "delta C",
+        "Δ°C"
+      ]
+    },
+    {
+      "id": "degree_fahrenheit_difference",
+      "dimension": "temperature_difference",
+      "symbol": "Δ°F",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "5",
+        "factor_denominator": "9"
+      },
+      "aliases": [
+        "delta F",
+        "Δ°F"
+      ]
+    },
+    {
+      "id": "kilopascal",
+      "dimension": "pressure",
+      "symbol": "kPa",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "kPa"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "pascal",
+      "dimension": "pressure",
+      "symbol": "Pa",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000"
+      },
+      "aliases": [
+        "Pa"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "bar",
+      "dimension": "pressure",
+      "symbol": "bar",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "100",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "bar"
+      ]
+    },
+    {
+      "id": "pound_force_per_square_inch",
+      "dimension": "pressure",
+      "symbol": "psi",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "8896443230521",
+        "factor_denominator": "1290320000000"
+      },
+      "aliases": [
+        "psi"
+      ],
+      "source": "NIST_SP811"
+    },
+    {
+      "id": "milligram_per_liter",
+      "dimension": "mass_per_volume",
+      "symbol": "mg/L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "mg/L",
+        "mg/l"
+      ]
+    },
+    {
+      "id": "microgram_per_liter",
+      "dimension": "mass_per_volume",
+      "symbol": "µg/L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000"
+      },
+      "aliases": [
+        "ug/L",
+        "µg/L"
+      ]
+    },
+    {
+      "id": "gram_per_liter",
+      "dimension": "mass_per_volume",
+      "symbol": "g/L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "g/L",
+        "g/l"
+      ]
+    },
+    {
+      "id": "kilogram_per_liter",
+      "dimension": "mass_per_volume",
+      "symbol": "kg/L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1000000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "kg/L"
+      ]
+    },
+    {
+      "id": "gram_per_milliliter",
+      "dimension": "mass_per_volume",
+      "symbol": "g/mL",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1000000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "g/mL"
+      ]
+    },
+    {
+      "id": "gram_per_us_liquid_gallon",
+      "dimension": "mass_per_volume",
+      "symbol": "g/US gal",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "125000000000",
+        "factor_denominator": "473176473"
+      },
+      "aliases": [
+        "g/gal"
+      ]
+    },
+    {
+      "id": "gram_per_hectoliter",
+      "dimension": "mass_per_volume",
+      "symbol": "g/hL",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "10",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "g/hL"
+      ]
+    },
+    {
+      "id": "pound_per_us_beer_barrel",
+      "dimension": "mass_per_volume",
+      "symbol": "lb/US beer bbl",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "736351250000",
+        "factor_denominator": "190499619"
+      },
+      "aliases": [
+        "lb/bbl"
+      ]
+    },
+    {
+      "id": "mole_per_liter",
+      "dimension": "amount_per_volume",
+      "symbol": "mol/L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "mol/L"
+      ]
+    },
+    {
+      "id": "millimole_per_liter",
+      "dimension": "amount_per_volume",
+      "symbol": "mmol/L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000"
+      },
+      "aliases": [
+        "mmol/L"
+      ]
+    },
+    {
+      "id": "milliequivalent_per_liter",
+      "dimension": "equivalent_per_volume",
+      "symbol": "mEq/L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "mEq/L"
+      ]
+    },
+    {
+      "id": "equivalent_per_liter",
+      "dimension": "equivalent_per_volume",
+      "symbol": "eq/L",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "eq/L"
+      ]
+    },
+    {
+      "id": "microsiemens_per_centimeter",
+      "dimension": "conductivity",
+      "symbol": "µS/cm",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "uS/cm",
+        "µS/cm"
+      ]
+    },
+    {
+      "id": "millisiemens_per_centimeter",
+      "dimension": "conductivity",
+      "symbol": "mS/cm",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "mS/cm"
+      ]
+    },
+    {
+      "id": "siemens_per_meter",
+      "dimension": "conductivity",
+      "symbol": "S/m",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "10000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "S/m"
+      ]
+    },
+    {
+      "id": "ph_scale",
+      "dimension": "ph_scale",
+      "symbol": "pH",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "pH"
+      ]
+    },
+    {
+      "id": "liter_per_kilogram",
+      "dimension": "specific_volume",
+      "symbol": "L/kg",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "L/kg"
+      ]
+    },
+    {
+      "id": "liter_per_minute",
+      "dimension": "volume_flow_rate",
+      "symbol": "L/min",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "L/min"
+      ]
+    },
+    {
+      "id": "milliliter_per_minute",
+      "dimension": "volume_flow_rate",
+      "symbol": "mL/min",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1000"
+      },
+      "aliases": [
+        "mL/min"
+      ]
+    },
+    {
+      "id": "ohm",
+      "dimension": "electric_resistance",
+      "symbol": "Ω",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "ohm",
+        "Ohm",
+        "Ω"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "millipascal_second",
+      "dimension": "dynamic_viscosity",
+      "symbol": "mPa·s",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "mPa-s",
+        "mPa·s"
+      ]
+    },
+    {
+      "id": "centipoise",
+      "dimension": "dynamic_viscosity",
+      "symbol": "cP",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "cP"
+      ]
+    }
+  ]
+}

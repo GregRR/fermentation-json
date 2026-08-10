@@ -1,0 +1,32 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "mass_concentration",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 120
+      },
+      "unit": "milligram_per_liter",
+      "basis": {
+        "kind": "as_substance_equivalent",
+        "substance": "calcium_carbonate"
+      }
+    },
+    "reported": {
+      "form": {
+        "type": "exact",
+        "value": 120
+      },
+      "unit": "milligram_per_liter",
+      "basis": {
+        "kind": "as_substance_equivalent",
+        "substance": "calcium_carbonate"
+      },
+      "original_text": "120 mg/L as CaCO3"
+    },
+    "epistemic_state": [
+      "reported"
+    ]
+  }
+}

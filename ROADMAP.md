@@ -110,12 +110,12 @@ These items should be resolved before the foundation is considered stable enough
 
 ### Unit and quantity vocabulary
 
-- [ ] Define the canonical-unit policy.
-- [ ] Define stable unit identifiers and aliases.
-- [ ] Define quantity-kind identifiers.
-- [ ] Define reporting-basis vocabulary and extensibility rules.
-- [ ] Define semantics for customary concentration notation such as ppm and ppb.
-- [ ] Add fixtures for ambiguous customary units, explicit US/Imperial units, chemical reporting bases, and canonical conversion preservation.
+- [x] Define the canonical-unit policy.
+- [x] Define stable unit identifiers and alias policy.
+- [x] Define initial quantity-kind identifiers.
+- [x] Define initial reporting-basis vocabulary and extensibility rules.
+- [x] Define semantics for customary concentration notation such as ppm and ppb.
+- [x] Add initial fixtures for ambiguous customary units, explicit U.S./Imperial units, chemical reporting bases, and canonical conversion preservation.
 
 The normative standard must remain independent of any particular unit library.
 
@@ -695,34 +695,28 @@ They should remain proposals or design notes until a concrete interoperability r
 
 The next development sequence is:
 
-1. **Canonical unit and quantity vocabulary**
-   - define canonical-unit policy;
-   - define stable unit identifiers;
-   - define quantity-kind and reporting-basis identifiers;
-   - add foundation fixtures.
-
-2. **Remaining reusable foundation schemas**
+1. **Remaining reusable foundation schemas**
    - generic calculation result;
    - warnings/explanations;
    - constraints/outcomes;
    - loss report;
    - import/export reports.
 
-3. **Public schema namespace**
+2. **Public schema namespace**
    - select canonical namespace;
    - assign versioned `$id` values;
    - verify external reference resolution.
 
-4. **Foundation semantic conformance**
+3. **Foundation semantic conformance**
    - reference integrity;
    - required-extension handling;
    - source-versus-derived invariants;
    - loss-report behavior.
 
-5. **BeerJSON 1.0 compatibility inventory and mapping**
+4. **BeerJSON 1.0 compatibility inventory and mapping**
    - begin before the brewing object model is considered stable.
 
-6. **First concrete domain schemas**
+5. **First concrete domain schemas**
    - shared materials/cultures/process/equipment;
    - recipe and batch;
    - water schemas as an early scientific pressure test.

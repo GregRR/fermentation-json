@@ -4,7 +4,7 @@
     "object_id": "calcium-2025",
     "property": "calcium",
     "result": {
-      "quantity_kind": "calcium_concentration",
+      "quantity_kind": "mass_concentration",
       "canonical": {
         "form": {
           "type": "range",
@@ -44,7 +44,7 @@
           "type": "average"
         },
         "quantity": {
-          "quantity_kind": "calcium_concentration",
+          "quantity_kind": "mass_concentration",
           "canonical": {
             "form": {
               "type": "exact",

@@ -1,26 +1,24 @@
 {
   "_schema": "quantity.schema.json",
   "instance": {
-    "quantity_kind": "volume",
+    "quantity_kind": "mass_fraction",
     "canonical": {
       "form": {
         "type": "exact",
-        "value": 37.85411784
+        "value": 0.05
       },
-      "unit": "liter"
+      "unit": "one"
     },
     "reported": {
       "form": {
         "type": "exact",
-        "value": 10
+        "value": 5
       },
-      "unit": "us_liquid_gallon",
-      "original_text": "10 gal",
-      "original_unit_text": "gal"
+      "unit": "percent",
+      "original_unit_text": "%"
     },
     "epistemic_state": [
-      "reported",
-      "user_entered"
+      "reported"
     ]
   }
 }

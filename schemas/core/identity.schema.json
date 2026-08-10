@@ -8,7 +8,8 @@
       "title": "Document identifier",
       "type": "string",
       "format": "uri",
-      "minLength": 1
+      "minLength": 1,
+      "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
     },
     "object_id": {
       "$anchor": "objectId",

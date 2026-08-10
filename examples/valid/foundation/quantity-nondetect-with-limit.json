@@ -1,7 +1,7 @@
 {
   "_schema": "quantity.schema.json",
   "instance": {
-    "quantity_kind": "lead_concentration",
+    "quantity_kind": "mass_concentration",
     "canonical": {
       "form": {
         "type": "non_detect"

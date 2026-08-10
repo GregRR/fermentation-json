@@ -3,7 +3,7 @@
   "instance": {
     "property": "lead",
     "result": {
-      "quantity_kind": "lead_concentration",
+      "quantity_kind": "mass_concentration",
       "canonical": {
         "form": {
           "type": "exact",
@@ -29,7 +29,7 @@
           "percentile": 90
         },
         "quantity": {
-          "quantity_kind": "lead_concentration",
+          "quantity_kind": "mass_concentration",
           "canonical": {
             "form": {
               "type": "exact",

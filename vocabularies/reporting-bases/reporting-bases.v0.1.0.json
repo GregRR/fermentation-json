@@ -1,0 +1,27 @@
+{
+  "vocabulary": "fermentationjson.reporting_basis_kinds",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "entries": [
+    {
+      "id": "as_substance_equivalent",
+      "requires_substance": true,
+      "description": "Reported on an equivalent-mass basis of the named substance, such as alkalinity as CaCO3 or disinfectant residual as Cl2."
+    },
+    {
+      "id": "elemental",
+      "requires_substance": true,
+      "description": "Reported as the named element rather than the complete molecular or ionic species."
+    },
+    {
+      "id": "ionic",
+      "requires_substance": true,
+      "description": "Reported as the named ionic species."
+    },
+    {
+      "id": "molecular",
+      "requires_substance": true,
+      "description": "Reported as the named molecular species."
+    }
+  ]
+}

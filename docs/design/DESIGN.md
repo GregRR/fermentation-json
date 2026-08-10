@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.9  
+**Document version:** 0.10
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -572,13 +572,72 @@ A conversion or estimate between chemically different reporting forms MUST be re
 
 If `ppm` or `ppb` is permitted by a profile, the applicable mass, volume, or solution-density basis MUST be defined or otherwise unambiguous. An implementation MUST NOT silently assume that all uses of `ppm` or `ppb` are equivalent to `mg/L` or `µg/L`.
 
-### 9.12 Unit identifiers
+### 9.12 Unit and quantity-kind identifiers
 
 Normative persisted unit identifiers MUST be unambiguous.
 
-Where a customary unit name has materially different definitions, the identifier MUST distinguish the applicable definition. For example, a stored gallon or fluid-ounce unit MUST distinguish US customary and Imperial forms.
+FermentationJSON core unit and quantity-kind identifiers use stable lower-case snake-case tokens defined by versioned vocabularies. Non-core extension identifiers MUST use collision-resistant absolute URIs.
 
-Implementations MAY use external unit libraries for parsing, conversion, validation, and display. Normative unit identifiers and semantics remain defined by FermentationJSON artifacts.
+Human-readable unit symbols, abbreviations, aliases, and source spellings are not normative persisted identifiers.
+
+Where a customary unit name has materially different definitions, the identifier MUST distinguish the applicable definition. For example:
+
+- `us_liquid_gallon` and `imperial_gallon` are distinct;
+- `us_fluid_ounce` and `imperial_fluid_ounce` are distinct;
+- `us_beer_barrel` is distinct from other units called barrel.
+
+`us_beer_barrel` is exactly 31 `us_liquid_gallon`.
+
+The exact source unit spelling SHOULD be preservable separately from the normalized reported-unit identifier.
+
+### 9.13 Canonical-unit policy
+
+Every registered core quantity kind MUST declare exactly one canonical unit in the applicable versioned quantity-kind vocabulary.
+
+For a registered core quantity kind, a quantity's canonical representation MUST use that declared canonical unit.
+
+Canonical units are selected for interoperability, scientific meaning, and domain practicality. A canonical unit need not be an SI base unit.
+
+The initial foundation policy includes, among others:
+
+- volume in `liter`;
+- mass in `kilogram`;
+- temperature in `degree_celsius`;
+- temperature difference in `kelvin_difference`;
+- pressure in `kilopascal`;
+- mass concentration in `milligram_per_liter`;
+- amount concentration in `mole_per_liter`;
+- equivalent concentration in `milliequivalent_per_liter`;
+- conductivity in `microsiemens_per_centimeter`;
+- pH using `ph_scale`.
+
+Profiles MAY define additional quantity kinds and canonical units through versioned profile vocabularies.
+
+A quantity kind describes the quantity being represented, not the identity of an analyte or material. For example, calcium and sulfate measurements can both use `mass_concentration` while the enclosing measurement identifies the analyte.
+
+### 9.14 Reported-unit policy and aliases
+
+A reported representation SHOULD use a registered FermentationJSON unit identifier when the source unit can be identified without inventing meaning.
+
+Source symbols and aliases MAY be preserved for round-trip fidelity, but aliases MUST NOT be treated as normative persisted identifiers.
+
+An importer MUST NOT map an ambiguous source token such as an unqualified `gallon`, `fluid ounce`, or `barrel` to a specific FermentationJSON unit without sufficient source context.
+
+### 9.15 Ratio units and concentration semantics
+
+`part_per_million` and `part_per_billion` are ratio units.
+
+They MUST NOT be treated as universally equivalent to `milligram_per_liter` or `microgram_per_liter`.
+
+When a source reports `ppm` or `ppb`, the source meaning MUST be preserved. A mass-per-volume concentration MAY be derived only when the necessary reporting basis, density assumption, or other scientific relationship is known and documented.
+
+### 9.16 External unit systems
+
+FermentationJSON does not normatively depend on an external unit code system or software unit library.
+
+Implementations MAY use external unit systems or libraries for parsing, conversion, validation, or display when their semantics are compatible with FermentationJSON.
+
+External mappings are adapter behavior and MUST NOT silently change a FermentationJSON unit's meaning.
 
 ## 10. Measurements and observations
 
@@ -2456,7 +2515,6 @@ A roadmap item is not part of the normative specification until it is incorporat
 
 The following topics remain unresolved and require a proposal, architecture decision, implementation experiment, or combination of these before they become normative:
 
-- canonical-unit selection and the versioned unit-vocabulary policy;
 - canonical public URI namespace and final URI structure for published schemas, profiles, modules, vocabularies, and compatibility profiles;
 - multi-document packaging or container format, if one is required;
 - attachment and external-dataset representation;
@@ -2505,6 +2563,8 @@ The following architectural decisions are considered established design constrai
 - regulatory or advisory thresholds are distinct from observed chemistry;
 - predicted treatment results are distinct from measured treated-water results;
 - treatment-chemical identity includes chemically meaningful form such as hydration state.
+- normative unit and quantity-kind identifiers are defined by versioned FermentationJSON vocabularies;
+- every registered core quantity kind has one declared canonical unit;
 
 Implementation-blocking architectural decisions SHOULD be recorded in `docs/decisions/` and reflected in this design document when they become established constraints.
 

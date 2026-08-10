@@ -9,8 +9,7 @@
   ],
   "properties": {
     "quantity_kind": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
     },
     "canonical": {
       "$ref": "#canonicalRepresentation"
@@ -67,12 +66,10 @@
       ],
       "properties": {
         "kind": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
         },
         "substance": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
         },
         "description": {
           "type": "string"
@@ -92,8 +89,7 @@
           "$ref": "result-form.schema.json#resultForm"
         },
         "unit": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
         },
         "basis": {
           "$ref": "#reportingBasis"
@@ -113,8 +109,7 @@
           "$ref": "result-form.schema.json#resultForm"
         },
         "unit": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
         },
         "basis": {
           "$ref": "#reportingBasis"
@@ -133,6 +128,9 @@
         "locale": {
           "type": "string",
           "minLength": 1
+        },
+        "original_unit_text": {
+          "type": "string"
         }
       },
       "unevaluatedProperties": false
@@ -177,8 +175,7 @@
               "unevaluatedProperties": false
             },
             "unit": {
-              "type": "string",
-              "minLength": 1
+              "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
             },
             "basis": {
               "$ref": "#reportingBasis"

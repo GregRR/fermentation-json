@@ -11,3 +11,19 @@ or publishing filesystem identifiers.
 `FormatChecker` is enabled because FermentationJSON treats URI/date/time
 semantics as part of full conformance even though Draft 2020-12 does not
 require format assertion by default.
+
+## Vocabulary semantic tests
+
+`test_vocabulary_semantics.py` verifies relationships that JSON Schema cannot
+express by itself:
+
+- vocabulary identifier uniqueness;
+- dimension/reference-unit consistency;
+- one canonical unit per registered quantity kind;
+- canonical-unit use in examples;
+- reported-unit dimensional compatibility;
+- reporting-basis requirements;
+- exact scalar conversion in representative fixtures;
+- the 31-U.S.-gallon definition of `us_beer_barrel`;
+- rejection of ambiguous unregistered customary unit identifiers;
+- `ppm` and `ppb` remaining fraction units.

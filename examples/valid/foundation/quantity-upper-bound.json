@@ -1,7 +1,7 @@
 {
   "_schema": "quantity.schema.json",
   "instance": {
-    "quantity_kind": "nitrate_concentration",
+    "quantity_kind": "mass_concentration",
     "canonical": {
       "form": {
         "type": "upper_bound",
