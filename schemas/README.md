@@ -67,3 +67,7 @@ No unversioned or `latest` schema aliases are defined at this stage.
 
 If convenience aliases are added later, they are not suitable where immutable
 identity or reproducibility is required.
+
+## Domain-schema anchors
+
+A normative schema resource may expose multiple named anchors when related concrete objects share a composable base. For example, `ingredients/hop.schema.json` exposes closed `hopDefinition` and `hopVarietyProfile` objects built from the composable `hopDefinitionBase`. Consumers should reference the concrete anchor matching the object they validate.

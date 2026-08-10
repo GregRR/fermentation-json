@@ -16,10 +16,12 @@ Files:
 - `mappings/measurable-types.v0.1.0.json` — concrete measurable/quantity type mapping;
 - `mappings/analytical-scales.v0.1.0.json` — token-dispatched BeerJSON gravity, color, carbonation, bitterness, and diastatic-power semantics;
 - `mappings/primitive-field-semantics.v0.1.0.json` — reusable rules for primitive carriers, percentages, field-encoded scales/bases, local date-times, and identity/absence semantics;
-- `mappings/hop-variety-base.v0.1.0.json` — first concrete BeerJSON domain-object mapping into the native hop material schema;
+- `mappings/hop-variety-base.v0.1.0.json` — BeerJSON base hop-object mapping into the native hop material schema;
+- `mappings/hop-variety-information.v0.1.0.json` — BeerJSON variety/profile and oil-analysis decomposition into native hop-profile semantics plus explicit source-preservation-only fields;
 - `fixtures/primitive-field-vectors.v0.1.0.json` — representative source-to-semantic mapping vectors;
 - `fixtures/measurable-roundtrip-vectors.v0.1.0.json` — representative measurable/range import and semantic round-trip vectors;
 - `fixtures/hop-variety-base-roundtrip-v0.1.0.json` — complete-object vectors for BeerJSON `HopVarietyBase`, including mixed native/source-preservation behavior;
+- `fixtures/hop-variety-information-roundtrip-v0.1.0.json` — complete-object vectors for BeerJSON `VarietyInformation`, including decomposition of `OilContentType` and contextual inventory preservation;
 - `mappings/field-mapping.v0.1.0.json` — one mapping row for every declared object field;
 - `profile.v0.1.0.json` — pre-release compatibility-profile manifest.
 
@@ -78,3 +80,9 @@ BeerJSON `DateType` uses an unanchored shape-only regex. Exact calendar-valid da
 ADR-0013 introduces the first native material/hop schemas and maps BeerJSON `HopVarietyBase` into them. `name`, producer text, product identifier, origin text, form, alpha acid, and beta acid have concrete native paths. BeerJSON `year` remains source-preserved because the pinned schema defines only an unconstrained string and does not establish crop/harvest/production-year semantics.
 
 Native FermentationJSON constraints are not weakened merely to accept every BeerJSON value. When a valid BeerJSON object cannot be represented natively without repair, the compatibility path preserves the complete source object instead.
+
+## Hop variety profile and oil analysis
+
+ADR-0014 extends the hop mapping through BeerJSON `VarietyInformation` without treating its nesting as the native domain model. Combined BeerJSON hop-use tokens become sets of descriptive variety roles, free-text substitutes remain text, and the six-month alpha-loss value is preserved as a fraction with no invented storage conditions. BeerJSON inventory remains source-preserved because stock state is contextual rather than intrinsic material identity.
+
+BeerJSON `OilContentType` is decomposed by analytical meaning. `total_oil_ml_per_100g` maps to explicit `volume_per_mass`; recognized essential-oil component percentages map to an extensible component list whose values are fractions of total oil. Cohumulone, polyphenols, xanthohumol, and generic `pinene` remain source-preserved in this mapping version because BeerJSON does not provide a scientifically safe denominator or identity for native normalization.

@@ -58,3 +58,11 @@ See ADR-0006 and `schemas/core/declaration.schema.json`.
 - `measurement-scales/` — numerical measurement scales and analytical indices that are semantically distinct from physical units.
 
 - `hop-forms/` — extensible core identifiers for hop material form.
+
+## Hop-domain vocabularies
+
+- `hop-forms/` — native hop material forms;
+- `hop-variety-roles/` — descriptive aroma/bittering/flavor roles for hop variety profiles;
+- `hop-oil-components/` — extensible identifiers for native essential-oil component fractions.
+
+These vocabularies describe native FermentationJSON semantics. BeerJSON source spellings and combined tokens remain compatibility-layer data.

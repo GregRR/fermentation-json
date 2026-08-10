@@ -153,3 +153,28 @@ def test_hop_variety_base_fields_have_concrete_mapping_or_explicit_source_preser
     assert rows["year"]["status"] == "special_mapping_defined"
     for field in set(rows) - {"year"}:
         assert rows[field]["status"] == "domain_mapping_defined"
+
+
+def test_hop_variety_information_and_oil_fields_are_no_longer_domain_pending() -> None:
+    mapping = _load("mappings/field-mapping.v0.1.0.json")
+    rows = {(row["source_type"], row["source_field"]): row for row in mapping["field_mappings"]}
+
+    for field in ("type", "notes", "percent_lost", "substitutes", "oil_content"):
+        assert rows[("hop.json#VarietyInformation", field)]["status"] == "domain_mapping_defined"
+    assert rows[("hop.json#VarietyInformation", "inventory")]["status"] == "special_mapping_defined"
+
+    safe_components = {
+        "humulene",
+        "caryophyllene",
+        "myrcene",
+        "farnesene",
+        "geraniol",
+        "b_pinene",
+        "linalool",
+        "limonene",
+        "nerol",
+    }
+    for field in safe_components:
+        assert rows[("hop.json#OilContentType", field)]["status"] == "domain_mapping_defined"
+    for field in ("total_oil_ml_per_100g", "cohumulone", "pinene", "polyphenols", "xanthohumol"):
+        assert rows[("hop.json#OilContentType", field)]["status"] == "special_mapping_defined"

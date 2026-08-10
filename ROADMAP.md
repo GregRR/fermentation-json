@@ -256,7 +256,7 @@ BeerJSON compatibility should be developed **before or alongside** the brewing s
 ## 2.4 Brewing ingredients and cultures
 
 - [ ] Fermentables.
-- [ ] Hops and hop-derived products (initial hop definition and BeerJSON `HopVarietyBase` mapping complete; oil/profile/addition mappings remain).
+- [ ] Hops and hop-derived products (native hop definition plus BeerJSON `HopVarietyBase` and `VarietyInformation`/oil-profile mappings complete; inventory/lot and addition mappings remain).
 - [ ] Cultures.
 - [ ] Miscellaneous ingredients.
 - [ ] Processing aids and additives.
@@ -713,7 +713,7 @@ The next development sequence is:
    - [x] establish schema-set publication/resolution outside `core/`;
    - [x] add the initial reusable material definition and hop definition;
    - [x] map BeerJSON `HopVarietyBase` with complete-object round-trip fixtures;
-   - [ ] extend hops through `VarietyInformation`/oil content without folding inventory into material identity;
+   - [x] extend hops through `VarietyInformation`/oil content without folding inventory into material identity;
    - [ ] add planned material-use/process foundations before mapping `HopAdditionType`;
    - [ ] continue recipe/batch separation and water schemas as early scientific pressure tests.
 
@@ -731,7 +731,7 @@ This sequence may be adjusted when implementation reveals a dependency, but new 
 | Architecture and design review | Complete | Main design and initial ADRs accepted |
 | Initial foundation schemas | Complete | Core schemas and positive/negative fixtures validate |
 | Foundation stabilization | Complete for compatibility work | Units, IDs, declarations, loss reporting, and foundation semantic conformance implemented |
-| BeerJSON compatibility baseline | In progress | Source snapshot, exhaustive inventory, measurable/primitive mappings, behavioral fixtures, and first concrete hop-domain mapping implemented; remaining domain/document mappings and fixtures remain |
+| BeerJSON compatibility baseline | In progress | Source snapshot, exhaustive inventory, measurable/primitive mappings, behavioral fixtures, and hop base/variety-profile mappings implemented; remaining domain/document mappings and fixtures remain |
 | Core brewing schemas | In progress | Initial material and hop schemas implemented; recipes, batches, processes, equipment, water, and remaining ingredient domains still required |
 | BeerXML compatibility | Not started | Preservation profile and fixtures implemented |
 | First stable FermentationJSON release | Future | Published schemas, profiles, mappings, conformance suite |

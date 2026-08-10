@@ -19,6 +19,20 @@
       "path": "hop-forms/hop-forms.v0.1.0.json"
     },
     {
+      "name": "hop_oil_components",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/hop-oil-components/0.1.0",
+      "version": "0.1.0",
+      "vocabulary_class": "extensible",
+      "path": "hop-oil-components/hop-oil-components.v0.1.0.json"
+    },
+    {
+      "name": "hop_variety_roles",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/hop-variety-roles/0.1.0",
+      "version": "0.1.0",
+      "vocabulary_class": "extensible",
+      "path": "hop-variety-roles/hop-variety-roles.v0.1.0.json"
+    },
+    {
       "name": "measurement_scales",
       "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/measurement-scales/0.1.0",
       "version": "0.1.0",

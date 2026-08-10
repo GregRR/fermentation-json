@@ -1,0 +1,320 @@
+{
+  "description": "Native hop variety profile with descriptive roles and essential-oil composition.",
+  "instance": {
+    "name": "Cascade",
+    "producer_name": "Example Grower",
+    "origin_text": "United States",
+    "form": "pellet",
+    "alpha_acid": {
+      "quantity_kind": "fraction",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.055
+        },
+        "unit": "one"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 5.5
+        },
+        "unit": "percent",
+        "original_unit_text": "%"
+      },
+      "epistemic_state": [
+        "reported"
+      ]
+    },
+    "beta_acid": {
+      "quantity_kind": "fraction",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.045
+        },
+        "unit": "one"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 4.5
+        },
+        "unit": "percent",
+        "original_unit_text": "%"
+      },
+      "epistemic_state": [
+        "reported"
+      ]
+    },
+    "variety_roles": [
+      "aroma",
+      "bittering",
+      "flavor"
+    ],
+    "notes": "Reference variety profile",
+    "substitution_notes": "Centennial; Amarillo",
+    "alpha_acid_loss_after_six_months": {
+      "quantity_kind": "fraction",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.5
+        },
+        "unit": "one"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 50
+        },
+        "unit": "percent",
+        "original_unit_text": "%"
+      },
+      "epistemic_state": [
+        "reported"
+      ]
+    },
+    "oil_profile": {
+      "total_oil": {
+        "quantity_kind": "volume_per_mass",
+        "canonical": {
+          "form": {
+            "type": "exact",
+            "value": 0.012
+          },
+          "unit": "liter_per_kilogram"
+        },
+        "reported": {
+          "form": {
+            "type": "exact",
+            "value": 1.2
+          },
+          "unit": "milliliter_per_100_gram",
+          "original_unit_text": "mL/100g"
+        },
+        "epistemic_state": [
+          "reported"
+        ]
+      },
+      "components": [
+        {
+          "component": "humulene",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.12
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 12
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        {
+          "component": "caryophyllene",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.05
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 5
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        {
+          "component": "myrcene",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.5
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 50
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        {
+          "component": "farnesene",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.05
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 5
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        {
+          "component": "geraniol",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.002
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 0.2
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        {
+          "component": "beta_pinene",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.005
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 0.5
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        {
+          "component": "linalool",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.004
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 0.4
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        {
+          "component": "limonene",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.003
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 0.3
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        {
+          "component": "nerol",
+          "fraction_of_total_oil": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.001
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 0.1
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/ingredients/hop.schema.json",
-  "title": "FermentationJSON hop material definition",
+  "title": "FermentationJSON hop material and variety profile definitions",
   "$ref": "#hopDefinition",
   "$defs": {
     "fraction_quantity": {
@@ -21,6 +21,33 @@
               "properties": {
                 "unit": {
                   "const": "one"
+                }
+              },
+              "required": [
+                "unit"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "volume_per_mass_quantity": {
+      "$anchor": "hopVolumePerMassQuantity",
+      "allOf": [
+        {
+          "$ref": "../core/quantity.schema.json#quantity"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quantity_kind": {
+              "const": "volume_per_mass"
+            },
+            "canonical": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "const": "liter_per_kilogram"
                 }
               },
               "required": [
@@ -52,8 +79,86 @@
         }
       ]
     },
-    "hop_definition": {
-      "$anchor": "hopDefinition",
+    "hop_variety_role": {
+      "$anchor": "hopVarietyRole",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "aroma",
+            "bittering",
+            "flavor"
+          ]
+        },
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+        }
+      ]
+    },
+    "hop_oil_component": {
+      "$anchor": "hopOilComponent",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "beta_pinene",
+            "caryophyllene",
+            "farnesene",
+            "geraniol",
+            "humulene",
+            "limonene",
+            "linalool",
+            "myrcene",
+            "nerol"
+          ]
+        },
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+        }
+      ]
+    },
+    "hop_oil_component_fraction": {
+      "$anchor": "hopOilComponentFraction",
+      "type": "object",
+      "required": [
+        "component",
+        "fraction_of_total_oil"
+      ],
+      "properties": {
+        "component": {
+          "$ref": "#hopOilComponent"
+        },
+        "fraction_of_total_oil": {
+          "$ref": "#hopFractionQuantity"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "hop_oil_profile": {
+      "$anchor": "hopOilProfile",
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "total_oil": {
+          "$ref": "#hopVolumePerMassQuantity"
+        },
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#hopOilComponentFraction"
+          }
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "hop_definition_base": {
+      "$anchor": "hopDefinitionBase",
       "allOf": [
         {
           "$ref": "../production/material.schema.json#materialDefinitionBase"
@@ -69,6 +174,51 @@
             },
             "beta_acid": {
               "$ref": "#hopFractionQuantity"
+            }
+          }
+        }
+      ]
+    },
+    "hop_definition": {
+      "$anchor": "hopDefinition",
+      "allOf": [
+        {
+          "$ref": "#hopDefinitionBase"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "hop_variety_profile": {
+      "$anchor": "hopVarietyProfile",
+      "allOf": [
+        {
+          "$ref": "#hopDefinitionBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "variety_roles": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#hopVarietyRole"
+              }
+            },
+            "notes": {
+              "type": "string",
+              "minLength": 1
+            },
+            "substitution_notes": {
+              "type": "string",
+              "minLength": 1
+            },
+            "alpha_acid_loss_after_six_months": {
+              "description": "Fraction of alpha acid reported lost after six months. Storage conditions are not implied when the source does not supply them.",
+              "$ref": "#hopFractionQuantity"
+            },
+            "oil_profile": {
+              "$ref": "#hopOilProfile"
             }
           }
         }

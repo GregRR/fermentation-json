@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.19
+**Document version:** 0.20
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -1235,6 +1235,12 @@ Textual producer and origin information MAY be preserved as `producer_name` and 
 
 BeerJSON `HopVarietyBase.year` MUST NOT be automatically interpreted as crop year, harvest year, or production year because the pinned BeerJSON schema supplies no such semantic definition. It remains source-preserved unless additional source information justifies a native interpretation.
 
+A native hop variety profile MAY extend the hop-definition base with descriptive variety roles, notes, substitution notes, the BeerJSON-defined six-month alpha-acid-loss fraction, and an essential-oil profile. Descriptive variety roles MUST remain distinct from a planned recipe addition or process-use role.
+
+Hop essential-oil data MUST be modeled by analytical meaning rather than by copying the BeerJSON `OilContentType` container. Total oil MAY be represented as `volume_per_mass`; BeerJSON `total_oil_ml_per_100g` maps exactly to a reported `milliliter_per_100_gram` representation and canonical `liter_per_kilogram`. Identified oil-component percentages MAY be represented as fractions of total essential oil through an extensible component identifier list.
+
+BeerJSON fields grouped under `OilContentType` MUST NOT automatically be treated as essential-oil fractions when the analytical meaning does not support that interpretation. In the initial mapping, cohumulone, polyphenols, xanthohumol, and generic `pinene` remain source-preserved rather than receiving invented native denominators or chemical identities. BeerJSON variety inventory likewise remains contextual stock state and MUST NOT be folded into intrinsic hop material identity. See ADR-0014.
+
 ---
 
 ## 16. Cultures and microbiology
@@ -2175,6 +2181,8 @@ The strict compatibility guarantee applies to documents valid under the pinned B
 The project MUST maintain documented mappings and conformance fixtures for BeerJSON 1.0. Representative measurable/range fixtures MUST distinguish native-quantity imports from source-preservation-only imports. A valid BeerJSON measurable object for which FermentationJSON cannot safely construct a native quantity MUST remain losslessly preservable without inventing semantics. Where a native quantity is constructed, its reported representation MUST retain enough BeerJSON value/unit information to reconstruct the source measurable object at the JSON data-model level. See ADR-0012.
 
 Concrete BeerJSON domain-object mappings MUST likewise preserve the distinction between native interpretation and source preservation. The first such mapping, `HopVarietyBase`, targets the native material/hop schema for safely understood fields while retaining BeerJSON-only or under-specified fields separately. Native FermentationJSON domain constraints MUST NOT be weakened merely because the BeerJSON source schema permits a weaker value. See ADR-0013.
+
+BeerJSON `VarietyInformation` and `OilContentType` compatibility MUST decompose the source object by actual semantic role. Descriptive variety roles and safe essential-oil data MAY receive native hop-profile representations, while inventory remains contextual and analytically ambiguous percentages remain source-preserved. The compatibility layer MUST NOT use BeerJSON object nesting as evidence that cohumulone, polyphenols, xanthohumol, or an unspecified pinene field are fractions of total hop essential oil. See ADR-0014.
 
 For content representable in both formats, a BeerJSON-to-FermentationJSON-to-BeerJSON round trip MUST preserve all BeerJSON-defined information.
 

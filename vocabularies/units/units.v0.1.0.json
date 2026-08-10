@@ -986,6 +986,21 @@
       ]
     },
     {
+      "id": "milliliter_per_100_gram",
+      "dimension": "specific_volume",
+      "symbol": "mL/100 g",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "100"
+      },
+      "aliases": [
+        "mL/100g",
+        "ml/100g"
+      ],
+      "source": "DERIVED_SI_COMPOSITE"
+    },
+    {
       "id": "us_liquid_quart_per_pound",
       "dimension": "specific_volume",
       "symbol": "US qt/lb",

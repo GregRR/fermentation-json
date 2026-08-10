@@ -19,3 +19,7 @@ Complete-document import, pinned-upstream schema validation of fixture documents
 - `test_measurable_roundtrip_vectors.py` validates representative measurable/range vectors against the native quantity schema and vocabularies, independently checks canonical unit conversions, reconstructs source BeerJSON measurable objects from retained reported data, and verifies source-preservation-only behavior when native semantics are not safe to invent.
 
 The first domain-object fixture set covers BeerJSON `HopVarietyBase`. Tests validate native hop objects against the actual domain schema, reconstruct source objects from native plus explicitly retained source-only fields, and confirm that weaker BeerJSON values such as an empty required name remain source-preservable rather than weakening native FermentationJSON constraints.
+
+## Hop variety-information vectors
+
+`test_hop_variety_information_roundtrip.py` verifies that BeerJSON `VarietyInformation` extends the native hop model without importing source nesting as native structure. It checks role-set mapping, exact total-oil conversion, essential-oil component fractions, source-preservation-only handling for ambiguous analytical fields, and separation of BeerJSON inventory from material identity.

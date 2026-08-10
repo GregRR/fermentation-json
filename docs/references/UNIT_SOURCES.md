@@ -86,8 +86,10 @@ unit-token position. FermentationJSON does not register `sg`, `plato`, `brix`,
 They map through the measurement-scale vocabulary documented in
 `ANALYTICAL_SCALES.md`; cross-scale transformations are explicit calculations.
 Composite specific-volume units added for compatibility are defined from the
-already registered FermentationJSON volume and mass units. Ambiguous BeerJSON
-tokens remain unresolved rather than being assigned a guessed definition.
+already registered FermentationJSON volume and mass units. This includes
+`milliliter_per_100_gram`, used for BeerJSON hop total oil, with the exact
+relationship `1 mL/100 g = 0.01 L/kg`. Ambiguous BeerJSON tokens remain
+unresolved rather than being assigned a guessed definition.
 
 ## UCUM evaluation
 

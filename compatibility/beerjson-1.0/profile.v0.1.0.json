@@ -27,11 +27,13 @@
   ],
   "strict_unknown_field_policy": "A document that violates the pinned BeerJSON schemas is outside the strict BeerJSON 1.0 compatibility guarantee. A pragmatic importer MAY preserve nonstandard fields opaquely but MUST report that the source is nonconforming.",
   "lossless_definition": "Preservation of all BeerJSON-defined information and semantics, not byte-for-byte JSON reproduction.",
-  "claim_status": "No FermentationJSON implementation may claim completed BeerJSON 1.0 compatibility from this baseline alone. Measurable/range behavior and the first concrete HopVarietyBase domain mapping are covered, but remaining domain mappings, complete-document import fixtures, identifier/reference preservation, and complete-document round-trip tests remain required.",
+  "claim_status": "No FermentationJSON implementation may claim completed BeerJSON 1.0 compatibility from this baseline alone. Measurable/range behavior plus HopVarietyBase and VarietyInformation/oil-profile domain mappings are covered, but remaining domain mappings, complete-document import fixtures, identifier/reference preservation, and complete-document round-trip tests remain required.",
   "analytical_scale_mapping": "mappings/analytical-scales.v0.1.0.json",
   "primitive_field_semantics_mapping": "mappings/primitive-field-semantics.v0.1.0.json",
   "representative_fixture_set": "fixtures/primitive-field-vectors.v0.1.0.json",
   "measurable_roundtrip_fixture_set": "fixtures/measurable-roundtrip-vectors.v0.1.0.json",
   "hop_variety_base_mapping": "mappings/hop-variety-base.v0.1.0.json",
-  "hop_variety_base_roundtrip_fixture_set": "fixtures/hop-variety-base-roundtrip-v0.1.0.json"
+  "hop_variety_base_roundtrip_fixture_set": "fixtures/hop-variety-base-roundtrip-v0.1.0.json",
+  "hop_variety_information_mapping": "mappings/hop-variety-information.v0.1.0.json",
+  "hop_variety_information_roundtrip_fixture_set": "fixtures/hop-variety-information-roundtrip-v0.1.0.json"
 }

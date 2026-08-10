@@ -1,0 +1,222 @@
+{
+  "artifact": "fermentationjson.beerjson_hop_variety_information_mapping",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_type": "hop.json#VarietyInformation",
+  "nested_source_type": "hop.json#OilContentType",
+  "target_schema": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/ingredients/hop.schema.json",
+  "target_anchor": "hopVarietyProfile",
+  "base_mapping": "hop-variety-base.v0.1.0.json",
+  "native_model_policy": "Variety/reference profile data may extend a hop material definition, but inventory and recipe-use state remain contextual records. BeerJSON OilContentType is decomposed by actual analytical meaning rather than copied as one native object.",
+  "field_mappings": [
+    {
+      "source_field": "type",
+      "target_path": "variety_roles",
+      "mode": "token_set_map",
+      "token_map": {
+        "aroma": [
+          "aroma"
+        ],
+        "bittering": [
+          "bittering"
+        ],
+        "flavor": [
+          "flavor"
+        ],
+        "aroma/bittering": [
+          "aroma",
+          "bittering"
+        ],
+        "bittering/flavor": [
+          "bittering",
+          "flavor"
+        ],
+        "aroma/flavor": [
+          "aroma",
+          "flavor"
+        ],
+        "aroma/bittering/flavor": [
+          "aroma",
+          "bittering",
+          "flavor"
+        ]
+      },
+      "reverse": "Prefer the retained BeerJSON token for unchanged round trip; otherwise map a supported native role set to the corresponding BeerJSON combined token."
+    },
+    {
+      "source_field": "notes",
+      "target_path": "notes",
+      "mode": "direct_text",
+      "native_condition": "non-empty string",
+      "reverse": "Use native notes when unchanged; preserve an empty BeerJSON string separately rather than weakening the native field."
+    },
+    {
+      "source_field": "percent_lost",
+      "target_path": "alpha_acid_loss_after_six_months",
+      "mode": "percent_to_fraction_quantity",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "semantic_qualification": "BeerJSON defines this as percentage of hop alpha lost in six months of storage but supplies no storage temperature, package, atmosphere, or other conditions.",
+      "reverse": "Reconstruct BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "substitutes",
+      "target_path": "substitution_notes",
+      "mode": "direct_text",
+      "native_condition": "non-empty string",
+      "reverse": "Return free text without parsing it into material references."
+    },
+    {
+      "source_field": "oil_content",
+      "target_path": "oil_profile plus retained BeerJSON oil fields",
+      "mode": "decomposed_object_mapping",
+      "mapping": "oil_content_field_mappings",
+      "reverse": "Reconstruct the BeerJSON OilContentType from native fields that have defined mappings plus source-preserved fields."
+    },
+    {
+      "source_field": "inventory",
+      "target_path": null,
+      "mode": "source_preservation_only",
+      "reason": "Inventory is contextual stock state, not intrinsic hop-variety identity or composition.",
+      "reverse": "Re-emit the retained BeerJSON HopInventoryType exactly until a separate native inventory model exists."
+    }
+  ],
+  "oil_content_field_mappings": [
+    {
+      "source_field": "total_oil_ml_per_100g",
+      "target_path": "oil_profile.total_oil",
+      "mode": "field_encoded_volume_per_mass_quantity",
+      "quantity_kind": "volume_per_mass",
+      "canonical_unit": "liter_per_kilogram",
+      "reported_unit": "milliliter_per_100_gram",
+      "conversion": "1 mL/100 g = 0.01 L/kg",
+      "reverse": "Prefer retained source numeric value; otherwise convert the native quantity to mL/100 g explicitly."
+    },
+    {
+      "source_field": "humulene",
+      "target_path": "oil_profile.components[component=humulene].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "humulene",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "caryophyllene",
+      "target_path": "oil_profile.components[component=caryophyllene].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "caryophyllene",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "myrcene",
+      "target_path": "oil_profile.components[component=myrcene].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "myrcene",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "farnesene",
+      "target_path": "oil_profile.components[component=farnesene].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "farnesene",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "geraniol",
+      "target_path": "oil_profile.components[component=geraniol].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "geraniol",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "b_pinene",
+      "target_path": "oil_profile.components[component=beta_pinene].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "beta_pinene",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "linalool",
+      "target_path": "oil_profile.components[component=linalool].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "linalool",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "limonene",
+      "target_path": "oil_profile.components[component=limonene].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "limonene",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "nerol",
+      "target_path": "oil_profile.components[component=nerol].fraction_of_total_oil",
+      "mode": "percent_of_total_oil_component",
+      "component": "nerol",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct the BeerJSON PercentType from the retained reported percentage representation."
+    },
+    {
+      "source_field": "cohumulone",
+      "target_path": null,
+      "mode": "source_preservation_only",
+      "reason": "BeerJSON places cohumulone inside OilContentType and globally describes individual fields there as percentages of total oil, while established hop-analysis methods treat alpha-acid composition separately from essential-oil analysis. Do not choose a denominator by guesswork.",
+      "reverse": "Re-emit the retained BeerJSON PercentType exactly."
+    },
+    {
+      "source_field": "pinene",
+      "target_path": null,
+      "mode": "source_preservation_only",
+      "reason": "BeerJSON does not identify which pinene isomer the generic field denotes, while b_pinene is a separate field.",
+      "reverse": "Re-emit the retained BeerJSON PercentType exactly."
+    },
+    {
+      "source_field": "polyphenols",
+      "target_path": null,
+      "mode": "source_preservation_only",
+      "reason": "BeerJSON does not state the material/dry-matter basis required to give this percentage scientifically unambiguous native semantics, and total polyphenols are analytically distinct from essential-oil composition.",
+      "reverse": "Re-emit the retained BeerJSON PercentType exactly."
+    },
+    {
+      "source_field": "xanthohumol",
+      "target_path": null,
+      "mode": "source_preservation_only",
+      "reason": "BeerJSON does not state the material basis required to interpret this percentage as a native concentration/fraction, and xanthohumol analysis is distinct from essential-oil composition.",
+      "reverse": "Re-emit the retained BeerJSON PercentType exactly."
+    }
+  ],
+  "non_inferences": [
+    "Do not treat VarietyInformation.type as a recipe addition instruction; it is mapped to descriptive variety roles.",
+    "Do not parse BeerJSON substitutes free text into material references.",
+    "Do not fold BeerJSON inventory into hop material identity.",
+    "Do not assume every PercentType nested under BeerJSON OilContentType is a fraction of total oil merely because the source object description says so; field-level analytical meaning controls native mapping.",
+    "Do not reinterpret ambiguous BeerJSON pinene, polyphenols, xanthohumol, or cohumulone percentages without a defensible denominator/identity."
+  ]
+}

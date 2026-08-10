@@ -1,0 +1,24 @@
+{
+  "vocabulary": "fermentationjson.hop_variety_roles",
+  "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/hop-variety-roles/0.1.0",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "vocabulary_class": "extensible",
+  "term_identifier_policy": "core_token_or_absolute_uri",
+  "unknown_core_term_behavior": "reject",
+  "unknown_uri_term_behavior": "preserve_without_inference",
+  "entries": [
+    {
+      "id": "aroma",
+      "description": "Variety is described or traditionally classified for aroma use; this is not a recipe-addition instruction."
+    },
+    {
+      "id": "bittering",
+      "description": "Variety is described or traditionally classified for bittering use; this is not a recipe-addition instruction."
+    },
+    {
+      "id": "flavor",
+      "description": "Variety is described or traditionally classified for flavor use; this is not a recipe-addition instruction."
+    }
+  ]
+}

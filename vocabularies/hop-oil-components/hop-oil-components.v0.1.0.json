@@ -1,0 +1,48 @@
+{
+  "vocabulary": "fermentationjson.hop_oil_components",
+  "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/hop-oil-components/0.1.0",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "vocabulary_class": "extensible",
+  "term_identifier_policy": "core_token_or_absolute_uri",
+  "unknown_core_term_behavior": "reject",
+  "unknown_uri_term_behavior": "preserve_without_inference",
+  "entries": [
+    {
+      "id": "beta_pinene",
+      "description": "Beta-pinene fraction of total hop essential oil."
+    },
+    {
+      "id": "caryophyllene",
+      "description": "Caryophyllene fraction of total hop essential oil; no more specific isomer identity is inferred by this core term."
+    },
+    {
+      "id": "farnesene",
+      "description": "Farnesene fraction of total hop essential oil; no more specific isomer identity is inferred by this core term."
+    },
+    {
+      "id": "geraniol",
+      "description": "Geraniol fraction of total hop essential oil."
+    },
+    {
+      "id": "humulene",
+      "description": "Humulene fraction of total hop essential oil."
+    },
+    {
+      "id": "limonene",
+      "description": "Limonene fraction of total hop essential oil."
+    },
+    {
+      "id": "linalool",
+      "description": "Linalool fraction of total hop essential oil."
+    },
+    {
+      "id": "myrcene",
+      "description": "Myrcene fraction of total hop essential oil."
+    },
+    {
+      "id": "nerol",
+      "description": "Nerol fraction of total hop essential oil."
+    }
+  ]
+}

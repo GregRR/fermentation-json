@@ -1501,66 +1501,72 @@
       "source_field": "type",
       "source_required": false,
       "source_value_type": "HopUseTypeEnum",
-      "target_family": "material",
-      "target_concept": "material.type",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.variety_roles",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-information.v0.1.0.json; source preservation remains required."
     },
     {
       "source_type": "hop.json#VarietyInformation",
       "source_field": "notes",
       "source_required": false,
       "source_value_type": "string",
-      "target_family": "material",
-      "target_concept": "material.notes",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.notes",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-information.v0.1.0.json; source preservation remains required."
     },
     {
       "source_type": "hop.json#VarietyInformation",
       "source_field": "percent_lost",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.percent_lost",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.alpha_acid_loss_after_six_months",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-information.v0.1.0.json; source preservation remains required."
     },
     {
       "source_type": "hop.json#VarietyInformation",
       "source_field": "substitutes",
       "source_required": false,
       "source_value_type": "string",
-      "target_family": "material",
-      "target_concept": "material.substitutes",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.substitution_notes",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-information.v0.1.0.json; source preservation remains required."
     },
     {
       "source_type": "hop.json#VarietyInformation",
       "source_field": "oil_content",
       "source_required": false,
       "source_value_type": "OilContentType",
-      "target_family": "material",
-      "target_concept": "material.oil_content",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile plus source-preserved nested fields",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-information.v0.1.0.json; source preservation remains required."
     },
     {
       "source_type": "hop.json#VarietyInformation",
       "source_field": "inventory",
       "source_required": false,
       "source_value_type": "HopInventoryType",
-      "target_family": "material",
-      "target_concept": "material.inventory",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "beerjson_source_preservation.inventory",
+      "status": "special_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-information.v0.1.0.json; source preservation remains required.",
+      "mapping_layers": {
+        "source_representation": "Preserve the BeerJSON HopInventoryType exactly when present.",
+        "semantic_interpretation": "Treat inventory as contextual stock state, not hop-variety identity.",
+        "native_representation": "No inventory field is added to the native hop variety profile in this batch.",
+        "reverse_mapping": "Re-emit the retained BeerJSON inventory object exactly until a separate native inventory model is defined."
+      }
     },
     {
       "source_type": "hop.json#HopAdditionType",
@@ -1600,15 +1606,15 @@
       "source_field": "total_oil_ml_per_100g",
       "source_required": false,
       "source_value_type": "number",
-      "target_family": "material",
-      "target_concept": "hop_total_oil",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.total_oil",
       "status": "special_mapping_defined",
       "preservation": "required",
-      "notes": "The measurement basis ml per 100 g is encoded in the field name.",
+      "notes": "Mapped as volume_per_mass using the exact field-encoded basis 1 mL/100 g = 0.01 L/kg; source number remains preserved.",
       "mapping_layers": {
         "source_representation": "Preserve the BeerJSON numeric value exactly under the source field total_oil_ml_per_100g.",
         "semantic_interpretation": "Interpret the value with the explicit source reporting basis milliliters of oil per 100 grams of hops; both numerator and denominator are encoded in the field name.",
-        "native_representation": "Represent hop total oil with an explicit quantity/reporting basis in the future material schema rather than a dimensionless bare number.",
+        "native_representation": "Represent as quantity_kind volume_per_mass with canonical liter_per_kilogram and reported unit milliliter_per_100_gram.",
         "reverse_mapping": "Prefer the retained BeerJSON number for unchanged round trip; otherwise export only after converting the native oil quantity/basis to mL per 100 g with any rounding reported."
       }
     },
@@ -1617,143 +1623,167 @@
       "source_field": "humulene",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.humulene",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[humulene]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "caryophyllene",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.caryophyllene",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[caryophyllene]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "cohumulone",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.cohumulone",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "beerjson_source_preservation.oil_content.cohumulone",
+      "status": "special_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Source-preservation-only rule defined by mappings/hop-variety-information.v0.1.0.json because native denominator or identity is not sufficiently established.",
+      "mapping_layers": {
+        "source_representation": "Preserve BeerJSON oil_content.cohumulone PercentType exactly.",
+        "semantic_interpretation": "Do not infer a scientifically stronger denominator or chemical identity than the pinned source semantics support.",
+        "native_representation": "No native analytical quantity is populated from this BeerJSON field in this mapping version.",
+        "reverse_mapping": "Re-emit the retained BeerJSON oil_content.cohumulone PercentType exactly."
+      }
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "myrcene",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.myrcene",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[myrcene]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "farnesene",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.farnesene",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[farnesene]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "geraniol",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.geraniol",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[geraniol]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "b_pinene",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.b_pinene",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[beta_pinene]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "linalool",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.linalool",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[linalool]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "limonene",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.limonene",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[limonene]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "nerol",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.nerol",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_variety_profile.oil_profile.components[nerol]",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Mapped as a fraction of total hop essential oil by mappings/hop-variety-information.v0.1.0.json."
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "pinene",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.pinene",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "beerjson_source_preservation.oil_content.pinene",
+      "status": "special_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Source-preservation-only rule defined by mappings/hop-variety-information.v0.1.0.json because native denominator or identity is not sufficiently established.",
+      "mapping_layers": {
+        "source_representation": "Preserve BeerJSON oil_content.pinene PercentType exactly.",
+        "semantic_interpretation": "Do not infer a scientifically stronger denominator or chemical identity than the pinned source semantics support.",
+        "native_representation": "No native analytical quantity is populated from this BeerJSON field in this mapping version.",
+        "reverse_mapping": "Re-emit the retained BeerJSON oil_content.pinene PercentType exactly."
+      }
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "polyphenols",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.polyphenols",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "beerjson_source_preservation.oil_content.polyphenols",
+      "status": "special_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Source-preservation-only rule defined by mappings/hop-variety-information.v0.1.0.json because native denominator or identity is not sufficiently established.",
+      "mapping_layers": {
+        "source_representation": "Preserve BeerJSON oil_content.polyphenols PercentType exactly.",
+        "semantic_interpretation": "Do not infer a scientifically stronger denominator or chemical identity than the pinned source semantics support.",
+        "native_representation": "No native analytical quantity is populated from this BeerJSON field in this mapping version.",
+        "reverse_mapping": "Re-emit the retained BeerJSON oil_content.polyphenols PercentType exactly."
+      }
     },
     {
       "source_type": "hop.json#OilContentType",
       "source_field": "xanthohumol",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.xanthohumol",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "beerjson_source_preservation.oil_content.xanthohumol",
+      "status": "special_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Source-preservation-only rule defined by mappings/hop-variety-information.v0.1.0.json because native denominator or identity is not sufficiently established.",
+      "mapping_layers": {
+        "source_representation": "Preserve BeerJSON oil_content.xanthohumol PercentType exactly.",
+        "semantic_interpretation": "Do not infer a scientifically stronger denominator or chemical identity than the pinned source semantics support.",
+        "native_representation": "No native analytical quantity is populated from this BeerJSON field in this mapping version.",
+        "reverse_mapping": "Re-emit the retained BeerJSON oil_content.xanthohumol PercentType exactly."
+      }
     },
     {
       "source_type": "hop.json#HopInventoryType",
