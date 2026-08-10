@@ -1,52 +1,21 @@
-# === macOS System Files ===
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon\r
-
-# macOS Indices and Volumes
-.Spotlight-V100
-.Trashes
-.fseventsd
-
-# === Python Files ===
-# Byte-compiled / optimized / DLL files
+# Python / uv
+.venv/
 __pycache__/
 *.py[cod]
-*$py.class
+dist/
+
+# Test and lint caches
+.pytest_cache/
+.ruff_cache/
 
 # Environments
 .venv/
 venv/
-ENV/
-env/
-IntelliJIdeaRulezzz/
 
-# Distribution / packaging
-bin/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 
-# IDE and Editor configs (Optional but highly recommended)
-.vscode/
-.idea/
-*.swp
-*.swo
+# macOS
+.DS_Store
+*~
 
 # Project Specific
 background/

@@ -8,7 +8,6 @@ import pytest
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
 
-
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_DIR = ROOT / "schemas" / "core"
 VALID_DIR = ROOT / "examples" / "valid" / "foundation"

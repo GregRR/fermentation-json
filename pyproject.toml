@@ -1,0 +1,24 @@
+[project]
+name = "fermentationjson-development"
+version = "0.0.0"
+description = "Development tooling for the FermentationJSON specification repository"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "jsonschema>=4.23,<5",
+    "pytest>=9,<10",
+    "referencing>=0.35,<1",
+    "ruff>=0.12,<1",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
