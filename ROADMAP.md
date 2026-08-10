@@ -137,7 +137,7 @@ The normative standard must remain independent of any particular unit library.
 - [x] Add loss-report schema.
 - [x] Add import/export/transcode report structures.
 - [x] Add structured profile/module and additional-vocabulary declarations.
-- [ ] Add reference-integrity semantic validation.
+- [x] Add local reference-integrity semantic validation.
 
 ### Vocabulary policy
 
@@ -149,13 +149,13 @@ The normative standard must remain independent of any particular unit library.
 
 ### Foundation conformance
 
-- [ ] Define a machine-readable conformance-suite version.
-- [ ] Add semantic tests that JSON Schema alone cannot express.
+- [x] Define a machine-readable foundation conformance-suite version.
+- [x] Add foundation semantic tests that JSON Schema alone cannot express.
 - [x] Verify required-extension and required-vocabulary interpretation behavior.
-- [ ] Verify reference resolution and unresolved-reference failures.
-- [ ] Verify source-reported versus derived-data invariants.
-- [ ] Verify loss-report behavior with representative transformations.
-- [ ] Add cross-implementation test-vector format suitable for independent implementations.
+- [x] Verify local reference resolution and unresolved-reference failures.
+- [x] Verify source-reported versus explicit-derivation invariants.
+- [x] Verify loss-report behavior with representative transformations.
+- [x] Add language-independent foundation test-vector format suitable for independent implementations.
 
 ## 1.5 Foundation exit criteria
 
@@ -698,22 +698,21 @@ They should remain proposals or design notes until a concrete interoperability r
 
 The next development sequence is:
 
-1. **Foundation semantic conformance**
-   - reference integrity and unresolved-reference failures;
-   - source-reported versus derived-data invariants;
-   - representative loss-report transformations;
-   - machine-readable conformance-suite versioning;
-   - cross-implementation test-vector structure.
+1. **BeerJSON 1.0 compatibility inventory and mapping**
+   - inventory every BeerJSON 1.0 field/type and required preservation behavior;
+   - define FermentationJSON mapping targets without prematurely freezing domain schemas;
+   - identify mapping pressure that should influence the first brewing objects;
+   - establish compatibility-profile and fixture layout.
 
-2. **BeerJSON 1.0 compatibility inventory and mapping**
-   - begin before the brewing object model is considered stable.
-
-3. **First concrete domain schemas**
-   - shared materials/cultures/process/equipment;
-   - recipe and batch;
+2. **First concrete domain schemas**
+   - shared materials/cultures/process/equipment foundations;
+   - recipe and batch separation;
    - water schemas as an early scientific pressure test.
 
-This sequence may be adjusted when implementation reveals a dependency, but new work should not bypass unresolved foundation semantics merely to increase schema count.
+3. **BeerXML 1.0 preservation mapping**
+   - begin once the brewing object model can receive standard-defined BeerXML information without artificial flattening.
+
+This sequence may be adjusted when implementation reveals a dependency, but new work should not bypass compatibility pressure tests merely to increase schema count.
 
 ---
 
@@ -723,7 +722,7 @@ This sequence may be adjusted when implementation reveals a dependency, but new 
 |---|---|---|
 | Architecture and design review | Complete | Main design and initial ADRs accepted |
 | Initial foundation schemas | Complete | Core schemas and positive/negative fixtures validate |
-| Foundation stabilization | In progress | Units, IDs, loss reporting, semantic conformance complete |
+| Foundation stabilization | Complete for compatibility work | Units, IDs, declarations, loss reporting, and foundation semantic conformance implemented |
 | BeerJSON compatibility baseline | Not started | Complete mapping and import fixtures |
 | Core brewing schemas | Not started | Recipes, batches, materials, processes, equipment, water implemented |
 | BeerXML compatibility | Not started | Preservation profile and fixtures implemented |

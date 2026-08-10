@@ -1,0 +1,142 @@
+{
+  "vector_set": "source_and_derivation_semantics",
+  "suite_id": "https://gregrr.github.io/fermentation-json/conformance/foundation/0.1.0/manifest.json",
+  "suite_version": "0.1.0",
+  "cases": [
+    {
+      "id": "reported-only-without-derivation-conforms",
+      "description": "A source-reported quantity needs no derivation metadata merely because it is reported.",
+      "input": {
+        "quantity": {
+          "quantity_kind": "mass_concentration",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 51
+            },
+            "unit": "milligram_per_liter"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 51
+            },
+            "unit": "milligram_per_liter"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        }
+      },
+      "expected": {
+        "conformant": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "reported-and-derived-can-coexist",
+      "description": "Preserved source representation and derived canonical interpretation are independent dimensions.",
+      "input": {
+        "quantity": {
+          "quantity_kind": "mass_concentration",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 131.72
+            },
+            "unit": "milligram_per_liter"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 108
+            },
+            "unit": "milligram_per_liter",
+            "basis": {
+              "kind": "as_substance_equivalent",
+              "substance": "calcium_carbonate"
+            }
+          },
+          "epistemic_state": [
+            "reported",
+            "derived"
+          ],
+          "derivation": {
+            "method": "chemical_basis_conversion",
+            "model_id": "alkalinity_basis_conversion",
+            "model_version": "1.0.0"
+          }
+        }
+      },
+      "expected": {
+        "conformant": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "derivation-without-derived-state-rejected",
+      "description": "Explicit derivation metadata must be reflected in the quantity epistemic state.",
+      "input": {
+        "quantity": {
+          "quantity_kind": "volume",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 19.873
+            },
+            "unit": "liter"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 5.25
+            },
+            "unit": "us_liquid_gallon"
+          },
+          "epistemic_state": [
+            "reported"
+          ],
+          "derivation": {
+            "method": "unit_conversion",
+            "model_id": "unit_conversion",
+            "model_version": "1.0.0"
+          }
+        }
+      },
+      "expected": {
+        "conformant": false,
+        "errors": [
+          "derivation_missing_derived_epistemic_state"
+        ]
+      }
+    },
+    {
+      "id": "derived-state-set-accepted-for-explicit-derivation",
+      "description": "Any recognized derived-origin state can acknowledge explicit derivation.",
+      "input": {
+        "quantity": {
+          "quantity_kind": "ph",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 7.45
+            },
+            "unit": "ph_scale"
+          },
+          "epistemic_state": [
+            "predicted"
+          ],
+          "derivation": {
+            "method": "hydrogen_ion_activity_model",
+            "model_id": "working_water_ph",
+            "model_version": "1.0.0"
+          }
+        }
+      },
+      "expected": {
+        "conformant": true,
+        "errors": []
+      }
+    }
+  ]
+}

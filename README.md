@@ -135,7 +135,8 @@ profiles/             domain and interoperability profiles
 vocabularies/         versioned controlled vocabularies
 compatibility/        external-format mappings and fixtures
 examples/             valid and intentionally invalid examples
-tests/                schema, conformance, and compatibility tests
+conformance/          versioned language-independent semantic test vectors
+tests/                schema, conformance, and compatibility test runners
 proposals/            substantial proposed changes and experimental work
 tools/                validators, importers, exporters, and development tools
 reference-implementations/
@@ -161,31 +162,37 @@ Implemented so far:
 - reusable calculation, diagnostic, constraint, loss-report, and interchange-report schemas;
 - versioned canonical core-schema identifiers and an offline schema catalog;
 - structured profile/module declarations and versioned vocabulary policy;
+- versioned foundation semantic-conformance rules and cross-language test vectors;
 - positive and negative schema fixtures;
 - foundation schema tests.
 
 Important work still in progress includes:
 
-- foundation semantic-conformance rules;
 - concrete document-type schemas;
 - brewing production schemas and profile;
 - water-treatment schemas;
 - BeerJSON and BeerXML compatibility mappings and fixtures;
-- full semantic conformance tooling.
+- domain/profile-specific semantic conformance beyond the foundation suite.
 
 See [`ROADMAP.md`](ROADMAP.md) for development sequencing as it is maintained.
 
 ## Validation
 
-Foundation tests live under [`tests/schema/`](tests/schema/).
+Structural foundation tests live under [`tests/schema/`](tests/schema/).
+Semantic conformance runners live under [`tests/conformance/`](tests/conformance/)
+and consume the language-independent vectors under [`conformance/`](conformance/).
 
-The test suite checks that:
+The current tests check that:
 
 1. core schemas are valid Draft 2020-12 schemas;
 2. valid foundation fixtures are accepted;
-3. intentionally invalid fixtures are rejected.
+3. intentionally invalid fixtures are rejected;
+4. canonical schema and vocabulary identifiers remain internally consistent;
+5. foundation semantic vectors produce the specified stable conformance errors;
+6. vector-set hashes match the versioned conformance-suite manifest.
 
-Semantic conformance tests will be added alongside the domain and compatibility profiles that require them.
+Domain and compatibility profiles will add their own semantic vectors where the
+foundation suite is not sufficient.
 
 ## Contributing
 

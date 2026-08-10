@@ -25,7 +25,8 @@
         {
           "category": "unsupported_semantic_qualifier",
           "severity": "warning",
-          "source_path": "/content/source_water/results/4"
+          "source_path": "/content/source_water/results/4",
+          "transformation": "Omitted or transformed the affected source information as described by the loss category."
         }
       ]
     }

@@ -1,0 +1,220 @@
+{
+  "vector_set": "interchange_loss_consistency",
+  "suite_id": "https://gregrr.github.io/fermentation-json/conformance/foundation/0.1.0/manifest.json",
+  "suite_version": "0.1.0",
+  "cases": [
+    {
+      "id": "lossy-report-with-attributable-entry-conforms",
+      "description": "Loss entries identify affected source information and describe the transformation.",
+      "input": {
+        "report": {
+          "operation": "export",
+          "status": "success_with_warnings",
+          "preservation_status": "lossy",
+          "source": {
+            "format": "fermentationjson",
+            "version": "0.1.0"
+          },
+          "target": {
+            "format": "beerjson",
+            "version": "1.0"
+          },
+          "compatibility_profile_id": "https://example.org/compatibility/beerjson",
+          "compatibility_profile_version": "1.0.0",
+          "loss_report": {
+            "source": {
+              "format": "fermentationjson",
+              "version": "0.1.0"
+            },
+            "target": {
+              "format": "beerjson",
+              "version": "1.0"
+            },
+            "compatibility_profile_id": "https://example.org/compatibility/beerjson",
+            "compatibility_profile_version": "1.0.0",
+            "entries": [
+              {
+                "category": "unsupported_semantic_qualifier",
+                "severity": "warning",
+                "source_path": "/content/source_water/results/4",
+                "transformation": "Omitted the non-detect qualifier because the target format cannot represent it."
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "conformant": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "embedded-loss-endpoints-must-match",
+      "description": "The embedded loss report describes the same source and target as the enclosing interchange report.",
+      "input": {
+        "report": {
+          "operation": "export",
+          "status": "success_with_warnings",
+          "preservation_status": "lossy",
+          "source": {
+            "format": "fermentationjson",
+            "version": "0.1.0"
+          },
+          "target": {
+            "format": "beerjson",
+            "version": "1.0"
+          },
+          "loss_report": {
+            "source": {
+              "format": "fermentationjson",
+              "version": "0.1.0"
+            },
+            "target": {
+              "format": "beerxml",
+              "version": "1.0"
+            },
+            "entries": [
+              {
+                "category": "omitted_information",
+                "severity": "warning",
+                "source_path": "/content/example",
+                "transformation": "Omitted field."
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "conformant": false,
+        "errors": [
+          "loss_report_endpoint_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "compatibility-profile-must-match",
+      "description": "Compatibility profile metadata must agree between enclosing and embedded reports.",
+      "input": {
+        "report": {
+          "operation": "export",
+          "status": "success_with_warnings",
+          "preservation_status": "lossy",
+          "source": {
+            "format": "fermentationjson"
+          },
+          "target": {
+            "format": "beerjson",
+            "version": "1.0"
+          },
+          "compatibility_profile_id": "https://example.org/compatibility/beerjson",
+          "compatibility_profile_version": "1.0.0",
+          "loss_report": {
+            "source": {
+              "format": "fermentationjson"
+            },
+            "target": {
+              "format": "beerjson",
+              "version": "1.0"
+            },
+            "compatibility_profile_id": "https://example.org/compatibility/beerjson",
+            "compatibility_profile_version": "1.1.0",
+            "entries": [
+              {
+                "category": "approximation",
+                "severity": "warning",
+                "source_path": "/content/example",
+                "transformation": "Approximated value."
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "conformant": false,
+        "errors": [
+          "loss_report_compatibility_profile_mismatch"
+        ]
+      }
+    },
+    {
+      "id": "loss-entry-requires-source-attribution",
+      "description": "Every recorded loss identifies the source path or source object affected.",
+      "input": {
+        "report": {
+          "operation": "export",
+          "status": "success_with_warnings",
+          "preservation_status": "lossy",
+          "source": {
+            "format": "fermentationjson"
+          },
+          "target": {
+            "format": "beerjson",
+            "version": "1.0"
+          },
+          "loss_report": {
+            "source": {
+              "format": "fermentationjson"
+            },
+            "target": {
+              "format": "beerjson",
+              "version": "1.0"
+            },
+            "entries": [
+              {
+                "category": "omitted_information",
+                "severity": "warning",
+                "transformation": "Omitted data."
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "conformant": false,
+        "errors": [
+          "loss_entry_missing_source_attribution"
+        ]
+      }
+    },
+    {
+      "id": "loss-entry-requires-transformation-description",
+      "description": "A loss entry states what transformation or loss occurred, not only its category.",
+      "input": {
+        "report": {
+          "operation": "export",
+          "status": "success_with_warnings",
+          "preservation_status": "lossy",
+          "source": {
+            "format": "fermentationjson"
+          },
+          "target": {
+            "format": "beerjson",
+            "version": "1.0"
+          },
+          "loss_report": {
+            "source": {
+              "format": "fermentationjson"
+            },
+            "target": {
+              "format": "beerjson",
+              "version": "1.0"
+            },
+            "entries": [
+              {
+                "category": "precision_reduction_or_rounding",
+                "severity": "warning",
+                "source_path": "/content/value"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "conformant": false,
+        "errors": [
+          "loss_entry_missing_transformation_description"
+        ]
+      }
+    }
+  ]
+}

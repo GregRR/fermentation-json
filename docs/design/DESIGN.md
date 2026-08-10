@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.12
+**Document version:** 0.13
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -2375,13 +2375,44 @@ An implementation MAY support only selected schemas, profiles, modules, compatib
 
 A partial implementation MUST accurately declare its supported conformance scope and MUST NOT imply support for unimplemented capabilities.
 
-### 25.7 Conformance fixtures
+### 25.7 Conformance fixtures and suite identity
 
 Normative compatibility profiles and profiles with behavior not fully expressible in schema SHOULD publish conformance fixtures or test vectors.
 
-A conformance claim SHOULD identify the version of the conformance suite used for verification.
+A conformance suite MUST have a stable identifier and version when it is used to support a normative conformance claim.
 
-### 25.8 Scientific pressure-test fixtures
+The foundation semantic-conformance suite is currently identified by:
+
+```text
+https://gregrr.github.io/fermentation-json/conformance/foundation/0.1.0/manifest.json
+```
+
+Its current pre-release suite version is `0.1.0`. Conformance-suite versions are independent from specification, schema-set, vocabulary, profile, module, compatibility-profile, and implementation versions.
+
+A conformance claim SHOULD identify the exact suite identifier and version used for verification.
+
+Language-specific test runners MAY consume the published vectors, but the normative semantics MUST NOT depend on one implementation language or test framework.
+
+### 25.8 Foundation semantic-conformance rules
+
+Within one document scope, `object_id` values MUST be unique.
+
+A data reference that omits `document_id`, or explicitly names the current document, and includes `object_id` MUST resolve within that document. A reference naming a different `document_id` is external and need not resolve during local-document validation unless an applicable profile or packaging rule requires it.
+
+A full-conformance processor MUST enforce required-artifact understanding according to Section 21 and ADR-0006. Declared profiles/modules require exact supported versions. Required additional vocabularies and required extensions MUST be supported before the processor claims full semantic interpretation.
+
+When a quantity contains explicit `derivation` metadata, its `epistemic_state` MUST include at least one derived-origin state: `calculated`, `derived`, `estimated`, `inferred`, or `predicted`. A preserved `reported` representation MAY coexist with such a derived-origin state.
+
+When an interchange report embeds a loss report:
+
+- source and target format descriptors MUST match those of the enclosing interchange report;
+- compatibility-profile identifier/version metadata supplied by the enclosing report MUST agree with the embedded report;
+- every loss entry MUST identify affected source information using `source_path` or `source_object`;
+- every loss entry MUST state the transformation or explain the loss.
+
+The foundation semantic-conformance suite publishes language-independent vectors for these rules. Stable error identifiers and vector-set hashes are listed in the suite manifest.
+
+### 25.9 Scientific pressure-test fixtures
 
 Profiles whose semantics include ranges, censored results, logarithmic values, derived states, or optimization behavior SHOULD publish fixtures that exercise those semantics rather than testing only ordinary scalar values.
 
@@ -2568,7 +2599,6 @@ A roadmap item is not part of the normative specification until it is incorporat
 
 The following topics remain unresolved and require a proposal, architecture decision, implementation experiment, or combination of these before they become normative:
 
-- canonical public URI namespace and final URI structure for published schemas, profiles, modules, vocabularies, and compatibility profiles;
 - multi-document packaging or container format, if one is required;
 - attachment and external-dataset representation;
 - extension namespace registration and vocabulary governance;
@@ -2622,6 +2652,9 @@ The following architectural decisions are considered established design constrai
 - schema resolution is independent of repository filesystem location and does not require network access;
 - vocabulary roles distinguish closed sets, extensible sets, stable identifier registries, and free source labels;
 - declared profiles/modules use exact identifier/version objects, and additional vocabularies can declare required understanding;
+- full conformance is tested independently from structural JSON Schema validation through versioned language-independent semantic vectors;
+- local object identifiers are unique and local data references must resolve within their document scope;
+- loss-report entries identify affected source information and describe the transformation or loss;
 
 Implementation-blocking architectural decisions SHOULD be recorded in `docs/decisions/` and reflected in this design document when they become established constraints.
 

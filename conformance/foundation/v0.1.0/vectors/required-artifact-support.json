@@ -1,0 +1,172 @@
+{
+  "vector_set": "required_artifact_support",
+  "suite_id": "https://gregrr.github.io/fermentation-json/conformance/foundation/0.1.0/manifest.json",
+  "suite_version": "0.1.0",
+  "cases": [
+    {
+      "id": "supported-required-artifacts-conform",
+      "description": "Exact supported versions satisfy declared required artifacts.",
+      "input": {
+        "document": {
+          "profiles": [
+            {
+              "identifier": "https://example.org/profiles/beer",
+              "version": "1.0.0"
+            }
+          ],
+          "modules": [
+            {
+              "identifier": "https://example.org/modules/water",
+              "version": "1.1.0"
+            }
+          ],
+          "vocabularies": [
+            {
+              "identifier": "https://example.org/vocabularies/analytes",
+              "version": "2.0.0",
+              "required": true
+            }
+          ],
+          "extensions": {
+            "https://example.org/extensions/lab": {
+              "required": true,
+              "version": "1.0.0",
+              "data": {}
+            }
+          }
+        },
+        "supported": {
+          "profiles": [
+            [
+              "https://example.org/profiles/beer",
+              "1.0.0"
+            ]
+          ],
+          "modules": [
+            [
+              "https://example.org/modules/water",
+              "1.1.0"
+            ]
+          ],
+          "vocabularies": [
+            [
+              "https://example.org/vocabularies/analytes",
+              "2.0.0"
+            ]
+          ],
+          "extensions": [
+            [
+              "https://example.org/extensions/lab",
+              "1.0.0"
+            ]
+          ]
+        }
+      },
+      "expected": {
+        "conformant": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "profile-version-mismatch-rejected",
+      "description": "Profiles require exact identifier/version support.",
+      "input": {
+        "document": {
+          "profiles": [
+            {
+              "identifier": "https://example.org/profiles/beer",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "supported": {
+          "profiles": [
+            [
+              "https://example.org/profiles/beer",
+              "1.1.0"
+            ]
+          ]
+        }
+      },
+      "expected": {
+        "conformant": false,
+        "errors": [
+          "unsupported_profile"
+        ]
+      }
+    },
+    {
+      "id": "optional-unknown-artifacts-do-not-block",
+      "description": "Unsupported optional vocabularies and extensions do not block interpretation.",
+      "input": {
+        "document": {
+          "vocabularies": [
+            {
+              "identifier": "https://example.org/vocabularies/optional",
+              "version": "1.0.0",
+              "required": false
+            }
+          ],
+          "extensions": {
+            "https://example.org/extensions/optional": {
+              "required": false,
+              "version": "1.0.0",
+              "data": {
+                "opaque": true
+              }
+            }
+          }
+        },
+        "supported": {}
+      },
+      "expected": {
+        "conformant": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "required-vocabulary-rejected-when-unsupported",
+      "description": "Unsupported required vocabulary prevents full interpretation.",
+      "input": {
+        "document": {
+          "vocabularies": [
+            {
+              "identifier": "https://example.org/vocabularies/required",
+              "version": "1.0.0",
+              "required": true
+            }
+          ]
+        },
+        "supported": {}
+      },
+      "expected": {
+        "conformant": false,
+        "errors": [
+          "unsupported_required_vocabulary"
+        ]
+      }
+    },
+    {
+      "id": "required-extension-rejected-when-unsupported",
+      "description": "Unsupported required extension prevents full interpretation.",
+      "input": {
+        "document": {
+          "extensions": {
+            "https://example.org/extensions/required": {
+              "required": true,
+              "version": "1.0.0",
+              "data": {}
+            }
+          }
+        },
+        "supported": {}
+      },
+      "expected": {
+        "conformant": false,
+        "errors": [
+          "unsupported_required_extension"
+        ]
+      }
+    }
+  ]
+}

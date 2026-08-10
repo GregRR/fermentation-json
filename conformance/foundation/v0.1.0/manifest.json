@@ -1,0 +1,97 @@
+{
+  "suite_id": "https://gregrr.github.io/fermentation-json/conformance/foundation/0.1.0/manifest.json",
+  "suite_version": "0.1.0",
+  "status": "pre-release",
+  "schema_set_version": "0.1.0",
+  "description": "Foundation semantic-conformance rules not fully expressible in JSON Schema.",
+  "rules": [
+    {
+      "id": "duplicate_object_id",
+      "scope": "reference_integrity",
+      "severity": "error",
+      "description": "object_id values are unique within a document scope."
+    },
+    {
+      "id": "unresolved_local_reference",
+      "scope": "reference_integrity",
+      "severity": "error",
+      "description": "A local data reference with object_id resolves within the current document."
+    },
+    {
+      "id": "unsupported_profile",
+      "scope": "required_artifact_support",
+      "severity": "error",
+      "description": "Every declared profile is supported at its exact declared version."
+    },
+    {
+      "id": "unsupported_module",
+      "scope": "required_artifact_support",
+      "severity": "error",
+      "description": "Every declared module is supported at its exact declared version."
+    },
+    {
+      "id": "unsupported_required_vocabulary",
+      "scope": "required_artifact_support",
+      "severity": "error",
+      "description": "Every additional vocabulary declared required is supported at its exact version."
+    },
+    {
+      "id": "unsupported_required_extension",
+      "scope": "required_artifact_support",
+      "severity": "error",
+      "description": "Every required extension is supported at its declared identifier/version."
+    },
+    {
+      "id": "derivation_missing_derived_epistemic_state",
+      "scope": "source_and_derivation_semantics",
+      "severity": "error",
+      "description": "A quantity carrying explicit derivation metadata acknowledges a derived-origin epistemic state."
+    },
+    {
+      "id": "loss_report_endpoint_mismatch",
+      "scope": "interchange_loss_consistency",
+      "severity": "error",
+      "description": "An embedded loss report uses the same source and target descriptors as its interchange report."
+    },
+    {
+      "id": "loss_report_compatibility_profile_mismatch",
+      "scope": "interchange_loss_consistency",
+      "severity": "error",
+      "description": "Compatibility-profile identifiers and versions agree between enclosing and embedded reports."
+    },
+    {
+      "id": "loss_entry_missing_source_attribution",
+      "scope": "interchange_loss_consistency",
+      "severity": "error",
+      "description": "Every loss entry identifies its affected source path or source object."
+    },
+    {
+      "id": "loss_entry_missing_transformation_description",
+      "scope": "interchange_loss_consistency",
+      "severity": "error",
+      "description": "Every loss entry states the transformation or explains the loss."
+    }
+  ],
+  "vector_sets": [
+    {
+      "id": "interchange-loss-consistency",
+      "path": "vectors/interchange-loss-consistency.json",
+      "sha256": "059a22c07de932d71cb94ca34121f4c5c60b07fbfe7f0016957aac615afaedaa"
+    },
+    {
+      "id": "reference-integrity",
+      "path": "vectors/reference-integrity.json",
+      "sha256": "570487ebeab1d0430c96593c73a9db2b90c6714c689e2905d2e5bfcf46dd8a86"
+    },
+    {
+      "id": "required-artifact-support",
+      "path": "vectors/required-artifact-support.json",
+      "sha256": "7dadc342fed8e4ad07b0268d4c6ba8bb1e0c8189c149eff4691d84a6f339924e"
+    },
+    {
+      "id": "source-and-derivation",
+      "path": "vectors/source-and-derivation.json",
+      "sha256": "46a8e23e81d2be296d67495d997b4e5a6d555f38eaf577e99b5808929f335f9b"
+    }
+  ]
+}

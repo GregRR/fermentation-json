@@ -56,3 +56,10 @@ is broken.
 ## Declaration and vocabulary-policy tests
 
 `test_declaration_policy.py` verifies structured profile/module/vocabulary declarations, duplicate-identifier semantics, required-versus-optional interpretation behavior, vocabulary catalog metadata, and synchronization between the foundation vocabulary registry and schema-enforced control terms.
+
+## Relationship to semantic conformance
+
+These tests establish structural and schema-adjacent invariants. Full foundation
+semantic behavior that is intentionally not encoded in JSON Schema is exercised
+through the versioned vectors under `conformance/` and the runners in
+`tests/conformance/`.
