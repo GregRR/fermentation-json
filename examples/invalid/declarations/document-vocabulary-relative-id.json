@@ -1,0 +1,17 @@
+{
+  "_schema": "document.schema.json",
+  "instance": {
+    "specification_version": "0.1.0",
+    "document_type": "bad_declaration",
+    "schema_id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
+    "document_id": "urn:uuid:1d991c2c-f701-417e-b7fd-94b1280dca6d",
+    "vocabularies": [
+      {
+        "identifier": "vocabularies/example",
+        "version": "1.0.0",
+        "required": true
+      }
+    ],
+    "content": {}
+  }
+}

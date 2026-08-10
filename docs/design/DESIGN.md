@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.11
+**Document version:** 0.12
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -638,6 +638,23 @@ FermentationJSON does not normatively depend on an external unit code system or 
 Implementations MAY use external unit systems or libraries for parsing, conversion, validation, or display when their semantics are compatible with FermentationJSON.
 
 External mappings are adapter behavior and MUST NOT silently change a FermentationJSON unit's meaning.
+
+
+### 9.17 Vocabulary classes and unknown values
+
+FermentationJSON vocabularies MUST be classified according to their interoperability role.
+
+A **closed vocabulary** is appropriate for a finite protocol/control set. Unknown values are invalid for the applicable version.
+
+An **extensible vocabulary** defines registered core lower-case snake-case tokens while permitting collision-resistant absolute URI identifiers for non-core terms. An unknown core-style token MUST be rejected. An unfamiliar URI term MAY be preserved by identity, but its meaning MUST NOT be guessed.
+
+A **stable identifier registry** is appropriate for open-world identities where unknown absolute identifiers may remain valid even if local domain semantics are unavailable.
+
+A **free source label** preserves source wording and MUST NOT be treated as a controlled identifier merely because it is present.
+
+Normative vocabulary artifacts MUST have stable absolute identifiers and explicit semantic versions. Vocabulary versions are independent from specification, schema-set, profile, and implementation versions. A published term identifier MUST NOT be reused for a different meaning.
+
+The vocabulary namespace and detailed versioning/declaration policy are defined by ADR-0006.
 
 ## 10. Measurements and observations
 
@@ -1958,11 +1975,15 @@ A profile or module MAY:
 
 A profile or module MUST NOT weaken a normative core requirement.
 
-### 20.2 Identification and versioning
+### 20.2 Identification, declarations, and versioning
 
-Every normative profile and module MUST have a stable identifier and an explicit version.
+Every normative profile and module MUST have a stable absolute identifier and an explicit semantic version.
 
-A document claiming conformance to a profile or module MUST declare the exact identifier and version.
+A document claiming conformance to a profile or module MUST declare an object containing the exact `identifier` and `version`. Bare identifier strings are not sufficient declarations.
+
+A declared profile or module is a normative requirement for that document. A processor that does not support the declared identifier and exact version MUST NOT claim full semantic interpretation or conformance processing for that document.
+
+Within each of the `profiles` and `modules` arrays, the same artifact identifier MUST NOT appear more than once. A document MUST NOT declare multiple versions of one profile or module under the same identifier.
 
 A published identifier MUST NOT be reassigned to incompatible content.
 
@@ -1981,6 +2002,16 @@ Profiles SHOULD contain requirements specific to their domain or interoperabilit
 The initial stable domain profile is expected to be brewing-oriented.
 
 Later profiles MAY define wine, cider, perry, mead, sake, kombucha, vinegar, and other fermentation domains.
+
+### 20.5 Additional vocabulary declarations
+
+Core vocabulary versions fixed by an applicable schema set, profile, or module are implicit dependencies and SHOULD NOT need to be repeated in every document.
+
+A document MAY declare additional vocabulary artifacts through a `vocabularies` array. Each declaration MUST contain an absolute `identifier`, an exact semantic `version`, and a `required` boolean.
+
+An implementation MAY preserve or ignore an unsupported additional vocabulary when `required` is false and the applicable profile permits doing so. If `required` is true, an implementation that does not support that vocabulary MUST report that it cannot fully interpret the document and MUST NOT claim full semantic conformance for that processing operation.
+
+Within the `vocabularies` array, the same vocabulary identifier MUST NOT appear more than once.
 
 ---
 
@@ -2008,7 +2039,7 @@ An extension MUST NOT:
 
 ### 21.3 Optional and required extensions
 
-An extension MUST declare whether understanding it is optional or required for correct interpretation of the containing document.
+An extension MUST declare whether understanding it is optional or required for correct interpretation of the containing document. An extension entry MAY also declare an exact semantic `version` and a payload `schema_id` when those artifacts exist.
 
 An implementation MAY ignore an optional extension it does not understand.
 
@@ -2589,6 +2620,8 @@ The following architectural decisions are considered established design constrai
 - every registered core quantity kind has one declared canonical unit;
 - normative JSON Schema resources have versioned absolute canonical `$id` values;
 - schema resolution is independent of repository filesystem location and does not require network access;
+- vocabulary roles distinguish closed sets, extensible sets, stable identifier registries, and free source labels;
+- declared profiles/modules use exact identifier/version objects, and additional vocabularies can declare required understanding;
 
 Implementation-blocking architectural decisions SHOULD be recorded in `docs/decisions/` and reflected in this design document when they become established constraints.
 

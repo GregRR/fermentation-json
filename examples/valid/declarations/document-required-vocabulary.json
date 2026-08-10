@@ -1,0 +1,19 @@
+{
+  "_schema": "document.schema.json",
+  "instance": {
+    "specification_version": "0.1.0",
+    "document_type": "required_vocabulary_example",
+    "schema_id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
+    "document_id": "urn:uuid:d47d72f4-c43b-47fc-9a6e-f6b393a93abe",
+    "vocabularies": [
+      {
+        "identifier": "https://example.org/vocabularies/required/1.0.0",
+        "version": "1.0.0",
+        "required": true
+      }
+    ],
+    "content": {
+      "example": true
+    }
+  }
+}

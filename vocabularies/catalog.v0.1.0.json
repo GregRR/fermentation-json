@@ -1,0 +1,36 @@
+{
+  "catalog": "fermentationjson.vocabulary_catalog",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "public_namespace": "https://gregrr.github.io/fermentation-json/vocabularies/",
+  "vocabularies": [
+    {
+      "name": "foundation",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/foundation/0.1.0",
+      "version": "0.1.0",
+      "vocabulary_class": "mixed",
+      "path": "foundation/foundation.v0.1.0.json"
+    },
+    {
+      "name": "quantity_kinds",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/quantity-kinds/0.1.0",
+      "version": "0.1.0",
+      "vocabulary_class": "extensible",
+      "path": "quantity-kinds/quantity-kinds.v0.1.0.json"
+    },
+    {
+      "name": "reporting_basis_kinds",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/reporting-bases/0.1.0",
+      "version": "0.1.0",
+      "vocabulary_class": "extensible",
+      "path": "reporting-bases/reporting-bases.v0.1.0.json"
+    },
+    {
+      "name": "units",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/units/0.1.0",
+      "version": "0.1.0",
+      "vocabulary_class": "extensible",
+      "path": "units/units.v0.1.0.json"
+    }
+  ]
+}

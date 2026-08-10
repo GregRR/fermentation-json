@@ -1,0 +1,21 @@
+{
+  "_schema": "document.schema.json",
+  "instance": {
+    "specification_version": "0.1.0",
+    "document_type": "extension_example",
+    "schema_id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
+    "document_id": "urn:uuid:c8a35394-1454-4fb1-84fe-38091d7ae1d1",
+    "content": {
+      "example": true
+    },
+    "extensions": {
+      "https://example.org/extensions/unrecognized/1": {
+        "required": false,
+        "version": "1.0.0",
+        "data": {
+          "preserved": true
+        }
+      }
+    }
+  }
+}

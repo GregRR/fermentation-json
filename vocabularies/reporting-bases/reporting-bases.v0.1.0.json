@@ -1,7 +1,12 @@
 {
   "vocabulary": "fermentationjson.reporting_basis_kinds",
+  "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/reporting-bases/0.1.0",
   "version": "0.1.0",
   "status": "pre-release",
+  "vocabulary_class": "extensible",
+  "term_identifier_policy": "core_token_or_absolute_uri",
+  "unknown_core_term_behavior": "reject",
+  "unknown_uri_term_behavior": "preserve_without_inference",
   "entries": [
     {
       "id": "as_substance_equivalent",

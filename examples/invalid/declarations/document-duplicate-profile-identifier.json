@@ -1,0 +1,21 @@
+{
+  "_schema": "document.schema.json",
+  "_semantic_error": "duplicate_profile_identifier",
+  "instance": {
+    "specification_version": "0.1.0",
+    "document_type": "bad_declaration",
+    "schema_id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
+    "document_id": "urn:uuid:bf8d564a-dc53-4380-9b37-4087cfa3d03a",
+    "profiles": [
+      {
+        "identifier": "https://example.org/profiles/example",
+        "version": "1.0.0"
+      },
+      {
+        "identifier": "https://example.org/profiles/example",
+        "version": "2.0.0"
+      }
+    ],
+    "content": {}
+  }
+}

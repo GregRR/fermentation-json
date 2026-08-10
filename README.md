@@ -34,7 +34,7 @@ Current and planned v1 work includes:
 - equipment;
 - water-source, target, blend, treatment, and treated-water models;
 - calculation and optimization results;
-- profiles and controlled extensions;
+- versioned profiles, optional modules, vocabularies, and controlled extensions;
 - compatibility and loss reporting.
 
 Later profiles and optional modules may add richer laboratory records, sampling, sensors, calibration, telemetry, automation, detailed equipment topology, batch genealogy, serving-system engineering, sensory data, and additional fermentation domains such as wine, cider, perry, mead, sake, kombucha, and vinegar.
@@ -89,7 +89,7 @@ For example:
       "type": "exact",
       "value": 10
     },
-    "unit": "US_liquid_gallon",
+    "unit": "us_liquid_gallon",
     "original_text": "10 gal"
   },
   "epistemic_state": [
@@ -160,12 +160,12 @@ Implemented so far:
 - versioned unit, quantity-kind, and reporting-basis vocabularies;
 - reusable calculation, diagnostic, constraint, loss-report, and interchange-report schemas;
 - versioned canonical core-schema identifiers and an offline schema catalog;
+- structured profile/module declarations and versioned vocabulary policy;
 - positive and negative schema fixtures;
 - foundation schema tests.
 
 Important work still in progress includes:
 
-- profile/module declaration and vocabulary-evolution policy;
 - foundation semantic-conformance rules;
 - concrete document-type schemas;
 - brewing production schemas and profile;

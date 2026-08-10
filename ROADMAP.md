@@ -77,6 +77,7 @@ Decision records:
 - [`docs/decisions/ADR-0002-document-envelope-identity-and-references.md`](docs/decisions/ADR-0002-document-envelope-identity-and-references.md)
 - [`docs/decisions/ADR-0003-closed-objects-and-extensions.md`](docs/decisions/ADR-0003-closed-objects-and-extensions.md)
 - [`docs/decisions/ADR-0005-public-schema-identifiers.md`](docs/decisions/ADR-0005-public-schema-identifiers.md)
+- [`docs/decisions/ADR-0006-vocabulary-and-declaration-policy.md`](docs/decisions/ADR-0006-vocabulary-and-declaration-policy.md)
 
 ## 1.3 Initial foundation schemas
 
@@ -135,21 +136,22 @@ The normative standard must remain independent of any particular unit library.
 - [x] Add constraint and constraint-outcome schema.
 - [x] Add loss-report schema.
 - [x] Add import/export/transcode report structures.
-- [ ] Add profile/module declaration support beyond the document-envelope fields.
+- [x] Add structured profile/module and additional-vocabulary declarations.
 - [ ] Add reference-integrity semantic validation.
 
 ### Vocabulary policy
 
-- [ ] Define when a concept belongs in a closed vocabulary, extensible vocabulary, stable identifier registry, or free source label.
-- [ ] Define vocabulary versioning.
-- [ ] Define unknown vocabulary-value behavior.
-- [ ] Establish initial vocabularies required by foundation and water schemas.
+- [x] Define closed, extensible, stable-identifier, and free-source-label categories.
+- [x] Define vocabulary artifact and term versioning policy.
+- [x] Define unknown core-token and unknown URI-term behavior.
+- [x] Establish initial foundation vocabularies and catalog.
+- [ ] Establish water-specific vocabularies alongside the first water schemas.
 
 ### Foundation conformance
 
 - [ ] Define a machine-readable conformance-suite version.
 - [ ] Add semantic tests that JSON Schema alone cannot express.
-- [ ] Verify required-extension behavior.
+- [x] Verify required-extension and required-vocabulary interpretation behavior.
 - [ ] Verify reference resolution and unresolved-reference failures.
 - [ ] Verify source-reported versus derived-data invariants.
 - [ ] Verify loss-report behavior with representative transformations.
@@ -696,22 +698,17 @@ They should remain proposals or design notes until a concrete interoperability r
 
 The next development sequence is:
 
-1. **Foundation vocabulary and declaration policy**
-   - define closed versus extensible vocabulary rules;
-   - define vocabulary versioning and unknown-value behavior;
-   - add profile/module declaration structures beyond envelope identifiers.
+1. **Foundation semantic conformance**
+   - reference integrity and unresolved-reference failures;
+   - source-reported versus derived-data invariants;
+   - representative loss-report transformations;
+   - machine-readable conformance-suite versioning;
+   - cross-implementation test-vector structure.
 
-2. **Foundation semantic conformance**
-   - reference integrity;
-   - required-extension handling;
-   - source-versus-derived invariants;
-   - loss-report and interchange-report behavior;
-   - machine-readable conformance-suite versioning.
-
-3. **BeerJSON 1.0 compatibility inventory and mapping**
+2. **BeerJSON 1.0 compatibility inventory and mapping**
    - begin before the brewing object model is considered stable.
 
-4. **First concrete domain schemas**
+3. **First concrete domain schemas**
    - shared materials/cultures/process/equipment;
    - recipe and batch;
    - water schemas as an early scientific pressure test.

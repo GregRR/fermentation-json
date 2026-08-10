@@ -1,13 +1,14 @@
 {
   "_schema": "quantity.schema.json",
+  "_semantic_error": "unknown_core_unit",
   "instance": {
     "quantity_kind": "volume",
-    "reported": {
+    "canonical": {
       "form": {
         "type": "exact",
-        "value": 10
+        "value": 1
       },
-      "unit": "us_liquid_gallon"
+      "unit": "future_liter"
     }
   }
 }

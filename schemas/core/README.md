@@ -6,7 +6,8 @@ They use JSON Schema Draft 2020-12 and implement the accepted foundation ADRs as
 
 ## Current schemas
 
-- `identity.schema.json` — document IDs, object IDs, schema IDs, checksums
+- `identity.schema.json` — document IDs, object IDs, schema IDs, semantic versions, checksums
+- `declaration.schema.json` — profile, module, and additional-vocabulary declarations
 - `vocabulary-identifier.schema.json` — core and extension vocabulary identifiers
 - `extension.schema.json` — controlled extension container
 - `reference.schema.json` — internal and external data references
@@ -56,7 +57,9 @@ FermentationJSON conformance also requires semantic validation, including
 reference integrity and scientific rules that cannot be expressed completely
 in JSON Schema.
 
-## Vocabulary semantics
+## Declarations and vocabulary semantics
+
+`document.schema.json` uses structured profile/module declarations and permits explicit declarations of additional vocabulary artifacts. Core vocabulary bindings are supplied by the governing schema set/profile/module and do not need to be repeated in each document.
 
 `quantity.schema.json` validates vocabulary identifier syntax. Registry
 membership, dimensional compatibility, and canonical-unit selection are
@@ -82,3 +85,6 @@ information preservation:
   transformation.
 
 A failed interchange operation must use `not_completed`.
+
+
+Required profiles and modules are always semantic requirements when declared. Additional vocabularies and extensions explicitly distinguish optional from required understanding. Unsupported required artifacts prevent a processor from claiming full interpretation even when the document is structurally valid.

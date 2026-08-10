@@ -1,0 +1,31 @@
+{
+  "_schema": "document.schema.json",
+  "instance": {
+    "specification_version": "0.1.0",
+    "document_type": "declaration_example",
+    "schema_id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
+    "document_id": "urn:uuid:34d5adf2-e91d-4ccd-ae10-987adfc8fed0",
+    "profiles": [
+      {
+        "identifier": "https://example.org/fermentation/profiles/example/1.2.0",
+        "version": "1.2.0"
+      }
+    ],
+    "modules": [
+      {
+        "identifier": "https://example.org/fermentation/modules/example/2.0.0",
+        "version": "2.0.0"
+      }
+    ],
+    "vocabularies": [
+      {
+        "identifier": "https://example.org/vocabularies/example/1.1.0",
+        "version": "1.1.0",
+        "required": false
+      }
+    ],
+    "content": {
+      "example": true
+    }
+  }
+}

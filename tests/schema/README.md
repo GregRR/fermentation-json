@@ -52,3 +52,7 @@ boundaries and therefore are not fully expressible in the individual schemas:
 The older structural tests intentionally remain separate so that canonical-ID
 resolution and ordinary schema validation fail independently when either layer
 is broken.
+
+## Declaration and vocabulary-policy tests
+
+`test_declaration_policy.py` verifies structured profile/module/vocabulary declarations, duplicate-identifier semantics, required-versus-optional interpretation behavior, vocabulary catalog metadata, and synchronization between the foundation vocabulary registry and schema-enforced control terms.

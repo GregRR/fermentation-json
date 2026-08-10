@@ -1,0 +1,13 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "https://example.org/vocab/quantity-kinds/1#custom_volume",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 1
+      },
+      "unit": "https://example.org/vocab/units/1#custom_volume_unit"
+    }
+  }
+}

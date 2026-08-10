@@ -25,6 +25,14 @@
         "required": {
           "type": "boolean"
         },
+        "version": {
+          "description": "Version of the extension semantics, when separately versioned.",
+          "$ref": "identity.schema.json#semanticVersion"
+        },
+        "schema_id": {
+          "description": "Schema identifier for the extension payload, when published.",
+          "$ref": "identity.schema.json#schemaId"
+        },
         "data": true
       },
       "unevaluatedProperties": false

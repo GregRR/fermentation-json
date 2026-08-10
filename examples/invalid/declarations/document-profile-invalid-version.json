@@ -1,0 +1,16 @@
+{
+  "_schema": "document.schema.json",
+  "instance": {
+    "specification_version": "0.1.0",
+    "document_type": "bad_declaration",
+    "schema_id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/document.schema.json",
+    "document_id": "urn:uuid:a07de07b-1886-446f-a32c-73347b04563c",
+    "profiles": [
+      {
+        "identifier": "https://example.org/profiles/example/1.0.0",
+        "version": "01.0.0"
+      }
+    ],
+    "content": {}
+  }
+}

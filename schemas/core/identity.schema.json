@@ -27,6 +27,12 @@
       "description": "Absolute identifier of a normative schema, profile, module, compatibility profile, or other declared conformance artifact.",
       "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
     },
+    "semantic_version": {
+      "$anchor": "semanticVersion",
+      "title": "Semantic version",
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*))*))?(?:\\+([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?$"
+    },
     "media_type": {
       "$anchor": "mediaType",
       "title": "Media type",

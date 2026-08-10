@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/declaration.schema.json",
+  "title": "FermentationJSON normative artifact declarations",
+  "$anchor": "artifactDeclaration",
+  "description": "Exact declaration of a versioned profile, optional module, or other normative conformance artifact.",
+  "type": "object",
+  "required": [
+    "identifier",
+    "version"
+  ],
+  "properties": {
+    "identifier": {
+      "$ref": "identity.schema.json#schemaId"
+    },
+    "version": {
+      "$ref": "identity.schema.json#semanticVersion"
+    }
+  },
+  "unevaluatedProperties": false,
+  "$defs": {
+    "vocabulary_declaration": {
+      "$anchor": "vocabularyDeclaration",
+      "description": "Declaration of an additional vocabulary artifact and whether understanding it is required for full interpretation.",
+      "type": "object",
+      "required": [
+        "identifier",
+        "version",
+        "required"
+      ],
+      "properties": {
+        "identifier": {
+          "$ref": "identity.schema.json#schemaId"
+        },
+        "version": {
+          "$ref": "identity.schema.json#semanticVersion"
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

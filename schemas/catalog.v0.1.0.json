@@ -21,6 +21,11 @@
       "path": "core/constraint.schema.json"
     },
     {
+      "name": "declaration",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/declaration.schema.json",
+      "path": "core/declaration.schema.json"
+    },
+    {
       "name": "diagnostic",
       "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/diagnostic.schema.json",
       "path": "core/diagnostic.schema.json"

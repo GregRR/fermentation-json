@@ -1,0 +1,116 @@
+{
+  "vocabulary": "fermentationjson.foundation",
+  "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/foundation/0.1.0",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "vocabularies": {
+    "result_form_type": {
+      "class": "closed",
+      "terms": [
+        "exact",
+        "approximate",
+        "upper_bound",
+        "lower_bound",
+        "range",
+        "non_detect"
+      ]
+    },
+    "reported_statistic_type": {
+      "class": "closed",
+      "terms": [
+        "single_observation",
+        "average",
+        "running_annual_average",
+        "locational_running_annual_average",
+        "percentile",
+        "highest",
+        "lowest",
+        "other"
+      ]
+    },
+    "diagnostic_severity": {
+      "class": "closed",
+      "terms": [
+        "informational",
+        "warning",
+        "error",
+        "fatal"
+      ]
+    },
+    "constraint_outcome_status": {
+      "class": "closed",
+      "terms": [
+        "satisfied",
+        "violated",
+        "not_evaluated"
+      ]
+    },
+    "calculation_status": {
+      "class": "extensible",
+      "term_identifier_policy": "core_token_or_absolute_uri",
+      "unknown_core_term_behavior": "reject",
+      "unknown_uri_term_behavior": "preserve_without_inference",
+      "terms": [
+        "successful",
+        "exact_within_tolerance",
+        "feasible",
+        "closest_feasible",
+        "infeasible",
+        "operationally_impractical",
+        "indeterminate",
+        "insufficient_data",
+        "unsupported_model",
+        "solver_failure"
+      ]
+    },
+    "selection_status": {
+      "class": "closed",
+      "terms": [
+        "selected",
+        "rejected",
+        "unselected"
+      ]
+    },
+    "interchange_operation": {
+      "class": "closed",
+      "terms": [
+        "import",
+        "export",
+        "transcode"
+      ]
+    },
+    "interchange_status": {
+      "class": "closed",
+      "terms": [
+        "success",
+        "success_with_warnings",
+        "failed"
+      ]
+    },
+    "preservation_status": {
+      "class": "closed",
+      "terms": [
+        "lossless",
+        "lossy",
+        "not_completed"
+      ]
+    },
+    "loss_category": {
+      "class": "extensible",
+      "term_identifier_policy": "core_token_or_absolute_uri",
+      "unknown_core_term_behavior": "reject",
+      "unknown_uri_term_behavior": "preserve_without_inference",
+      "terms": [
+        "omitted_information",
+        "unsupported_object_or_field",
+        "unsupported_extension",
+        "unsupported_semantic_qualifier",
+        "unsupported_unit_or_reporting_basis",
+        "precision_reduction_or_rounding",
+        "approximation",
+        "many_to_one_mapping",
+        "ambiguous_mapping"
+      ]
+    }
+  }
+}

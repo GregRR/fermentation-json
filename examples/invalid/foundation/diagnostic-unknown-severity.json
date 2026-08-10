@@ -1,0 +1,7 @@
+{
+  "_schema": "diagnostic.schema.json",
+  "instance": {
+    "code": "example_diagnostic",
+    "severity": "caution"
+  }
+}

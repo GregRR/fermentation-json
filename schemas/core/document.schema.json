@@ -14,8 +14,7 @@
   ],
   "properties": {
     "specification_version": {
-      "type": "string",
-      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+      "$ref": "identity.schema.json#semanticVersion"
     },
     "document_type": {
       "type": "string",
@@ -30,14 +29,22 @@
     "profiles": {
       "type": "array",
       "items": {
-        "$ref": "identity.schema.json#schemaId"
+        "$ref": "declaration.schema.json#artifactDeclaration"
       },
       "uniqueItems": true
     },
     "modules": {
       "type": "array",
       "items": {
-        "$ref": "identity.schema.json#schemaId"
+        "$ref": "declaration.schema.json#artifactDeclaration"
+      },
+      "uniqueItems": true
+    },
+    "vocabularies": {
+      "description": "Additional vocabulary artifacts not already fixed by the applicable core schema set, profile, or module.",
+      "type": "array",
+      "items": {
+        "$ref": "declaration.schema.json#vocabularyDeclaration"
       },
       "uniqueItems": true
     },
