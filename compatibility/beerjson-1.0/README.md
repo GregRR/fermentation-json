@@ -6,7 +6,7 @@ This directory develops the FermentationJSON compatibility profile for BeerJSON 
 
 Compatibility work is pinned to the upstream **BeerJSON `v1.0.2` tag**. The BeerJSON document version remains `1.0`; `v1.0.2` is the immutable upstream repository/package snapshot used for this work.
 
-The current files establish a source baseline, exhaustive named-type/declared-field inventory, unit-token mapping baseline, and field-mapping framework. They do **not** yet constitute a completed compatibility implementation or conformance claim.
+The current files establish a source baseline, exhaustive named-type/declared-field inventory, mapping framework, and executable representative measurable/range round-trip vectors. They do **not** yet constitute a completed compatibility implementation or conformance claim.
 
 Files:
 
@@ -17,6 +17,7 @@ Files:
 - `mappings/analytical-scales.v0.1.0.json` — token-dispatched BeerJSON gravity, color, carbonation, bitterness, and diastatic-power semantics;
 - `mappings/primitive-field-semantics.v0.1.0.json` — reusable rules for primitive carriers, percentages, field-encoded scales/bases, local date-times, and identity/absence semantics;
 - `fixtures/primitive-field-vectors.v0.1.0.json` — representative source-to-semantic mapping vectors;
+- `fixtures/measurable-roundtrip-vectors.v0.1.0.json` — representative measurable/range import and semantic round-trip vectors;
 - `mappings/field-mapping.v0.1.0.json` — one mapping row for every declared object field;
 - `profile.v0.1.0.json` — pre-release compatibility-profile manifest.
 
@@ -56,6 +57,11 @@ BeerJSON gravity, color, carbonation, bitterness, and diastatic-power values are
 
 BeerJSON range endpoints are complete measurable objects and may therefore use different source units. FermentationJSON reported ranges can preserve endpoint-specific units while canonical ranges remain normalized to one canonical unit.
 
+## Measurable round-trip fixtures
+
+ADR-0012 adds executable, language-independent vectors for representative BeerJSON measurable objects and ranges. When the source semantics are defined, the expected native FermentationJSON quantity retains enough reported value/unit information to reconstruct the BeerJSON source object while its canonical value is independently checked against the registered unit vocabulary.
+
+A valid BeerJSON measurable object does not have to receive an invented native quantity merely to satisfy compatibility. Unresolved source tokens and mixed analytical-scale ranges instead use a source-preservation-only path: the complete BeerJSON object remains available for lossless round trip, and native normalization waits for an explicit, supported interpretation or calculation. These vectors cover the measurable/range layer only; complete-document compatibility remains pending.
 
 ## Primitive and field-encoded semantics
 

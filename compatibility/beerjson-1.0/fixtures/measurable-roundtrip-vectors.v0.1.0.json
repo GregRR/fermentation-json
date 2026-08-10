@@ -1,0 +1,569 @@
+{
+  "artifact": "fermentationjson.beerjson_measurable_roundtrip_vectors",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_standard": {
+    "name": "BeerJSON",
+    "document_version": "1.0",
+    "repository_tag": "v1.0.2"
+  },
+  "rules": [
+    "Source numeric values and BeerJSON unit tokens are semantic source information; numeric JSON lexical formatting is not required to round-trip byte-for-byte.",
+    "A native_quantity vector MUST retain enough reported representation to reconstruct the BeerJSON measurable object exactly at the JSON data-model level.",
+    "A source_preservation_only vector MUST retain the complete BeerJSON source object without inventing a native quantity.",
+    "Canonical values are independently checked against the registered FermentationJSON unit vocabulary where the mapping is a physical or ratio-unit conversion.",
+    "Same-scale analytical ranges may form one native FermentationJSON range; mixed-scale analytical ranges require explicit normalization calculation before a native range exists."
+  ],
+  "vectors": [
+    {
+      "id": "volume_us_gallon_exact",
+      "source_type": "VolumeType",
+      "source": {
+        "unit": "gal",
+        "value": 5.25
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "volume",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 19.873411866
+            },
+            "unit": "liter"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 5.25
+            },
+            "unit": "us_liquid_gallon",
+            "original_unit_text": "gal"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "temperature_fahrenheit_exact",
+      "source_type": "TemperatureType",
+      "source": {
+        "unit": "F",
+        "value": 68
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "temperature",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 20
+            },
+            "unit": "degree_celsius"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 68
+            },
+            "unit": "degree_fahrenheit",
+            "original_unit_text": "F"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "temperature_mixed_unit_range",
+      "source_type": "TemperatureRangeType",
+      "source": {
+        "minimum": {
+          "unit": "F",
+          "value": 50
+        },
+        "maximum": {
+          "unit": "C",
+          "value": 20
+        }
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "temperature",
+          "canonical": {
+            "form": {
+              "type": "range",
+              "minimum": {
+                "type": "exact",
+                "value": 10
+              },
+              "maximum": {
+                "type": "exact",
+                "value": 20
+              }
+            },
+            "unit": "degree_celsius"
+          },
+          "reported": {
+            "form": {
+              "type": "range",
+              "minimum": {
+                "type": "exact",
+                "value": 50
+              },
+              "maximum": {
+                "type": "exact",
+                "value": 20
+              }
+            },
+            "endpoint_units": {
+              "minimum": "degree_fahrenheit",
+              "maximum": "degree_celsius"
+            },
+            "endpoint_original_unit_text": {
+              "minimum": "F",
+              "maximum": "C"
+            }
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "duration_minutes_integer",
+      "source_type": "TimeType",
+      "source": {
+        "unit": "min",
+        "value": 3
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "duration",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 180
+            },
+            "unit": "second"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 3
+            },
+            "unit": "minute",
+            "original_unit_text": "min"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "percent_neutral_fraction",
+      "source_type": "PercentType",
+      "source": {
+        "unit": "%",
+        "value": 75
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "fraction",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 0.75
+            },
+            "unit": "one"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 75
+            },
+            "unit": "percent",
+            "original_unit_text": "%"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "concentration_ppm_ratio",
+      "source_type": "ConcentrationType",
+      "source": {
+        "unit": "ppm",
+        "value": 125
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "fraction",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 0.000125
+            },
+            "unit": "one"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 125
+            },
+            "unit": "part_per_million",
+            "original_unit_text": "ppm"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "concentration_mg_per_liter",
+      "source_type": "ConcentrationType",
+      "source": {
+        "unit": "mg/l",
+        "value": 45
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "mass_concentration",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 45
+            },
+            "unit": "milligram_per_liter"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 45
+            },
+            "unit": "milligram_per_liter",
+            "original_unit_text": "mg/l"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "ph_exact",
+      "source_type": "AcidityType",
+      "source": {
+        "unit": "pH",
+        "value": 5.2
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "ph",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 5.2
+            },
+            "unit": "ph_scale"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 5.2
+            },
+            "unit": "ph_scale",
+            "original_unit_text": "pH"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "specific_gravity_exact",
+      "source_type": "GravityType",
+      "source": {
+        "unit": "sg",
+        "value": 1.05
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "specific_gravity",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 1.05
+            },
+            "unit": "one",
+            "scale": "specific_gravity"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 1.05
+            },
+            "unit": "one",
+            "original_unit_text": "sg",
+            "scale": "specific_gravity"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "srm_color_exact",
+      "source_type": "ColorType",
+      "source": {
+        "unit": "SRM",
+        "value": 6.5
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "srm_color_index",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 6.5
+            },
+            "unit": "one",
+            "scale": "srm_color_index"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 6.5
+            },
+            "unit": "one",
+            "original_unit_text": "SRM",
+            "scale": "srm_color_index"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "srm_color_same_scale_range",
+      "source_type": "ColorRangeType",
+      "source": {
+        "minimum": {
+          "unit": "SRM",
+          "value": 5
+        },
+        "maximum": {
+          "unit": "SRM",
+          "value": 12
+        }
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "srm_color_index",
+          "canonical": {
+            "form": {
+              "type": "range",
+              "minimum": {
+                "type": "exact",
+                "value": 5
+              },
+              "maximum": {
+                "type": "exact",
+                "value": 12
+              }
+            },
+            "unit": "one",
+            "scale": "srm_color_index"
+          },
+          "reported": {
+            "form": {
+              "type": "range",
+              "minimum": {
+                "type": "exact",
+                "value": 5
+              },
+              "maximum": {
+                "type": "exact",
+                "value": 12
+              }
+            },
+            "unit": "one",
+            "scale": "srm_color_index",
+            "original_unit_text": "SRM"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "carbonation_volumes_exact",
+      "source_type": "CarbonationType",
+      "source": {
+        "unit": "vols",
+        "value": 2.4
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "carbon_dioxide_volume_ratio",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 2.4
+            },
+            "unit": "one",
+            "scale": "carbon_dioxide_volumes"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 2.4
+            },
+            "unit": "one",
+            "original_unit_text": "vols",
+            "scale": "carbon_dioxide_volumes"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "carbonation_grams_per_liter_exact",
+      "source_type": "CarbonationType",
+      "source": {
+        "unit": "g/l",
+        "value": 5.2
+      },
+      "expected": {
+        "import_status": "native_quantity",
+        "native_quantity": {
+          "quantity_kind": "mass_concentration",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 5200
+            },
+            "unit": "milligram_per_liter"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 5.2
+            },
+            "unit": "gram_per_liter",
+            "original_unit_text": "g/l"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        },
+        "semantic_subject": "carbon_dioxide",
+        "round_trip": "reconstruct_from_reported"
+      }
+    },
+    {
+      "id": "volume_undefined_imperial_barrel_token",
+      "source_type": "VolumeType",
+      "source": {
+        "unit": "ibbl",
+        "value": 1
+      },
+      "expected": {
+        "import_status": "source_preservation_only",
+        "native_quantity": null,
+        "preserved_source": {
+          "unit": "ibbl",
+          "value": 1
+        },
+        "reason": "BeerJSON v1.0.2 does not define which Imperial barrel realization ibbl denotes.",
+        "round_trip": "use_preserved_source"
+      }
+    },
+    {
+      "id": "specific_heat_undefined_calorie_token",
+      "source_type": "SpecificHeatType",
+      "source": {
+        "unit": "Cal/(g C)",
+        "value": 0.9
+      },
+      "expected": {
+        "import_status": "source_preservation_only",
+        "native_quantity": null,
+        "preserved_source": {
+          "unit": "Cal/(g C)",
+          "value": 0.9
+        },
+        "reason": "BeerJSON v1.0.2 does not identify the calorie realization represented by Cal.",
+        "round_trip": "use_preserved_source"
+      }
+    },
+    {
+      "id": "color_mixed_analytical_scale_range",
+      "source_type": "ColorRangeType",
+      "source": {
+        "minimum": {
+          "unit": "SRM",
+          "value": 5
+        },
+        "maximum": {
+          "unit": "EBC",
+          "value": 24
+        }
+      },
+      "expected": {
+        "import_status": "source_preservation_only",
+        "native_quantity": null,
+        "preserved_source": {
+          "minimum": {
+            "unit": "SRM",
+            "value": 5
+          },
+          "maximum": {
+            "unit": "EBC",
+            "value": 24
+          }
+        },
+        "reason": "Mixed analytical scales require an explicit normalization calculation before one native range can be constructed.",
+        "round_trip": "use_preserved_source"
+      }
+    }
+  ]
+}

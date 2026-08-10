@@ -102,7 +102,7 @@ def test_ppm_and_ppb_are_not_mapped_to_mass_per_volume() -> None:
 
 def test_profile_does_not_claim_completed_compatibility() -> None:
     profile = _load("profile.v0.1.0.json")
-    assert profile["status"] == "pre-release_mapping_baseline"
+    assert profile["status"] == "pre-release_behavioral_fixture_baseline"
     assert profile["directions"]["import"] == "required_target"
     assert "No FermentationJSON implementation may claim completed" in profile["claim_status"]
 

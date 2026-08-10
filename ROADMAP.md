@@ -197,8 +197,10 @@ BeerJSON compatibility should be developed **before or alongside** the brewing s
 - [ ] Preserve optional metadata.
 - [ ] Preserve semantically meaningful ordering.
 - [x] Define strict and pragmatic unknown/extension-data handling for BeerJSON imports.
-- [ ] Build representative BeerJSON import fixtures.
-- [ ] Build round-trip fixtures for the BeerJSON-representable subset.
+- [x] Build representative BeerJSON measurable/range import fixtures.
+- [x] Build measurable/range round-trip fixtures for the BeerJSON-representable subset.
+- [ ] Build representative complete-document BeerJSON import fixtures.
+- [ ] Build complete-document round-trip fixtures for the BeerJSON-representable subset.
 - [ ] Build loss-report fixtures for FermentationJSON-to-BeerJSON export.
 - [ ] Publish a versioned BeerJSON 1.0 compatibility profile.
 

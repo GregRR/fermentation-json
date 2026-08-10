@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.17
+**Document version:** 0.18
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -2160,7 +2160,7 @@ Measurement scales and analytical indices MUST remain distinct from physical uni
 
 The strict compatibility guarantee applies to documents valid under the pinned BeerJSON schema snapshot. A pragmatic importer MAY preserve nonstandard application fields opaquely, but MUST report that the source deviates from the BeerJSON compatibility baseline.
 
-The project MUST maintain documented mappings and conformance fixtures for BeerJSON 1.0.
+The project MUST maintain documented mappings and conformance fixtures for BeerJSON 1.0. Representative measurable/range fixtures MUST distinguish native-quantity imports from source-preservation-only imports. A valid BeerJSON measurable object for which FermentationJSON cannot safely construct a native quantity MUST remain losslessly preservable without inventing semantics. Where a native quantity is constructed, its reported representation MUST retain enough BeerJSON value/unit information to reconstruct the source measurable object at the JSON data-model level. See ADR-0012.
 
 For content representable in both formats, a BeerJSON-to-FermentationJSON-to-BeerJSON round trip MUST preserve all BeerJSON-defined information.
 
