@@ -1,0 +1,9 @@
+{
+  "_schema": "extension.schema.json",
+  "instance": {
+    "my_extension": {
+      "required": false,
+      "data": {}
+    }
+  }
+}

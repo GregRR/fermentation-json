@@ -1,0 +1,25 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "volume",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 37.85411784
+      },
+      "unit": "liter"
+    },
+    "reported": {
+      "form": {
+        "type": "exact",
+        "value": 10
+      },
+      "unit": "US_liquid_gallon",
+      "original_text": "10 gal"
+    },
+    "epistemic_state": [
+      "reported",
+      "user_entered"
+    ]
+  }
+}

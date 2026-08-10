@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON result form",
+  "$anchor": "resultForm",
+  "description": "Preserves exact, approximate, bounded, ranged, and non-detected result semantics.",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "value"
+      ],
+      "properties": {
+        "type": {
+          "const": "exact"
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "value"
+      ],
+      "properties": {
+        "type": {
+          "const": "approximate"
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "value",
+        "inclusive"
+      ],
+      "properties": {
+        "type": {
+          "const": "upper_bound"
+        },
+        "value": {
+          "type": "number"
+        },
+        "inclusive": {
+          "type": "boolean"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "value",
+        "inclusive"
+      ],
+      "properties": {
+        "type": {
+          "const": "lower_bound"
+        },
+        "value": {
+          "type": "number"
+        },
+        "inclusive": {
+          "type": "boolean"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "minimum",
+        "maximum"
+      ],
+      "properties": {
+        "type": {
+          "const": "range"
+        },
+        "minimum": {
+          "$ref": "#qualifiedEndpoint"
+        },
+        "maximum": {
+          "$ref": "#qualifiedEndpoint"
+        },
+        "minimum_inclusive": {
+          "type": "boolean"
+        },
+        "maximum_inclusive": {
+          "type": "boolean"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "non_detect"
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  ],
+  "$defs": {
+    "qualified_endpoint": {
+      "$anchor": "qualifiedEndpoint",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "value"
+          ],
+          "properties": {
+            "type": {
+              "const": "exact"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "value",
+            "inclusive"
+          ],
+          "properties": {
+            "type": {
+              "const": "upper_bound"
+            },
+            "value": {
+              "type": "number"
+            },
+            "inclusive": {
+              "type": "boolean"
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "value",
+            "inclusive"
+          ],
+          "properties": {
+            "type": {
+              "const": "lower_bound"
+            },
+            "value": {
+              "type": "number"
+            },
+            "inclusive": {
+              "type": "boolean"
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "const": "non_detect"
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    }
+  }
+}

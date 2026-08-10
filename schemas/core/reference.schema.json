@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON data reference",
+  "$anchor": "dataReference",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "$ref": "identity.schema.json#documentId"
+    },
+    "object_id": {
+      "$ref": "identity.schema.json#objectId"
+    },
+    "expected_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_id": {
+      "$ref": "identity.schema.json#schemaId"
+    },
+    "media_type": {
+      "$ref": "identity.schema.json#mediaType"
+    },
+    "checksum": {
+      "$ref": "identity.schema.json#checksum"
+    },
+    "label": {
+      "type": "string"
+    },
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "document_id"
+      ]
+    },
+    {
+      "required": [
+        "object_id"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,13 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "lead_concentration",
+    "canonical": {
+      "form": {
+        "type": "non_detect",
+        "value": 0
+      },
+      "unit": "microgram_per_liter"
+    }
+  }
+}

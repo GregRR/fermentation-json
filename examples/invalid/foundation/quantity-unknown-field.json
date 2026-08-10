@@ -1,0 +1,14 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "volume",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 1
+      },
+      "unit": "liter"
+    },
+    "magic_value": 42
+  }
+}

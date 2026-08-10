@@ -1,0 +1,36 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "sulfate_concentration",
+    "canonical": {
+      "form": {
+        "type": "range",
+        "minimum": {
+          "type": "non_detect"
+        },
+        "maximum": {
+          "type": "exact",
+          "value": 11.1
+        }
+      },
+      "unit": "milligram_per_liter"
+    },
+    "reported": {
+      "form": {
+        "type": "range",
+        "minimum": {
+          "type": "non_detect"
+        },
+        "maximum": {
+          "type": "exact",
+          "value": 11.1
+        }
+      },
+      "unit": "milligram_per_liter",
+      "original_text": "ND–11.1"
+    },
+    "epistemic_state": [
+      "reported"
+    ]
+  }
+}

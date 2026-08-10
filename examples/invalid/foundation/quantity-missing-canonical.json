@@ -1,0 +1,13 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "volume",
+    "reported": {
+      "form": {
+        "type": "exact",
+        "value": 10
+      },
+      "unit": "US_liquid_gallon"
+    }
+  }
+}

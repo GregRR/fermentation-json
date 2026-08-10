@@ -1,0 +1,10 @@
+{
+  "_schema": "document.schema.json",
+  "instance": {
+    "specification_version": "v0.1",
+    "document_type": "example",
+    "schema_id": "schemas/example.schema.json",
+    "document_id": "urn:uuid:123e4567-e89b-12d3-a456-426614174000",
+    "content": {}
+  }
+}

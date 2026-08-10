@@ -1,0 +1,34 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "lead_concentration",
+    "canonical": {
+      "form": {
+        "type": "non_detect"
+      },
+      "unit": "microgram_per_liter"
+    },
+    "reported": {
+      "form": {
+        "type": "non_detect"
+      },
+      "unit": "microgram_per_liter",
+      "original_text": "ND"
+    },
+    "analytical_limits": [
+      {
+        "type": "detection_limit",
+        "quantity": {
+          "form": {
+            "type": "exact",
+            "value": 1.0
+          },
+          "unit": "microgram_per_liter"
+        }
+      }
+    ],
+    "epistemic_state": [
+      "reported"
+    ]
+  }
+}

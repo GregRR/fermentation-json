@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON identity primitives",
+  "description": "Reusable identifiers used by pre-release FermentationJSON schemas.",
+  "$defs": {
+    "document_id": {
+      "$anchor": "documentId",
+      "title": "Document identifier",
+      "type": "string",
+      "format": "uri",
+      "minLength": 1
+    },
+    "object_id": {
+      "$anchor": "objectId",
+      "title": "Document-scoped object identifier",
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_id": {
+      "$anchor": "schemaId",
+      "title": "Schema or profile identifier",
+      "type": "string",
+      "format": "uri-reference",
+      "minLength": 1
+    },
+    "media_type": {
+      "$anchor": "mediaType",
+      "title": "Media type",
+      "type": "string",
+      "minLength": 1
+    },
+    "checksum": {
+      "$anchor": "checksum",
+      "title": "Checksum",
+      "type": "object",
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

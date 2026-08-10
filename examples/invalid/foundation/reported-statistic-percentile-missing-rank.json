@@ -1,0 +1,6 @@
+{
+  "_schema": "reported-statistic.schema.json",
+  "instance": {
+    "type": "percentile"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "_schema": "document.schema.json",
+  "instance": {
+    "specification_version": "0.1.0",
+    "document_type": "example",
+    "schema_id": "schemas/example.schema.json",
+    "document_id": "relative/document/id",
+    "content": {}
+  }
+}

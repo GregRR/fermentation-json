@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON measurement or observation",
+  "$anchor": "measurement",
+  "type": "object",
+  "required": [
+    "property",
+    "result"
+  ],
+  "properties": {
+    "object_id": {
+      "$ref": "identity.schema.json#objectId"
+    },
+    "property": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_label": {
+      "type": "string"
+    },
+    "result": {
+      "$ref": "quantity.schema.json#quantity"
+    },
+    "reported_statistics": {
+      "type": "array",
+      "items": {
+        "$ref": "#reportedStatisticValue"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "valid",
+        "invalid",
+        "missing",
+        "not_detected",
+        "below_detection_limit",
+        "below_reporting_limit",
+        "below_quantification_limit",
+        "above_instrument_range",
+        "provisional",
+        "verified",
+        "rejected"
+      ]
+    },
+    "observed_at": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    "observation_period": {
+      "$ref": "#observationPeriod"
+    },
+    "coverage": {
+      "type": "string",
+      "enum": [
+        "single_observation",
+        "observation_period_summary",
+        "typical",
+        "representative",
+        "seasonal",
+        "historical",
+        "reference"
+      ]
+    },
+    "sample_location": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenance": {
+      "$ref": "provenance.schema.json#provenance"
+    },
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  },
+  "not": {
+    "required": [
+      "observed_at",
+      "observation_period"
+    ]
+  },
+  "unevaluatedProperties": false,
+  "$defs": {
+    "observation_period": {
+      "$anchor": "observationPeriod",
+      "type": "object",
+      "properties": {
+        "start": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            }
+          ]
+        },
+        "end": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            }
+          ]
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "minProperties": 1,
+      "unevaluatedProperties": false
+    },
+    "reported_statistic_value": {
+      "$anchor": "reportedStatisticValue",
+      "type": "object",
+      "required": [
+        "statistic",
+        "quantity"
+      ],
+      "properties": {
+        "statistic": {
+          "$ref": "reported-statistic.schema.json#reportedStatistic"
+        },
+        "quantity": {
+          "allOf": [
+            {
+              "$ref": "quantity.schema.json#quantity"
+            },
+            {
+              "required": [
+                "reported"
+              ]
+            }
+          ]
+        },
+        "provenance": {
+          "$ref": "provenance.schema.json#provenance"
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

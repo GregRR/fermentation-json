@@ -1,0 +1,54 @@
+{
+  "_schema": "measurement.schema.json",
+  "instance": {
+    "property": "lead",
+    "result": {
+      "quantity_kind": "lead_concentration",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 4.2
+        },
+        "unit": "microgram_per_liter"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 4.2
+        },
+        "unit": "microgram_per_liter"
+      },
+      "epistemic_state": [
+        "reported"
+      ]
+    },
+    "reported_statistics": [
+      {
+        "statistic": {
+          "type": "percentile",
+          "percentile": 90
+        },
+        "quantity": {
+          "quantity_kind": "lead_concentration",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 4.2
+            },
+            "unit": "microgram_per_liter"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 4.2
+            },
+            "unit": "microgram_per_liter"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        }
+      }
+    ]
+  }
+}

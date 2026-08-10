@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON document envelope",
+  "$anchor": "documentEnvelope",
+  "description": "Reusable FermentationJSON document envelope. This base schema remains composable; concrete document schemas must close the root object.",
+  "type": "object",
+  "required": [
+    "specification_version",
+    "document_type",
+    "schema_id",
+    "document_id",
+    "content"
+  ],
+  "properties": {
+    "specification_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "document_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_id": {
+      "$ref": "identity.schema.json#schemaId"
+    },
+    "document_id": {
+      "$ref": "identity.schema.json#documentId"
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "$ref": "identity.schema.json#schemaId"
+      },
+      "uniqueItems": true
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "$ref": "identity.schema.json#schemaId"
+      },
+      "uniqueItems": true
+    },
+    "metadata": {
+      "$ref": "document-metadata.schema.json#documentMetadata"
+    },
+    "content": true,
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  }
+}

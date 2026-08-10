@@ -1,0 +1,19 @@
+{
+  "_schema": "source-document.schema.json",
+  "instance": {
+    "publisher": {
+      "name": "Example Water Utility"
+    },
+    "analysis_provider": {
+      "name": "Example Analytical Laboratory"
+    },
+    "title": "2025 Water Quality Report",
+    "publication_date": "2026-05-01",
+    "source_uri": "https://example.org/reports/2025-water.pdf",
+    "retrieval_date": "2026-08-09",
+    "locator": {
+      "page": 7,
+      "table": "Inorganic Constituents"
+    }
+  }
+}

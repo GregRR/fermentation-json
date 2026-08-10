@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON extension container",
+  "$anchor": "extensionContainer",
+  "type": "object",
+  "propertyNames": {
+    "type": "string",
+    "format": "uri",
+    "minLength": 1
+  },
+  "additionalProperties": {
+    "$ref": "#extensionEntry"
+  },
+  "$defs": {
+    "extension_entry": {
+      "$anchor": "extensionEntry",
+      "type": "object",
+      "required": [
+        "required",
+        "data"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "data": true
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

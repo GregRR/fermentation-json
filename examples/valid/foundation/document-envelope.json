@@ -1,0 +1,20 @@
+{
+  "_schema": "document.schema.json",
+  "instance": {
+    "specification_version": "0.1.0",
+    "document_type": "foundation_example",
+    "schema_id": "schemas/example.schema.json",
+    "document_id": "urn:uuid:123e4567-e89b-12d3-a456-426614174000",
+    "metadata": {
+      "title": "Foundation example",
+      "created_at": "2026-08-09T22:00:00-07:00",
+      "generating_software": {
+        "name": "example",
+        "version": "0.1.0"
+      }
+    },
+    "content": {
+      "example": true
+    }
+  }
+}

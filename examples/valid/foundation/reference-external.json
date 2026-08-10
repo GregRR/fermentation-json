@@ -1,0 +1,11 @@
+{
+  "_schema": "reference.schema.json",
+  "instance": {
+    "document_id": "urn:uuid:123e4567-e89b-12d3-a456-426614174000",
+    "object_id": "water-profile",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "abc123"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "nitrate_concentration",
+    "canonical": {
+      "form": {
+        "type": "upper_bound",
+        "value": 0.3,
+        "inclusive": false
+      },
+      "unit": "milligram_per_liter"
+    },
+    "reported": {
+      "form": {
+        "type": "upper_bound",
+        "value": 0.3,
+        "inclusive": false
+      },
+      "unit": "milligram_per_liter",
+      "original_text": "<0.30"
+    },
+    "epistemic_state": [
+      "reported"
+    ]
+  }
+}

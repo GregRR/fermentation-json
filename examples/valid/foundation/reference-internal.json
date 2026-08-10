@@ -1,0 +1,7 @@
+{
+  "_schema": "reference.schema.json",
+  "instance": {
+    "object_id": "source-water-1",
+    "expected_type": "source_water_profile"
+  }
+}

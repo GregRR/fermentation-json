@@ -1,0 +1,11 @@
+{
+  "_schema": "extension.schema.json",
+  "instance": {
+    "https://example.org/fermentation-extension/v1": {
+      "required": false,
+      "data": {
+        "example": true
+      }
+    }
+  }
+}
