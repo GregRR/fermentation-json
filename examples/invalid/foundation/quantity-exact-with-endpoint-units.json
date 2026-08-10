@@ -1,0 +1,23 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "temperature",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 10
+      },
+      "unit": "degree_celsius"
+    },
+    "reported": {
+      "form": {
+        "type": "exact",
+        "value": 50
+      },
+      "endpoint_units": {
+        "minimum": "degree_fahrenheit",
+        "maximum": "degree_celsius"
+      }
+    }
+  }
+}

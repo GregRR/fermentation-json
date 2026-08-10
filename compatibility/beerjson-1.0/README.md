@@ -13,6 +13,7 @@ Files:
 - `source-manifest.v0.1.0.json` — exact upstream source reference;
 - `inventory/beerjson-v1.0.2-inventory.json` — named types and declared fields;
 - `mappings/unit-tokens.v0.1.0.json` — BeerJSON unit-token handling;
+- `mappings/measurable-types.v0.1.0.json` — concrete measurable/quantity type mapping and explicitly pending analytical scales;
 - `mappings/field-mapping.v0.1.0.json` — one mapping row for every declared object field;
 - `profile.v0.1.0.json` — pre-release compatibility-profile manifest.
 
@@ -44,3 +45,10 @@ The strict compatibility guarantee applies to documents valid under the pinned B
 Several BeerJSON fields encode semantics partly in the field name rather than their value schema. Examples include `boil_rate_per_hour`, `drain_rate_per_minute`, `cell_count_billions`, `total_oil_ml_per_100g`, and `calories_per_pint`. Bare numeric carbonation fields also lack an explicit unit. These are marked `special_mapping_required` and MUST NOT be normalized by guesswork.
 
 BeerJSON `ConcentrationType` permits `ppm`, `ppb`, and `mg/l`. FermentationJSON preserves `ppm` and `ppb` as ratio-unit source representations and does not silently reinterpret them as `mg/L` or `µg/L`.
+## Measurable and quantity mapping
+
+ADR-0009 defines the first concrete BeerJSON type mappings. Physical quantities such as volume, mass, temperature, pressure, duration, viscosity, and specific volume map to native FermentationJSON quantity kinds. `PercentType` maps neutrally to `fraction` until a field mapping justifies a more specific fraction kind. `ConcentrationType` is token-sensitive: `mg/l` maps to mass concentration, while `ppm` and `ppb` remain ratio quantities.
+
+BeerJSON gravity, color, carbonation, bitterness, and diastatic-power types are deliberately not treated as ordinary interchangeable physical-unit families. Their source values remain preserved while their native analytical-scale models and conversion provenance are developed.
+
+BeerJSON range endpoints are complete measurable objects and may therefore use different source units. FermentationJSON reported ranges can preserve endpoint-specific units while canonical ranges remain normalized to one canonical unit.

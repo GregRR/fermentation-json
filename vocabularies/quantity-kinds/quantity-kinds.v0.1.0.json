@@ -104,6 +104,12 @@
       "aggregation_policy": "logarithmic_special_case"
     },
     {
+      "id": "specific_heat_capacity",
+      "dimension": "specific_heat_capacity",
+      "canonical_unit": "joule_per_kilogram_kelvin",
+      "description": "Specific heat capacity: energy required per unit mass per unit temperature difference."
+    },
+    {
       "id": "specific_volume",
       "dimension": "specific_volume",
       "canonical_unit": "liter_per_kilogram"

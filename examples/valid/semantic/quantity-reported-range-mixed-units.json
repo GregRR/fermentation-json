@@ -1,0 +1,44 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "temperature",
+    "canonical": {
+      "form": {
+        "type": "range",
+        "minimum": {
+          "type": "exact",
+          "value": 10
+        },
+        "maximum": {
+          "type": "exact",
+          "value": 20
+        }
+      },
+      "unit": "degree_celsius"
+    },
+    "reported": {
+      "form": {
+        "type": "range",
+        "minimum": {
+          "type": "exact",
+          "value": 50
+        },
+        "maximum": {
+          "type": "exact",
+          "value": 20
+        }
+      },
+      "endpoint_units": {
+        "minimum": "degree_fahrenheit",
+        "maximum": "degree_celsius"
+      },
+      "endpoint_original_unit_text": {
+        "minimum": "F",
+        "maximum": "C"
+      }
+    },
+    "epistemic_state": [
+      "reported"
+    ]
+  }
+}

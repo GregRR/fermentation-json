@@ -1,0 +1,38 @@
+{
+  "_schema": "quantity.schema.json",
+  "_semantic_error": "reported_unit_dimension_mismatch",
+  "instance": {
+    "quantity_kind": "temperature",
+    "canonical": {
+      "form": {
+        "type": "range",
+        "minimum": {
+          "type": "exact",
+          "value": 10
+        },
+        "maximum": {
+          "type": "exact",
+          "value": 20
+        }
+      },
+      "unit": "degree_celsius"
+    },
+    "reported": {
+      "form": {
+        "type": "range",
+        "minimum": {
+          "type": "exact",
+          "value": 50
+        },
+        "maximum": {
+          "type": "exact",
+          "value": 20
+        }
+      },
+      "endpoint_units": {
+        "minimum": "degree_fahrenheit",
+        "maximum": "liter"
+      }
+    }
+  }
+}

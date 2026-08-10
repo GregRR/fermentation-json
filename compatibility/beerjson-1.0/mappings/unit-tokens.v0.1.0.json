@@ -231,49 +231,49 @@
     "SpecificHeatUnitType": {
       "Cal/(g C)": {
         "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "status": "semantic_definition_pending"
       },
       "J/(kg K)": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "joule_per_kilogram_kelvin",
+        "status": "exact"
       },
       "BTU/(lb F)": {
         "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "status": "semantic_definition_pending"
       }
     },
     "SpecificVolumeUnitType": {
       "qt/lb": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "us_liquid_quart_per_pound",
+        "status": "exact"
       },
       "gal/lb": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "us_liquid_gallon_per_pound",
+        "status": "exact"
       },
       "gal/oz": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "us_liquid_gallon_per_ounce",
+        "status": "exact"
       },
       "l/g": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "liter_per_gram",
+        "status": "exact"
       },
       "l/kg": {
         "fermentationjson_unit": "liter_per_kilogram",
         "status": "exact"
       },
       "floz/oz": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "us_fluid_ounce_per_ounce",
+        "status": "exact"
       },
       "m^3/kg": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "cubic_meter_per_kilogram",
+        "status": "exact"
       },
       "ft^3/lb": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "cubic_foot_per_pound",
+        "status": "exact"
       }
     },
     "UnitUnitType": {

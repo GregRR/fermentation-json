@@ -59,6 +59,9 @@
     },
     "dynamic_viscosity": {
       "reference_unit": "millipascal_second"
+    },
+    "specific_heat_capacity": {
+      "reference_unit": "joule_per_kilogram_kelvin"
     }
   },
   "entries": [
@@ -888,6 +891,21 @@
       ]
     },
     {
+      "id": "joule_per_kilogram_kelvin",
+      "dimension": "specific_heat_capacity",
+      "symbol": "J/(kg·K)",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "J/(kg K)",
+        "J/(kg·K)"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
       "id": "microsiemens_per_centimeter",
       "dimension": "conductivity",
       "symbol": "µS/cm",
@@ -952,6 +970,102 @@
       "aliases": [
         "L/kg"
       ]
+    },
+    {
+      "id": "us_liquid_quart_per_pound",
+      "dimension": "specific_volume",
+      "symbol": "US qt/lb",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "6145149",
+        "factor_denominator": "2945405"
+      },
+      "aliases": [
+        "qt/lb"
+      ]
+    },
+    {
+      "id": "us_liquid_gallon_per_pound",
+      "dimension": "specific_volume",
+      "symbol": "US gal/lb",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "24580596",
+        "factor_denominator": "2945405"
+      },
+      "aliases": [
+        "gal/lb"
+      ]
+    },
+    {
+      "id": "us_liquid_gallon_per_ounce",
+      "dimension": "specific_volume",
+      "symbol": "US gal/oz",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "393289536",
+        "factor_denominator": "2945405"
+      },
+      "aliases": [
+        "gal/oz"
+      ]
+    },
+    {
+      "id": "liter_per_gram",
+      "dimension": "specific_volume",
+      "symbol": "L/g",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "L/g",
+        "l/g"
+      ]
+    },
+    {
+      "id": "us_fluid_ounce_per_ounce",
+      "dimension": "specific_volume",
+      "symbol": "US fl oz/oz",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "6145149",
+        "factor_denominator": "5890810"
+      },
+      "aliases": [
+        "floz/oz"
+      ]
+    },
+    {
+      "id": "cubic_meter_per_kilogram",
+      "dimension": "specific_volume",
+      "symbol": "m³/kg",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "1000",
+        "factor_denominator": "1"
+      },
+      "aliases": [
+        "m^3/kg",
+        "m³/kg"
+      ],
+      "source": "BIPM_SI"
+    },
+    {
+      "id": "cubic_foot_per_pound",
+      "dimension": "specific_volume",
+      "symbol": "ft³/lb",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "14158423296",
+        "factor_denominator": "226796185"
+      },
+      "aliases": [
+        "ft^3/lb",
+        "ft³/lb"
+      ],
+      "source": "NIST_SP811"
     },
     {
       "id": "liter_per_minute",

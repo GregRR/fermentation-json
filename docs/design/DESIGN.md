@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.14
+**Document version:** 0.15
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -391,7 +391,7 @@ A reported representation SHOULD be included when the quantity originated from:
 The reported representation MAY preserve:
 
 - the reported value or values;
-- the reported unit;
+- a common reported unit, or endpoint-specific reported units for a range when the source uses different units at the endpoints;
 - original text;
 - decimal precision;
 - significant figures;
@@ -405,6 +405,8 @@ The reported representation MAY be identical to the canonical representation whe
 An implementation MUST NOT fabricate a reported representation when no original reported representation existed.
 
 Canonicalization MUST NOT overwrite, replace, or reinterpret the reported representation.
+
+For a reported range, the representation MUST use either one common `unit` applying to both endpoints or an `endpoint_units` object that identifies the unit of each endpoint independently. A non-range reported representation MUST use one common `unit` and MUST NOT use `endpoint_units`. This permits lossless preservation of sources whose range endpoints are expressed in different units while keeping the canonical range normalized to one canonical unit.
 
 ### 9.4 Representation, epistemic state, and derivation are independent
 
@@ -2149,6 +2151,8 @@ The project MUST maintain a machine-readable inventory and mapping entry for eve
 BeerJSON source values and unit tokens required for round trip MUST be preserved even when canonical FermentationJSON quantities are also produced. Array item ordering MUST be preserved.
 
 A mapping MUST NOT infer a missing unit or other semantic qualifier from convention alone. BeerJSON `ppm` and `ppb` source tokens MUST NOT be silently reinterpreted as mass-per-volume units.
+
+BeerJSON measurable types MUST be mapped according to scientific meaning rather than copied mechanically. Ordinary physical quantities MAY map directly to FermentationJSON quantity kinds. Types that combine distinct scales or methods, including BeerJSON gravity, color, carbonation, bitterness, and diastatic-power types, MUST remain explicitly source-preserved and semantically pending until their native scale definitions and conversion provenance are documented. Generic `PercentType` MAY be refined by field context, while `ConcentrationType` MUST dispatch by source token so that `mg/l` remains mass concentration and `ppm`/`ppb` remain ratio quantities unless an explicit derivation establishes otherwise. BeerJSON range endpoints MAY carry different source units; the reported representation MUST preserve those endpoint units independently when necessary. See ADR-0009.
 
 The strict compatibility guarantee applies to documents valid under the pinned BeerJSON schema snapshot. A pragmatic importer MAY preserve nonstandard application fields opaquely, but MUST report that the source deviates from the BeerJSON compatibility baseline.
 

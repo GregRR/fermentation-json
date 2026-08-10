@@ -101,13 +101,20 @@ def semantic_errors(quantity: dict) -> list[str]:
 
     reported = quantity.get("reported")
     if reported:
-        unit_id = reported["unit"]
-        if not _is_absolute_uri(unit_id):
-            unit = UNITS.get(unit_id)
-            if unit is None:
-                errors.append("unknown_core_unit")
-            elif unit["dimension"] != kind["dimension"]:
-                errors.append("reported_unit_dimension_mismatch")
+        reported_unit_ids: list[str] = []
+        if "unit" in reported:
+            reported_unit_ids.append(reported["unit"])
+        else:
+            endpoint_units = reported.get("endpoint_units", {})
+            reported_unit_ids.extend(endpoint_units.values())
+
+        for unit_id in reported_unit_ids:
+            if not _is_absolute_uri(unit_id):
+                unit = UNITS.get(unit_id)
+                if unit is None:
+                    errors.append("unknown_core_unit")
+                elif unit["dimension"] != kind["dimension"]:
+                    errors.append("reported_unit_dimension_mismatch")
 
     for representation in (canonical, reported):
         if not representation:
@@ -125,7 +132,7 @@ def semantic_errors(quantity: dict) -> list[str]:
     if reported and not errors:
         c_form = canonical["form"]
         r_form = reported["form"]
-        if c_form["type"] == "exact" and r_form["type"] == "exact":
+        if c_form["type"] == "exact" and r_form["type"] == "exact" and "unit" in reported:
             c_unit = UNITS.get(canonical["unit"])
             r_unit = UNITS.get(reported["unit"])
             if c_unit and r_unit and c_unit["dimension"] == r_unit["dimension"]:

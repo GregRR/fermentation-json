@@ -102,8 +102,7 @@
       "$anchor": "reportedRepresentation",
       "type": "object",
       "required": [
-        "form",
-        "unit"
+        "form"
       ],
       "properties": {
         "form": {
@@ -132,9 +131,106 @@
         },
         "original_unit_text": {
           "type": "string"
+        },
+        "endpoint_units": {
+          "type": "object",
+          "required": [
+            "minimum",
+            "maximum"
+          ],
+          "properties": {
+            "minimum": {
+              "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+            },
+            "maximum": {
+              "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        "endpoint_original_unit_text": {
+          "type": "object",
+          "properties": {
+            "minimum": {
+              "type": "string"
+            },
+            "maximum": {
+              "type": "string"
+            }
+          },
+          "unevaluatedProperties": false
         }
       },
-      "unevaluatedProperties": false
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "form": {
+                "properties": {
+                  "type": {
+                    "const": "range"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              }
+            },
+            "required": [
+              "form"
+            ]
+          },
+          "then": {
+            "oneOf": [
+              {
+                "required": [
+                  "unit"
+                ],
+                "not": {
+                  "required": [
+                    "endpoint_units"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "endpoint_units"
+                ],
+                "not": {
+                  "required": [
+                    "unit"
+                  ]
+                }
+              }
+            ],
+            "dependentRequired": {
+              "endpoint_original_unit_text": [
+                "endpoint_units"
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "unit"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "endpoint_units"
+                  ]
+                },
+                {
+                  "required": [
+                    "endpoint_original_unit_text"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
     },
     "analytical_limit": {
       "$anchor": "analyticalLimit",

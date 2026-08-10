@@ -64,7 +64,10 @@ in JSON Schema.
 `quantity.schema.json` validates vocabulary identifier syntax. Registry
 membership, dimensional compatibility, and canonical-unit selection are
 semantic conformance requirements checked by
-`tests/schema/test_vocabulary_semantics.py`.
+`tests/schema/test_vocabulary_semantics.py`. A reported range may use one common
+`unit` or explicit `endpoint_units` when the source expresses its minimum and
+maximum in different units; non-range reported quantities continue to require one
+common `unit`.
 
 ## Generic result and interchange semantics
 

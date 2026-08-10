@@ -1,0 +1,161 @@
+{
+  "artifact": "fermentationjson.beerjson_measurable_type_mapping",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_standard": {
+    "name": "BeerJSON",
+    "version": "v1.0.2",
+    "schema": "measureable_units.json",
+    "source_manifest": "../source-manifest.v0.1.0.json"
+  },
+  "unit_token_mapping": "unit-tokens.v0.1.0.json",
+  "rules": [
+    "BeerJSON source value and unit tokens MUST be preserved independently from the native FermentationJSON representation.",
+    "A BeerJSON measurable type does not automatically define one FermentationJSON quantity kind when the source type mixes distinct scientific semantics.",
+    "Field-level mappings MAY refine a neutral type-level quantity kind when the field semantics justify a more specific kind.",
+    "No conversion relationship is implied for analytical or empirical scales until its semantics and source are documented.",
+    "BeerJSON range endpoints are independently typed quantity objects and MAY carry different units; lossless import therefore preserves endpoint-specific reported units when necessary."
+  ],
+  "quantity_type_mappings": {
+    "VolumeType": {
+      "status": "direct",
+      "quantity_kind": "volume",
+      "source_unit_type": "VolumeUnitType"
+    },
+    "MassType": {
+      "status": "direct",
+      "quantity_kind": "mass",
+      "source_unit_type": "MassUnitType"
+    },
+    "TemperatureType": {
+      "status": "direct",
+      "quantity_kind": "temperature",
+      "source_unit_type": "TemperatureUnitType"
+    },
+    "PressureType": {
+      "status": "direct",
+      "quantity_kind": "pressure",
+      "source_unit_type": "PressureUnitType"
+    },
+    "AcidityType": {
+      "status": "direct_token_constrained",
+      "quantity_kind": "ph",
+      "source_unit_type": "AcidityUnitType",
+      "notes": "BeerJSON v1.0.2 permits only the pH token; import as exact pH without inventing reference temperature or averaging semantics."
+    },
+    "TimeType": {
+      "status": "direct",
+      "quantity_kind": "duration",
+      "source_unit_type": "TimeUnitType",
+      "notes": "BeerJSON restricts the source value to integer; FermentationJSON preserves that source integer even though its canonical duration model is not restricted to integers."
+    },
+    "PercentType": {
+      "status": "context_refined",
+      "quantity_kind": "fraction",
+      "source_unit_type": "PercentUnitType",
+      "notes": "The generic type-level mapping is fraction. Field semantics may refine this to mass_fraction, volume_fraction, or another explicitly justified fraction kind."
+    },
+    "ViscosityType": {
+      "status": "direct",
+      "quantity_kind": "dynamic_viscosity",
+      "source_unit_type": "ViscosityUnitType"
+    },
+    "SpecificVolumeType": {
+      "status": "direct",
+      "quantity_kind": "specific_volume",
+      "source_unit_type": "SpecificVolumeUnitType"
+    },
+    "SpecificHeatType": {
+      "status": "partial_unit_support",
+      "quantity_kind": "specific_heat_capacity",
+      "source_unit_type": "SpecificHeatUnitType",
+      "notes": "J/(kg K) is mapped. BeerJSON does not define which calorie or BTU realization its other tokens mean, so those tokens remain preserved but unresolved."
+    },
+    "ConcentrationType": {
+      "status": "token_dispatched",
+      "source_unit_type": "ConcentrationUnitType",
+      "token_quantity_kinds": {
+        "mg/l": "mass_concentration",
+        "ppm": "fraction",
+        "ppb": "fraction"
+      },
+      "notes": "ppm and ppb are preserved as ratio quantities. A field/domain mapping may derive mass concentration only with explicit analyte and basis assumptions."
+    },
+    "UnitType": {
+      "status": "context_required",
+      "source_unit_type": "UnitUnitType",
+      "notes": "BeerJSON uses this type for count-like and unitless amounts. FJSON does not equate package counts, item counts, and mathematical dimensionless ratios without field/item context."
+    },
+    "DiastaticPowerType": {
+      "status": "analytical_scale_pending",
+      "source_unit_type": "DiastaticPowerUnitType",
+      "notes": "Native scale semantics and conversion provenance must be documented before core quantity/unit registration."
+    },
+    "ColorType": {
+      "status": "analytical_scale_pending",
+      "source_unit_type": "ColorUnitType",
+      "notes": "BeerJSON combines grain Lovibond and wort/beer SRM/EBC in one source type. Native mapping must retain material/measurement context rather than treating them as one generic physical dimension."
+    },
+    "CarbonationType": {
+      "status": "analytical_scale_pending",
+      "source_unit_type": "CarbonationUnitType",
+      "notes": "g/L and volumes of CO2 are not treated as interchangeable units without an explicit carbonation definition and reference-condition model."
+    },
+    "BitternessType": {
+      "status": "analytical_scale_pending",
+      "source_unit_type": "BitternessUnitType",
+      "notes": "IBU is an analytical brewing measure and requires method/scale semantics rather than a generic physical unit conversion."
+    },
+    "GravityType": {
+      "status": "multi_scale_pending",
+      "source_unit_type": "GravityUnitType",
+      "notes": "Specific gravity, Plato, and Brix are distinct measurement/scaling concepts. Native FJSON will not pretend they are ordinary units of one physical dimension."
+    }
+  },
+  "range_type_mappings": {
+    "TemperatureRangeType": {
+      "base_type": "TemperatureType",
+      "status": "direct",
+      "reported_endpoint_unit_policy": "preserve_independently_when_source_units_differ"
+    },
+    "PercentRangeType": {
+      "base_type": "PercentType",
+      "status": "context_refined",
+      "reported_endpoint_unit_policy": "preserve_independently_when_source_units_differ"
+    },
+    "CarbonationRangeType": {
+      "base_type": "CarbonationType",
+      "status": "base_type_pending",
+      "reported_endpoint_unit_policy": "preserve_source_objects"
+    },
+    "BitternessRangeType": {
+      "base_type": "BitternessType",
+      "status": "base_type_pending",
+      "reported_endpoint_unit_policy": "preserve_source_objects"
+    },
+    "ColorRangeType": {
+      "base_type": "ColorType",
+      "status": "base_type_pending",
+      "reported_endpoint_unit_policy": "preserve_source_objects"
+    },
+    "GravityRangeType": {
+      "base_type": "GravityType",
+      "status": "base_type_pending",
+      "reported_endpoint_unit_policy": "preserve_source_objects"
+    }
+  },
+  "non_quantity_types": {
+    "DateType": {
+      "status": "separate_metadata_mapping",
+      "notes": "Date/date-time lexical mapping belongs to metadata/process semantics, not the quantity model."
+    },
+    "QualitativeRangeType": {
+      "status": "controlled_vocabulary_mapping",
+      "notes": "Qualitative labels are categorical values, not numerical quantities."
+    },
+    "VersionType": {
+      "status": "separate_metadata_mapping",
+      "notes": "BeerJSON version is metadata, not a quantity."
+    }
+  }
+}

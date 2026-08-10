@@ -62,14 +62,17 @@ authoritative regulatory guidance and independent industry corroboration.
 
 ## BeerJSON compatibility vocabulary
 
-BeerJSON development repository, `measureable_units.json` documentation.
+BeerJSON `v1.0.2` `measureable_units.json` schema and generated documentation.
 
-- https://github.com/beerjson/beerjson/blob/main/docs/measureable_units.json.md
+- https://raw.githubusercontent.com/beerjson/beerjson/v1.0.2/json/measureable_units.json
+- https://github.com/beerjson/beerjson/blob/v1.0.2/docs/measureable_units.json.md
 
 BeerJSON uses compact source-format unit tokens. FermentationJSON does not
 reuse those tokens as its core vocabulary; its BeerJSON compatibility profile
-will define explicit mappings while preserving BeerJSON source values and
-units.
+defines explicit mappings while preserving BeerJSON source values and units.
+Composite specific-volume units added for compatibility are defined from the
+already registered FermentationJSON volume and mass units. Ambiguous BeerJSON
+tokens remain unresolved rather than being assigned a guessed definition.
 
 ## UCUM evaluation
 

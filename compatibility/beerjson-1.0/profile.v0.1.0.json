@@ -16,6 +16,7 @@
   "inventory": "inventory/beerjson-v1.0.2-inventory.json",
   "field_mapping": "mappings/field-mapping.v0.1.0.json",
   "unit_mapping": "mappings/unit-tokens.v0.1.0.json",
+  "measurable_type_mapping": "mappings/measurable-types.v0.1.0.json",
   "preservation_requirements": [
     "all BeerJSON-defined fields",
     "original numeric and string values",

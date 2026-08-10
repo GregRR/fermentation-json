@@ -3770,5 +3770,6 @@
     "semantic_interpretation",
     "native_representation",
     "reverse_mapping"
-  ]
+  ],
+  "measurable_type_mapping": "measurable-types.v0.1.0.json"
 }
