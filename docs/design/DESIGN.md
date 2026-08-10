@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.16
+**Document version:** 0.17
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -2153,6 +2153,8 @@ BeerJSON source values and unit tokens required for round trip MUST be preserved
 A mapping MUST NOT infer a missing unit or other semantic qualifier from convention alone. BeerJSON `ppm` and `ppb` source tokens MUST NOT be silently reinterpreted as mass-per-volume units.
 
 BeerJSON measurable types MUST be mapped according to scientific meaning rather than copied mechanically. Ordinary physical quantities MAY map directly to FermentationJSON quantity kinds. Generic `PercentType` MAY be refined by field context, while `ConcentrationType` MUST dispatch by source token so that `mg/l` remains mass concentration and `ppm`/`ppb` remain ratio quantities unless an explicit derivation establishes otherwise. BeerJSON range endpoints MAY carry different source units; the reported representation MUST preserve those endpoint units independently when necessary. See ADR-0009.
+
+BeerJSON primitive JSON carrier types MUST NOT be treated as complete semantic types. Optional omission remains distinct from `null`, zero, `false`, and empty text; enum source tokens remain exact source tokens; field-name or sibling-field scale/basis semantics MUST be made explicit by the compatibility mapping; and missing units, time zones, score bounds, defaults, or object identity MUST NOT be invented. BeerJSON `DateType` local date-times MUST remain local when no offset is present. The BeerJSON-1.0 compatibility profile additionally requires the root numeric version to equal `1.0` even though the upstream `VersionType` schema itself accepts any number. See ADR-0011.
 
 Measurement scales and analytical indices MUST remain distinct from physical units. FermentationJSON defines explicit measurement-scale identifiers for BeerJSON specific gravity, Plato, Brix, SRM, EBC, Lovibond, volumes of CO2, IBU, degrees Lintner, and Windisch-Kolbach. Cross-scale transformations MUST be represented as derived calculations with applicable method/model/reference-condition provenance rather than as ordinary unit conversions. Brix MUST NOT be silently relabeled as Plato; IBU MUST NOT be equated with iso-alpha-acid mass concentration; Lovibond MUST NOT be treated as a spectrophotometric beer-color unit; and carbonation volumes MUST NOT be treated as grams per liter without an explicit reference-condition calculation. A BeerJSON analytical range whose endpoints use different scales MUST remain source-preserved until an explicit normalization calculation is performed. See ADR-0010.
 

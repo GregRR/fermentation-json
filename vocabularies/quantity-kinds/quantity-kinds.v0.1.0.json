@@ -33,6 +33,18 @@
       "description": "Amount-of-substance fraction."
     },
     {
+      "id": "count",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "description": "Dimensionless count of discrete items or entities; field/domain semantics determine whether fractional source values are meaningful."
+    },
+    {
+      "id": "volume_per_mass",
+      "dimension": "specific_volume",
+      "canonical_unit": "liter_per_kilogram",
+      "description": "Volume normalized by mass when the semantic concept is a composition, content, yield, or reporting basis rather than thermodynamic specific volume."
+    },
+    {
       "id": "length",
       "dimension": "length",
       "canonical_unit": "meter"

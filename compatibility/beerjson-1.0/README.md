@@ -15,6 +15,8 @@ Files:
 - `mappings/unit-tokens.v0.1.0.json` — BeerJSON unit-token handling;
 - `mappings/measurable-types.v0.1.0.json` — concrete measurable/quantity type mapping;
 - `mappings/analytical-scales.v0.1.0.json` — token-dispatched BeerJSON gravity, color, carbonation, bitterness, and diastatic-power semantics;
+- `mappings/primitive-field-semantics.v0.1.0.json` — reusable rules for primitive carriers, percentages, field-encoded scales/bases, local date-times, and identity/absence semantics;
+- `fixtures/primitive-field-vectors.v0.1.0.json` — representative source-to-semantic mapping vectors;
 - `mappings/field-mapping.v0.1.0.json` — one mapping row for every declared object field;
 - `profile.v0.1.0.json` — pre-release compatibility-profile manifest.
 
@@ -53,3 +55,12 @@ ADR-0009 defines the first concrete BeerJSON type mappings. Physical quantities 
 BeerJSON gravity, color, carbonation, bitterness, and diastatic-power values are mapped through explicit measurement-scale semantics rather than registered as ordinary physical-unit families. Distinct scales remain distinct native quantity kinds. Cross-scale relationships, where supported, are calculations with method/model/reference-condition provenance rather than unit conversions. Mixed-scale BeerJSON range endpoints remain independently preserved unless an explicit normalization calculation is performed.
 
 BeerJSON range endpoints are complete measurable objects and may therefore use different source units. FermentationJSON reported ranges can preserve endpoint-specific units while canonical ranges remain normalized to one canonical unit.
+
+
+## Primitive and field-encoded semantics
+
+BeerJSON primitive JSON types are treated as serialization carriers, not as complete semantic types. Optional omission remains distinct from `null`, zero, `false`, or an empty string. Enum tokens are preserved exactly even when a native FermentationJSON vocabulary later uses different identifiers.
+
+The compatibility mapping also resolves source semantics encoded outside a value's immediate type. Examples include cell counts expressed in billions by the field name, hop oil reported as mL per 100 g, equipment rates whose time basis is in the field name, and packaging graphic dimensions whose unit is supplied by a sibling field. When BeerJSON does not provide enough semantics, such as its bare numeric carbonation fields or `calories_per_pint`, FermentationJSON preserves the source value rather than inventing missing units.
+
+BeerJSON `DateType` uses an unanchored shape-only regex. Exact calendar-valid date and local-date-time strings can receive native semantics, while other strings accepted by that source regex remain preserved without being repaired or assigned an invented time zone. Distinct embedded BeerJSON objects are likewise not deduplicated merely because descriptive fields happen to match.

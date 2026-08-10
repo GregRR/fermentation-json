@@ -702,9 +702,10 @@ They should remain proposals or design notes until a concrete interoperability r
 The next development sequence is:
 
 1. **BeerJSON field-level mappings and representative fixtures**
-   - resolve BeerJSON fields to concrete domain concepts without copying legacy source shapes;
-   - build representative measurable import fixtures covering physical quantities and scale-defined analytical values;
-   - add same-scale and mixed-scale range fixtures plus round-trip expectations before recipe/domain schema work expands.
+   - [x] define primitive carrier, omission/null, enum-token, local-date-time, percentage, field-encoded basis, and embedded-object identity rules;
+   - [x] add representative primitive/source-semantic mapping vectors;
+   - [ ] expand representative measurable import fixtures covering physical quantities and scale-defined analytical values;
+   - [ ] add same-scale and mixed-scale range fixtures plus round-trip expectations before recipe/domain schema work expands.
 
 2. **First concrete domain schemas**
    - shared materials/cultures/process/equipment foundations;

@@ -132,6 +132,20 @@
       "source": "BIPM_SI"
     },
     {
+      "id": "inch",
+      "dimension": "length",
+      "symbol": "in",
+      "conversion_to_dimension_reference": {
+        "type": "linear",
+        "factor_numerator": "127",
+        "factor_denominator": "5000"
+      },
+      "aliases": [
+        "in"
+      ],
+      "source": "NIST_INTERNATIONAL_INCH"
+    },
+    {
       "id": "centimeter",
       "dimension": "length",
       "symbol": "cm",

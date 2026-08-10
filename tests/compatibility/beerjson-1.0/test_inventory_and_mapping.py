@@ -66,17 +66,29 @@ def test_unit_mapping_covers_every_beerjson_unit_token() -> None:
 
 def test_special_semantic_fields_remain_explicit() -> None:
     mapping = _load("mappings/field-mapping.v0.1.0.json")
-    special = {
+    unresolved = {
         (row["source_type"], row["source_field"])
         for row in mapping["field_mappings"]
         if row["status"] == "special_mapping_required"
     }
-    assert ("equipment.json#EquipmentItemType", "boil_rate_per_hour") in special
-    assert ("equipment.json#EquipmentItemType", "drain_rate_per_minute") in special
-    assert ("culture.json#CultureAdditionType", "cell_count_billions") in special
-    assert ("hop.json#OilContentType", "total_oil_ml_per_100g") in special
-    assert ("recipe.json#RecipeType", "carbonation") in special
-    assert ("water.json#WaterType", "pH") in special
+    resolved = {
+        (row["source_type"], row["source_field"])
+        for row in mapping["field_mappings"]
+        if row["status"] == "special_mapping_defined"
+    }
+
+    assert ("beer.json#BeerJSONRoot", "profiles") in unresolved
+    assert ("recipe.json#RecipeType", "carbonation") in unresolved
+    assert ("packaging_vessel.json#PackagingVesselType", "carbonation") in unresolved
+    assert ("recipe.json#RecipeType", "calories_per_pint") in unresolved
+
+    assert ("equipment.json#EquipmentItemType", "boil_rate_per_hour") in resolved
+    assert ("equipment.json#EquipmentItemType", "drain_rate_per_minute") in resolved
+    assert ("culture.json#CultureAdditionType", "cell_count_billions") in resolved
+    assert ("hop.json#OilContentType", "total_oil_ml_per_100g") in resolved
+    assert ("packaging_graphic.json#PackagingGraphicType", "width") in resolved
+    assert ("packaging_graphic.json#PackagingGraphicType", "height") in resolved
+    assert ("water.json#WaterType", "pH") in resolved
 
 
 def test_ppm_and_ppb_are_not_mapped_to_mass_per_volume() -> None:
@@ -100,7 +112,7 @@ def test_special_mappings_separate_source_native_and_reverse_layers() -> None:
     required_layers = set(mapping["special_mapping_layers"])
 
     for row in mapping["field_mappings"]:
-        if row["status"] != "special_mapping_required":
+        if row["status"] not in {"special_mapping_required", "special_mapping_defined"}:
             continue
         assert set(row["mapping_layers"]) == required_layers
         assert all(row["mapping_layers"][layer] for layer in required_layers)
@@ -110,10 +122,8 @@ def test_beerjson_equipment_rates_map_to_native_volume_flow_rate() -> None:
     mapping = _load("mappings/field-mapping.v0.1.0.json")
     rows = {(row["source_type"], row["source_field"]): row for row in mapping["field_mappings"]}
 
-    for field_name, time_basis in (
-        ("boil_rate_per_hour", "hour"),
-        ("drain_rate_per_minute", "minute"),
-    ):
+    rate_fields = (("boil_rate_per_hour", "hour"), ("drain_rate_per_minute", "minute"))
+    for field_name, time_basis in rate_fields:
         row = rows[("equipment.json#EquipmentItemType", field_name)]
         layers = row["mapping_layers"]
         assert row["source_value_type"] == "VolumeType"

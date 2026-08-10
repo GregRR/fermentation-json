@@ -1,0 +1,444 @@
+{
+  "artifact": "fermentationjson.beerjson_primitive_field_semantics",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_standard": {
+    "name": "BeerJSON",
+    "version": "v1.0.2",
+    "source_manifest": "../source-manifest.v0.1.0.json"
+  },
+  "rules": [
+    "Primitive JSON carrier types do not by themselves define FermentationJSON semantic types.",
+    "An omitted optional BeerJSON property is distinct from null, zero, false, and an empty string. The pinned BeerJSON schemas do not define null as a value for these fields.",
+    "BeerJSON enum tokens are source-format tokens. Importers preserve the exact token; a native FermentationJSON vocabulary mapping may use a different identifier but must retain enough source information for reverse mapping.",
+    "Matching names, producer strings, product IDs, or equal object content do not establish identity between distinct embedded BeerJSON object occurrences.",
+    "Importers must not invent units, time zones, scale bounds, default values, or reference identities that are absent from BeerJSON."
+  ],
+  "generic_primitive_policy": {
+    "string": "Preserve exact Unicode string content. Do not infer identifiers, URIs, years, or controlled vocabulary membership unless the field-specific BeerJSON schema establishes that role.",
+    "boolean": "Preserve true/false exactly; absence remains distinct from false.",
+    "enum": "Preserve the exact BeerJSON token and map to a native token only through an explicit field/type vocabulary mapping."
+  },
+  "date_type": {
+    "source_type": "measureable_units.json#DateType",
+    "forms": {
+      "date": {
+        "pattern": "YYYY-MM-DD",
+        "native_semantics": "calendar_date"
+      },
+      "local_date_time": {
+        "pattern": "YYYY-MM-DDTHH:MM:SS",
+        "native_semantics": "local_date_time_without_offset"
+      }
+    },
+    "timezone_policy": "A BeerJSON local date-time has no zone/offset. It MUST NOT be converted to an RFC 3339 instant by assuming UTC or a local zone. Preserve it as local date-time semantics until an external source supplies a zone.",
+    "calendar_validation_policy": "The pinned BeerJSON regex checks only digit shape and is unanchored; it does not establish a real calendar date. Strict compatibility preserves any source accepted by the pinned schema. Native date/local-date-time interpretation requires both a whole-string lexical form and calendar-valid fields; otherwise preserve the source string and report a compatibility diagnostic rather than inventing or repairing a date.",
+    "source_pattern_is_unanchored": true,
+    "native_mapping_policy": "Only a whole-string lexical match to YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS is eligible for native calendar/local-date-time semantics. A string that satisfies the pinned BeerJSON JSON Schema only because the unanchored pattern matches a substring MUST remain source-preserved without invented date semantics."
+  },
+  "version_type": {
+    "source_type": "measureable_units.json#VersionType",
+    "source_schema_constraint": "number_only",
+    "compatibility_profile_requirement": "numeric_value_equals_1.0",
+    "rule": "The pinned BeerJSON schema does not constrain VersionType to 1.0. FermentationJSON BeerJSON-1.0 compatibility therefore treats a root version numerically equal to 1.0 as a semantic profile requirement; other numbers are outside the BeerJSON-1.0 compatibility claim even if structurally accepted by the upstream schema."
+  },
+  "percent_type": {
+    "source_type": "measureable_units.json#PercentType",
+    "source_unit": "%",
+    "canonical_conversion": {
+      "unit": "one",
+      "factor_numerator": "1",
+      "factor_denominator": "100"
+    },
+    "default_quantity_kind": "fraction",
+    "rule": "PercentType is a percentage carrier. Field context may refine the native fraction kind only when BeerJSON explicitly establishes the basis.",
+    "field_refinements": [
+      {
+        "source_type": "culture.json#CultureInformation",
+        "source_field": "alcohol_tolerance",
+        "quantity_kind": "volume_fraction",
+        "reason": "ABV limit is explicit in the BeerJSON field description."
+      },
+      {
+        "source_type": "culture.json#CultureAdditionType",
+        "source_field": "attenuation",
+        "quantity_kind": "fraction",
+        "reason": "Apparent attenuation fraction; no mass/volume composition basis is implied."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "moisture",
+        "quantity_kind": "fraction",
+        "reason": "BeerJSON states percentage but does not normatively identify a mass/volume basis."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "protein",
+        "quantity_kind": "fraction",
+        "reason": "BeerJSON states percentage but does not normatively identify a mass/volume basis."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "kolbach_index",
+        "quantity_kind": "fraction",
+        "reason": "Ratio of soluble to total nitrogen/protein according to the BeerJSON description."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "max_in_batch",
+        "quantity_kind": "fraction",
+        "reason": "Maximum grain-bill percentage; BeerJSON does not state the composition basis."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "glassy",
+        "quantity_kind": "fraction",
+        "reason": "Material percentage; preserve without inventing a mass/count basis."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "plump",
+        "quantity_kind": "fraction",
+        "reason": "Sieve-result percentage; preserve without inventing a mass/count basis."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "half",
+        "quantity_kind": "fraction",
+        "reason": "BeerJSON provides no description that establishes a more specific percentage basis."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "mealy",
+        "quantity_kind": "fraction",
+        "reason": "Kernel-property percentage; preserve without inventing a mass/count basis."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "thru",
+        "quantity_kind": "fraction",
+        "reason": "Sieve-result percentage; preserve without inventing a mass/count basis."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "friability",
+        "quantity_kind": "fraction",
+        "reason": "Friability percentage; no physical composition basis is implied."
+      },
+      {
+        "source_type": "fermentable.json#FermentableType",
+        "source_field": "fermentability",
+        "quantity_kind": "fraction",
+        "reason": "Baseline apparent-attenuation-style percentage for extract."
+      },
+      {
+        "source_type": "fermentable.json#YieldType",
+        "source_field": "fine_grind",
+        "quantity_kind": "fraction",
+        "reason": "Yield relative to sucrose according to BeerJSON."
+      },
+      {
+        "source_type": "fermentable.json#YieldType",
+        "source_field": "coarse_grind",
+        "quantity_kind": "fraction",
+        "reason": "Yield relative to sucrose according to BeerJSON."
+      },
+      {
+        "source_type": "fermentable.json#YieldType",
+        "source_field": "fine_coarse_difference",
+        "quantity_kind": "fraction",
+        "reason": "Difference between two BeerJSON percentage yields."
+      },
+      {
+        "source_type": "hop.json#HopVarietyBase",
+        "source_field": "alpha_acid",
+        "quantity_kind": "fraction",
+        "reason": "BeerJSON provides a percentage but does not explicitly declare mass basis."
+      },
+      {
+        "source_type": "hop.json#HopVarietyBase",
+        "source_field": "beta_acid",
+        "quantity_kind": "fraction",
+        "reason": "BeerJSON provides a percentage but does not explicitly declare mass basis."
+      },
+      {
+        "source_type": "hop.json#VarietyInformation",
+        "source_field": "percent_lost",
+        "quantity_kind": "fraction",
+        "reason": "Fractional alpha-acid loss over the source-defined six-month period."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "humulene",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "caryophyllene",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "cohumulone",
+        "quantity_kind": "fraction",
+        "reason": "BeerJSON percentage; no more specific basis is stated by the schema."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "myrcene",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "farnesene",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "geraniol",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "b_pinene",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "linalool",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "limonene",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "nerol",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "pinene",
+        "quantity_kind": "fraction",
+        "reason": "Hop-oil component percentage; source basis remains BeerJSON-defined."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "polyphenols",
+        "quantity_kind": "fraction",
+        "reason": "BeerJSON percentage; no more specific basis is stated by the schema."
+      },
+      {
+        "source_type": "hop.json#OilContentType",
+        "source_field": "xanthohumol",
+        "quantity_kind": "fraction",
+        "reason": "BeerJSON percentage; no more specific basis is stated by the schema."
+      },
+      {
+        "source_type": "recipe.json#RecipeType",
+        "source_field": "alcohol_by_volume",
+        "quantity_kind": "volume_fraction",
+        "reason": "Field identity explicitly defines alcohol by volume."
+      },
+      {
+        "source_type": "recipe.json#RecipeType",
+        "source_field": "apparent_attenuation",
+        "quantity_kind": "fraction",
+        "reason": "Apparent attenuation is a process/result fraction, not a composition unit."
+      },
+      {
+        "source_type": "recipe.json#EfficiencyType",
+        "source_field": "conversion",
+        "quantity_kind": "fraction",
+        "reason": "Process efficiency percentage."
+      },
+      {
+        "source_type": "recipe.json#EfficiencyType",
+        "source_field": "lauter",
+        "quantity_kind": "fraction",
+        "reason": "Process efficiency percentage."
+      },
+      {
+        "source_type": "recipe.json#EfficiencyType",
+        "source_field": "mash",
+        "quantity_kind": "fraction",
+        "reason": "Process efficiency percentage."
+      },
+      {
+        "source_type": "recipe.json#EfficiencyType",
+        "source_field": "brewhouse",
+        "quantity_kind": "fraction",
+        "reason": "Process efficiency percentage."
+      }
+    ],
+    "range_policy": "BeerJSON PercentType imposes no 0..100 bound. Importers MUST NOT clamp or reject a source percentage solely because it is outside that conventional range; preserve the BeerJSON value and let the native field/domain profile apply any scientifically justified constraint."
+  },
+  "numeric_field_rules": [
+    {
+      "source_type": "fermentable.json#FermentableType",
+      "source_field": "alpha_amylase",
+      "source_type_kind": "number",
+      "semantic_kind": "source_analytical_number",
+      "status": "preserve_without_native_unit",
+      "rule": "BeerJSON describes dextrinizing units but supplies neither an explicit unit token nor analytical method. Preserve the number and description semantics; do not invent a FermentationJSON unit or scale."
+    },
+    {
+      "source_type": "hop.json#OilContentType",
+      "source_field": "total_oil_ml_per_100g",
+      "source_type_kind": "number",
+      "semantic_kind": "volume_per_mass",
+      "status": "native_quantity_mapping_defined",
+      "quantity_kind": "volume_per_mass",
+      "canonical_unit": "liter_per_kilogram",
+      "source_basis": "milliliter_per_100_gram",
+      "canonical_factor": {
+        "numerator": "1",
+        "denominator": "100"
+      },
+      "rule": "The field name explicitly defines mL oil per 100 g hops. Convert exactly to L/kg with factor 0.01 while preserving the original bare BeerJSON number and field identity."
+    },
+    {
+      "source_type": "packaging_vessel.json#PackagingVesselType",
+      "source_field": "carbonation",
+      "source_type_kind": "number",
+      "semantic_kind": "carbonation_value_missing_unit",
+      "status": "source_preservation_only",
+      "rule": "BeerJSON provides no unit token. Preserve the number and do not infer volumes CO2 or g/L."
+    },
+    {
+      "source_type": "packaging_vessel.json#PackagingVesselType",
+      "source_field": "vessel_quantity",
+      "source_type_kind": "number",
+      "semantic_kind": "count",
+      "status": "native_quantity_mapping_defined",
+      "quantity_kind": "count",
+      "canonical_unit": "one",
+      "rule": "Interpret as the numeric number of packaging vessels. BeerJSON permits any JSON number, so import MUST NOT silently round a fractional source value."
+    },
+    {
+      "source_type": "packaging_graphic.json#PackagingGraphicType",
+      "source_field": "dpi",
+      "source_type_kind": "number",
+      "semantic_kind": "dots_per_inch",
+      "status": "domain_semantics_defined_core_quantity_deferred",
+      "rule": "The field description fixes the basis as dots per inch. Preserve exactly; a future packaging schema may define a dedicated resolution quantity without treating dpi as generic dimensionless data."
+    },
+    {
+      "source_type": "packaging_graphic.json#PackagingGraphicType",
+      "source_field": "width",
+      "source_type_kind": "number",
+      "semantic_kind": "sibling_unit_length",
+      "status": "native_quantity_mapping_defined",
+      "quantity_kind": "length",
+      "sibling_unit_field": "units",
+      "unit_dispatch": {
+        "mm": "millimeter",
+        "in": "inch"
+      },
+      "rule": "Width is incomplete without the sibling units field. Map the pair to an explicit length quantity; if units is absent, preserve width without inventing a unit."
+    },
+    {
+      "source_type": "packaging_graphic.json#PackagingGraphicType",
+      "source_field": "height",
+      "source_type_kind": "number",
+      "semantic_kind": "sibling_unit_length",
+      "status": "native_quantity_mapping_defined",
+      "quantity_kind": "length",
+      "sibling_unit_field": "units",
+      "unit_dispatch": {
+        "mm": "millimeter",
+        "in": "inch"
+      },
+      "rule": "Height is incomplete without the sibling units field. Map the pair to an explicit length quantity; if units is absent, preserve height without inventing a unit."
+    },
+    {
+      "source_type": "recipe.json#RecipeType",
+      "source_field": "carbonation",
+      "source_type_kind": "number",
+      "semantic_kind": "carbonation_value_missing_unit",
+      "status": "source_preservation_only",
+      "rule": "BeerJSON provides no unit token. Preserve the number and do not infer volumes CO2 or g/L."
+    },
+    {
+      "source_type": "recipe.json#RecipeType",
+      "source_field": "calories_per_pint",
+      "source_type_kind": "number",
+      "semantic_kind": "energy_per_serving_ambiguous_units",
+      "status": "source_preservation_only",
+      "rule": "The field name gives a calorie-per-pint shape but BeerJSON does not define which calorie realization or pint system applies. Preserve the number and field identity without inventing energy or serving units."
+    },
+    {
+      "source_type": "recipe.json#TasteType",
+      "source_field": "rating",
+      "source_type_kind": "number",
+      "semantic_kind": "unbounded_source_score",
+      "status": "preserve_without_scale_normalization",
+      "rule": "BeerJSON defines no rating range or scale. Preserve the numeric score exactly and do not normalize to 5, 10, 20, 100, or another scale."
+    },
+    {
+      "source_type": "water.json#WaterType",
+      "source_field": "pH",
+      "source_type_kind": "number",
+      "semantic_kind": "ph",
+      "status": "native_quantity_mapping_defined",
+      "quantity_kind": "ph",
+      "canonical_unit": "ph_scale",
+      "result_form": "exact",
+      "rule": "Treat the BeerJSON number as one exact reported pH value. Do not infer an average, measurement temperature, or reference condition."
+    }
+  ],
+  "integer_field_rules": [
+    {
+      "source_type": "culture.json#CultureInformation",
+      "source_field": "max_reuse",
+      "semantic_kind": "count",
+      "quantity_kind": "count",
+      "rule": "Maximum reuse count; preserve integer exactly."
+    },
+    {
+      "source_type": "culture.json#CultureAdditionType",
+      "source_field": "times_cultured",
+      "semantic_kind": "count",
+      "quantity_kind": "count",
+      "rule": "Culture-generation/use count; preserve integer exactly."
+    },
+    {
+      "source_type": "culture.json#CultureAdditionType",
+      "source_field": "cell_count_billions",
+      "semantic_kind": "scaled_count_1e9",
+      "quantity_kind": "count",
+      "rule": "Field name explicitly scales the integer by 10^9 cells.",
+      "scale_factor": "1000000000"
+    },
+    {
+      "source_type": "style.json#StyleBase",
+      "source_field": "category_number",
+      "semantic_kind": "identifier_number",
+      "quantity_kind": null,
+      "rule": "Category identifier/label component, not a measured quantity."
+    },
+    {
+      "source_type": "timing.json#TimingType",
+      "source_field": "step",
+      "semantic_kind": "one_based_ordinal",
+      "quantity_kind": null,
+      "rule": "BeerJSON description uses 2 to mean the second process step; preserve the ordinal and do not silently convert to zero-based indexing."
+    }
+  ],
+  "identity_and_reference_policy": {
+    "source_model": "embedded_objects_without_stable_cross_object_identifiers",
+    "deduplication": "MUST NOT merge distinct BeerJSON object occurrences solely because descriptive fields match.",
+    "generated_native_ids": "An importer MAY assign FermentationJSON object IDs as part of native representation, but generated IDs are not evidence that the BeerJSON source contained identity or reference semantics."
+  }
+}

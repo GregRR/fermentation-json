@@ -13,3 +13,5 @@ They ensure that:
 - the profile cannot be mistaken for a completed compatibility claim.
 
 Import, upstream-schema validation, and round-trip tests will be added as concrete domain mappings become executable.
+
+- `test_primitive_field_semantics.py` verifies conservative percentage refinement, bare-number/integer classification, absence/null semantics, local date-time/version rules, field-encoded bases, exact inch conversion, and representative primitive mapping vectors.

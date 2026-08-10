@@ -60,6 +60,15 @@ The regulatory definition remains the normative source for the
 FermentationJSON unit; the TTB and Brewers Association references provide
 authoritative regulatory guidance and independent industry corroboration.
 
+
+## International inch
+
+NIST Office of Weights and Measures, *SI Units – Length*.
+
+- https://www.nist.gov/pml/owm/si-units-length
+
+The international inch is exactly 25.4 mm, or 0.0254 m. FermentationJSON uses this exact relationship for the core `inch` length unit needed by BeerJSON packaging-graphic compatibility.
+
 ## BeerJSON compatibility vocabulary
 
 BeerJSON `v1.0.2` `measureable_units.json` schema and generated documentation.

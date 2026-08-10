@@ -1,0 +1,189 @@
+{
+  "artifact": "fermentationjson.beerjson_primitive_field_vectors",
+  "version": "0.1.0",
+  "mapping": "../mappings/primitive-field-semantics.v0.1.0.json",
+  "cases": [
+    {
+      "id": "date_only_preserved",
+      "source": {
+        "field": "created",
+        "value": "2026-08-10"
+      },
+      "expected": {
+        "semantic_kind": "calendar_date",
+        "value": "2026-08-10"
+      }
+    },
+    {
+      "id": "local_datetime_no_timezone_invented",
+      "source": {
+        "field": "created",
+        "value": "2026-08-10T04:15:30"
+      },
+      "expected": {
+        "semantic_kind": "local_date_time_without_offset",
+        "value": "2026-08-10T04:15:30",
+        "timezone": null
+      }
+    },
+    {
+      "id": "unanchored_date_pattern_superstring_preserved",
+      "source": {
+        "field": "created",
+        "value": "prefix-2026-08-10-suffix"
+      },
+      "expected": {
+        "beerjson_schema_pattern_can_match": true,
+        "native_date_semantics": null,
+        "status": "source_preservation_only"
+      }
+    },
+    {
+      "id": "impossible_calendar_date_not_repaired",
+      "source": {
+        "field": "created",
+        "value": "2026-99-99"
+      },
+      "expected": {
+        "beerjson_schema_pattern_can_match": true,
+        "native_date_semantics": null,
+        "status": "source_preservation_only"
+      }
+    },
+    {
+      "id": "abv_percent_to_volume_fraction",
+      "source": {
+        "type": "recipe.json#RecipeType",
+        "field": "alcohol_by_volume",
+        "value": {
+          "unit": "%",
+          "value": 5.2
+        }
+      },
+      "expected": {
+        "quantity_kind": "volume_fraction",
+        "canonical_unit": "one",
+        "canonical_value": 0.052
+      }
+    },
+    {
+      "id": "beerjson_percent_not_clamped_by_compatibility_layer",
+      "source": {
+        "type": "fermentable.json#FermentableType",
+        "field": "max_in_batch",
+        "value": {
+          "unit": "%",
+          "value": 105.0
+        }
+      },
+      "expected": {
+        "quantity_kind": "fraction",
+        "canonical_unit": "one",
+        "canonical_value": 1.05,
+        "compatibility_layer_clamped": false
+      }
+    },
+    {
+      "id": "cell_count_billions_expanded",
+      "source": {
+        "type": "culture.json#CultureAdditionType",
+        "field": "cell_count_billions",
+        "value": 125
+      },
+      "expected": {
+        "quantity_kind": "count",
+        "canonical_unit": "one",
+        "canonical_value": 125000000000
+      }
+    },
+    {
+      "id": "hop_oil_basis_expanded",
+      "source": {
+        "type": "hop.json#OilContentType",
+        "field": "total_oil_ml_per_100g",
+        "value": 1.5
+      },
+      "expected": {
+        "quantity_kind": "volume_per_mass",
+        "canonical_unit": "liter_per_kilogram",
+        "canonical_value": 0.015
+      }
+    },
+    {
+      "id": "graphic_inches_to_length",
+      "source": {
+        "type": "packaging_graphic.json#PackagingGraphicType",
+        "field": "width",
+        "value": 3.5,
+        "siblings": {
+          "units": "in"
+        }
+      },
+      "expected": {
+        "quantity_kind": "length",
+        "canonical_unit": "meter",
+        "canonical_value": 0.0889
+      }
+    },
+    {
+      "id": "bare_ph_is_exact_reported_ph",
+      "source": {
+        "type": "water.json#WaterType",
+        "field": "pH",
+        "value": 7.4
+      },
+      "expected": {
+        "quantity_kind": "ph",
+        "canonical_unit": "ph_scale",
+        "canonical_value": 7.4,
+        "result_form": "exact"
+      }
+    },
+    {
+      "id": "bare_carbonation_has_no_invented_unit",
+      "source": {
+        "type": "recipe.json#RecipeType",
+        "field": "carbonation",
+        "value": 2.4
+      },
+      "expected": {
+        "status": "source_preservation_only",
+        "invented_unit": null
+      }
+    },
+    {
+      "id": "timing_step_preserves_one_based_ordinal",
+      "source": {
+        "type": "timing.json#TimingType",
+        "field": "step",
+        "value": 2
+      },
+      "expected": {
+        "semantic_kind": "one_based_ordinal",
+        "value": 2
+      }
+    },
+    {
+      "id": "beerjson_1_version_semantics",
+      "source": {
+        "type": "beer.json#BeerJSONRoot",
+        "field": "version",
+        "value": 1.0
+      },
+      "expected": {
+        "beerjson_1_profile_compatible": true
+      }
+    },
+    {
+      "id": "other_numeric_version_outside_profile",
+      "source": {
+        "type": "beer.json#BeerJSONRoot",
+        "field": "version",
+        "value": 2.0
+      },
+      "expected": {
+        "beerjson_1_profile_compatible": false
+      }
+    }
+  ]
+}

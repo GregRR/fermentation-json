@@ -7,7 +7,8 @@
   "mapping_statuses": {
     "foundation_mapping_available": "The foundation already has the semantic structure needed, though domain vocabulary may still be added.",
     "domain_schema_pending": "The source field is inventoried and assigned to a FermentationJSON concept family, but its concrete target path awaits that domain schema.",
-    "special_mapping_required": "The source field needs an explicit transformation rule because meaning is not fully represented by its BeerJSON value type."
+    "special_mapping_required": "The source field needs an explicit transformation rule because meaning is not fully represented by its BeerJSON value type.",
+    "special_mapping_defined": "Source representation differs materially from the native FermentationJSON representation, but the compatibility mapping rule is now defined."
   },
   "inheritance_rule": "Mappings on a BeerJSON base type apply to fields inherited by derived types unless a derived-type rule explicitly overrides them.",
   "array_order_rule": "Importers MUST preserve array item ordering. No claim is made that JSON object member order is semantic.",
@@ -564,7 +565,7 @@
       "source_value_type": "integer",
       "target_family": "culture",
       "target_concept": "cell_count",
-      "status": "special_mapping_required",
+      "status": "special_mapping_defined",
       "preservation": "required",
       "notes": "The scale of billions is encoded in the field name and MUST be preserved.",
       "mapping_layers": {
@@ -757,7 +758,7 @@
       "source_value_type": "VolumeType",
       "target_family": "equipment",
       "target_concept": "volume_flow_rate",
-      "status": "special_mapping_required",
+      "status": "special_mapping_defined",
       "preservation": "required",
       "notes": "Rate semantics are encoded in the field name although BeerJSON stores a VolumeType.",
       "mapping_layers": {
@@ -774,7 +775,7 @@
       "source_value_type": "VolumeType",
       "target_family": "equipment",
       "target_concept": "volume_flow_rate",
-      "status": "special_mapping_required",
+      "status": "special_mapping_defined",
       "preservation": "required",
       "notes": "Rate semantics are encoded in the field name although BeerJSON stores a VolumeType.",
       "mapping_layers": {
@@ -1594,7 +1595,7 @@
       "source_value_type": "number",
       "target_family": "material",
       "target_concept": "hop_total_oil",
-      "status": "special_mapping_required",
+      "status": "special_mapping_defined",
       "preservation": "required",
       "notes": "The measurement basis ml per 100 g is encoded in the field name.",
       "mapping_layers": {
@@ -2332,7 +2333,7 @@
       "source_value_type": "number",
       "target_family": "packaging",
       "target_concept": "graphic_width",
-      "status": "special_mapping_required",
+      "status": "special_mapping_defined",
       "preservation": "required",
       "notes": "Measurement unit is supplied by the sibling units field.",
       "mapping_layers": {
@@ -2349,7 +2350,7 @@
       "source_value_type": "number",
       "target_family": "packaging",
       "target_concept": "graphic_height",
-      "status": "special_mapping_required",
+      "status": "special_mapping_defined",
       "preservation": "required",
       "notes": "Measurement unit is supplied by the sibling units field.",
       "mapping_layers": {
@@ -3225,7 +3226,7 @@
       "source_value_type": "number",
       "target_family": "water",
       "target_concept": "ph",
-      "status": "special_mapping_required",
+      "status": "special_mapping_defined",
       "preservation": "required",
       "notes": "BeerJSON stores pH as a bare number; import as exact reported pH without inventing averaging semantics.",
       "mapping_layers": {
@@ -3772,5 +3773,6 @@
     "reverse_mapping"
   ],
   "measurable_type_mapping": "measurable-types.v0.1.0.json",
-  "analytical_scale_mapping": "analytical-scales.v0.1.0.json"
+  "analytical_scale_mapping": "analytical-scales.v0.1.0.json",
+  "primitive_field_semantics_mapping": "primitive-field-semantics.v0.1.0.json"
 }

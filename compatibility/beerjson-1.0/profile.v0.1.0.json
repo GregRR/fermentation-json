@@ -28,5 +28,7 @@
   "strict_unknown_field_policy": "A document that violates the pinned BeerJSON schemas is outside the strict BeerJSON 1.0 compatibility guarantee. A pragmatic importer MAY preserve nonstandard fields opaquely but MUST report that the source is nonconforming.",
   "lossless_definition": "Preservation of all BeerJSON-defined information and semantics, not byte-for-byte JSON reproduction.",
   "claim_status": "No FermentationJSON implementation may claim completed BeerJSON 1.0 compatibility from this baseline alone. Concrete domain mappings, import fixtures, and round-trip tests remain required.",
-  "analytical_scale_mapping": "mappings/analytical-scales.v0.1.0.json"
+  "analytical_scale_mapping": "mappings/analytical-scales.v0.1.0.json",
+  "primitive_field_semantics_mapping": "mappings/primitive-field-semantics.v0.1.0.json",
+  "representative_fixture_set": "fixtures/primitive-field-vectors.v0.1.0.json"
 }
