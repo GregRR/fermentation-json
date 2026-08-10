@@ -192,7 +192,7 @@ BeerJSON compatibility should be developed **before or alongside** the brewing s
 - [x] Define concrete measurable/quantity mapping rules and preserve BeerJSON source value/unit tokens independently from native representation.
 - [x] Support endpoint-specific reported units so BeerJSON ranges with independently unit-bearing endpoints can be preserved.
 - [ ] Preserve original BeerJSON values and units across complete document imports.
-- [ ] Resolve analytical-scale mappings for gravity, color, carbonation, bitterness, and diastatic power with documented scientific provenance.
+- [x] Resolve analytical-scale mappings for gravity, color, carbonation, bitterness, and diastatic power with documented scientific provenance and explicit non-unit conversion policy.
 - [ ] Preserve identifiers and references.
 - [ ] Preserve optional metadata.
 - [ ] Preserve semantically meaningful ordering.
@@ -701,10 +701,10 @@ They should remain proposals or design notes until a concrete interoperability r
 
 The next development sequence is:
 
-1. **BeerJSON analytical-scale research and field-level mapping**
-   - define scientifically sourced native semantics for gravity, color, carbonation, bitterness, and diastatic power;
-   - continue resolving BeerJSON fields to concrete domain concepts without copying legacy source shapes;
-   - build representative measurable import and round-trip fixtures as native analytical mappings stabilize.
+1. **BeerJSON field-level mappings and representative fixtures**
+   - resolve BeerJSON fields to concrete domain concepts without copying legacy source shapes;
+   - build representative measurable import fixtures covering physical quantities and scale-defined analytical values;
+   - add same-scale and mixed-scale range fixtures plus round-trip expectations before recipe/domain schema work expands.
 
 2. **First concrete domain schemas**
    - shared materials/cultures/process/equipment foundations;
@@ -725,7 +725,7 @@ This sequence may be adjusted when implementation reveals a dependency, but new 
 | Architecture and design review | Complete | Main design and initial ADRs accepted |
 | Initial foundation schemas | Complete | Core schemas and positive/negative fixtures validate |
 | Foundation stabilization | Complete for compatibility work | Units, IDs, declarations, loss reporting, and foundation semantic conformance implemented |
-| BeerJSON compatibility baseline | In progress | Source snapshot, exhaustive inventory, mapping framework, and measurable-type mapping implemented; field/domain mappings and fixtures remain |
+| BeerJSON compatibility baseline | In progress | Source snapshot, exhaustive inventory, mapping framework, measurable-type mapping, and analytical-scale semantics implemented; field/domain mappings and fixtures remain |
 | Core brewing schemas | Not started | Recipes, batches, materials, processes, equipment, water implemented |
 | BeerXML compatibility | Not started | Preservation profile and fixtures implemented |
 | First stable FermentationJSON release | Future | Published schemas, profiles, mappings, conformance suite |

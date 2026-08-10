@@ -96,12 +96,14 @@
     },
     "DiastaticPowerUnitType": {
       "Lintner": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "degrees_lintner"
       },
       "WK": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "windisch_kolbach"
       }
     },
     "TemperatureUnitType": {
@@ -158,46 +160,54 @@
     },
     "ColorUnitType": {
       "EBC": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "ebc_color_index"
       },
       "Lovi": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "lovibond_color_scale"
       },
       "SRM": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "srm_color_index"
       }
     },
     "CarbonationUnitType": {
       "vols": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "carbon_dioxide_volumes"
       },
       "g/l": {
         "fermentationjson_unit": "gram_per_liter",
-        "status": "unit_exact_quantity_semantics_pending"
+        "status": "physical_unit_mapping"
       }
     },
     "BitternessUnitType": {
       "IBUs": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "international_bitterness_units"
       }
     },
     "GravityUnitType": {
       "sg": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "specific_gravity"
       },
       "plato": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "degrees_plato"
       },
       "brix": {
-        "fermentationjson_unit": null,
-        "status": "core_unit_pending"
+        "fermentationjson_unit": "one",
+        "status": "measurement_scale_mapping",
+        "fermentationjson_scale": "degrees_brix"
       }
     },
     "DensityUnitType": {

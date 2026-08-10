@@ -128,6 +128,76 @@
       "id": "dynamic_viscosity",
       "dimension": "dynamic_viscosity",
       "canonical_unit": "millipascal_second"
+    },
+    {
+      "id": "specific_gravity",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "specific_gravity",
+      "description": "Specific-gravity scale reading; reference conditions remain explicit metadata when known."
+    },
+    {
+      "id": "plato_extract",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "degrees_plato",
+      "description": "Extract expressed on the degrees Plato scale."
+    },
+    {
+      "id": "brix_reading",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "degrees_brix",
+      "description": "Reading on the degrees Brix sucrose mass-fraction scale; non-sucrose matrices require explicit interpretation."
+    },
+    {
+      "id": "srm_color_index",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "srm_color_index",
+      "description": "Beer color expressed as the ASBC/SRM analytical index."
+    },
+    {
+      "id": "ebc_color_index",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "ebc_color_index",
+      "description": "Beer color expressed as the EBC analytical index."
+    },
+    {
+      "id": "lovibond_color_index",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "lovibond_color_scale",
+      "description": "Color expressed on the Lovibond scale; not treated as directly interchangeable with spectrophotometric beer-color indices."
+    },
+    {
+      "id": "carbon_dioxide_volume_ratio",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "carbon_dioxide_volumes",
+      "description": "Dissolved carbon dioxide expressed as volumes of CO2 relative to beverage volume under the applicable reference convention."
+    },
+    {
+      "id": "bitterness_index",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "international_bitterness_units",
+      "description": "Beer/wort bitterness expressed as the international bitterness-unit analytical index."
+    },
+    {
+      "id": "diastatic_power_lintner",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "degrees_lintner",
+      "description": "Malt diastatic power expressed on the degrees Lintner scale."
+    },
+    {
+      "id": "diastatic_power_windisch_kolbach",
+      "dimension": "fraction",
+      "canonical_unit": "one",
+      "canonical_scale": "windisch_kolbach",
+      "description": "Malt diastatic power expressed on the Windisch-Kolbach scale."
     }
   ]
 }

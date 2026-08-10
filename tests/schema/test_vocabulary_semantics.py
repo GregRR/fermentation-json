@@ -14,6 +14,7 @@ SCHEMA_DIR = ROOT / "schemas" / "core"
 UNIT_FILE = ROOT / "vocabularies" / "units" / "units.v0.1.0.json"
 KIND_FILE = ROOT / "vocabularies" / "quantity-kinds" / "quantity-kinds.v0.1.0.json"
 BASIS_FILE = ROOT / "vocabularies" / "reporting-bases" / "reporting-bases.v0.1.0.json"
+SCALE_FILE = ROOT / "vocabularies" / "measurement-scales" / "measurement-scales.v0.1.0.json"
 VALID_DIR = ROOT / "examples" / "valid" / "semantic"
 INVALID_DIR = ROOT / "examples" / "invalid" / "semantic"
 
@@ -29,9 +30,11 @@ def _by_id(entries):
 UNITS_DOC = _load(UNIT_FILE)
 KINDS_DOC = _load(KIND_FILE)
 BASES_DOC = _load(BASIS_FILE)
+SCALES_DOC = _load(SCALE_FILE)
 UNITS = _by_id(UNITS_DOC["entries"])
 KINDS = _by_id(KINDS_DOC["entries"])
 BASES = _by_id(BASES_DOC["entries"])
+SCALES = _by_id(SCALES_DOC["entries"])
 
 
 def _is_absolute_uri(value: str) -> bool:
@@ -99,8 +102,32 @@ def semantic_errors(quantity: dict) -> list[str]:
     elif canonical_unit["dimension"] != kind["dimension"]:
         errors.append("canonical_unit_dimension_mismatch")
 
+    expected_scale = kind.get("canonical_scale")
+    canonical_scale = canonical.get("scale")
+    if expected_scale:
+        if canonical_scale is None:
+            errors.append("missing_canonical_measurement_scale")
+        elif canonical_scale != expected_scale:
+            errors.append("wrong_canonical_measurement_scale")
+    elif canonical_scale and not _is_absolute_uri(canonical_scale):
+        errors.append("measurement_scale_not_allowed_for_quantity_kind")
+
+    if canonical_scale and not _is_absolute_uri(canonical_scale) and canonical_scale not in SCALES:
+        errors.append("unknown_core_measurement_scale")
+
     reported = quantity.get("reported")
     if reported:
+        reported_scale = reported.get("scale")
+        if reported_scale:
+            if not _is_absolute_uri(reported_scale) and reported_scale not in SCALES:
+                errors.append("unknown_core_measurement_scale")
+            if expected_scale and reported_scale != expected_scale:
+                errors.append("reported_measurement_scale_mismatch")
+            elif not expected_scale and not _is_absolute_uri(reported_scale):
+                errors.append("measurement_scale_not_allowed_for_quantity_kind")
+        elif expected_scale:
+            errors.append("missing_reported_measurement_scale")
+
         reported_unit_ids: list[str] = []
         if "unit" in reported:
             reported_unit_ids.append(reported["unit"])
@@ -145,7 +172,7 @@ def semantic_errors(quantity: dict) -> list[str]:
 
 
 def test_vocabulary_ids_are_unique_and_well_formed() -> None:
-    for document in (UNITS_DOC, KINDS_DOC, BASES_DOC):
+    for document in (UNITS_DOC, KINDS_DOC, BASES_DOC, SCALES_DOC):
         ids = [entry["id"] for entry in document["entries"]]
         assert len(ids) == len(set(ids))
         for identifier in ids:
@@ -165,6 +192,13 @@ def test_every_core_quantity_kind_has_valid_canonical_unit() -> None:
     for kind in KINDS.values():
         unit = UNITS[kind["canonical_unit"]]
         assert unit["dimension"] == kind["dimension"]
+        if scale_id := kind.get("canonical_scale"):
+            assert scale_id in SCALES
+
+
+def test_measurement_scales_are_not_registered_as_physical_units() -> None:
+    scale_ids = set(SCALES)
+    assert scale_ids.isdisjoint(UNITS)
 
 
 def test_us_beer_barrel_definition_is_31_us_gallons() -> None:

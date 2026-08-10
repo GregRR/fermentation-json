@@ -54,3 +54,5 @@ A document may declare additional vocabulary artifacts through its
 states whether understanding it is required for full interpretation.
 
 See ADR-0006 and `schemas/core/declaration.schema.json`.
+
+- `measurement-scales/` — numerical measurement scales and analytical indices that are semantically distinct from physical units.

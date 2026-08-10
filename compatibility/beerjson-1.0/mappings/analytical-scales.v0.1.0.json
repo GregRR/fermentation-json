@@ -1,0 +1,145 @@
+{
+  "artifact": "fermentationjson.beerjson_analytical_scale_mapping",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_standard": {
+    "name": "BeerJSON",
+    "version": "v1.0.2",
+    "schema": "measureable_units.json"
+  },
+  "measurement_scale_vocabulary": "../../../vocabularies/measurement-scales/measurement-scales.v0.1.0.json",
+  "rules": [
+    "BeerJSON analytical-scale tokens are source-format tokens, not FermentationJSON physical-unit identifiers.",
+    "The BeerJSON source value and token MUST be preserved even when a native quantity is constructed.",
+    "A scale-defined native quantity uses an explicit quantity kind and measurement-scale identifier; its unit is the neutral numeric carrier 'one' unless the BeerJSON token denotes a physical unit such as g/l.",
+    "Conversion between distinct measurement scales is a calculation with model/method/reference-condition provenance, not a unit conversion.",
+    "An analytical range may become one native range only when both endpoints map to the same native quantity kind and scale; mixed-scale endpoints remain independently preserved unless an explicit conversion is performed."
+  ],
+  "type_dispatch": {
+    "GravityType": {
+      "sg": {
+        "quantity_kind": "specific_gravity",
+        "unit": "one",
+        "scale": "specific_gravity",
+        "conversion": "none"
+      },
+      "plato": {
+        "quantity_kind": "plato_extract",
+        "unit": "one",
+        "scale": "degrees_plato",
+        "conversion": "none"
+      },
+      "brix": {
+        "quantity_kind": "brix_reading",
+        "unit": "one",
+        "scale": "degrees_brix",
+        "conversion": "none"
+      }
+    },
+    "ColorType": {
+      "SRM": {
+        "quantity_kind": "srm_color_index",
+        "unit": "one",
+        "scale": "srm_color_index",
+        "conversion": "none"
+      },
+      "EBC": {
+        "quantity_kind": "ebc_color_index",
+        "unit": "one",
+        "scale": "ebc_color_index",
+        "conversion": "none"
+      },
+      "Lovi": {
+        "quantity_kind": "lovibond_color_index",
+        "unit": "one",
+        "scale": "lovibond_color_scale",
+        "conversion": "none"
+      }
+    },
+    "CarbonationType": {
+      "vols": {
+        "quantity_kind": "carbon_dioxide_volume_ratio",
+        "unit": "one",
+        "scale": "carbon_dioxide_volumes",
+        "conversion": "none"
+      },
+      "g/l": {
+        "quantity_kind": "mass_concentration",
+        "unit": "gram_per_liter",
+        "scale": null,
+        "semantic_subject": "carbon_dioxide",
+        "conversion": "none"
+      }
+    },
+    "BitternessType": {
+      "IBUs": {
+        "quantity_kind": "bitterness_index",
+        "unit": "one",
+        "scale": "international_bitterness_units",
+        "conversion": "none"
+      }
+    },
+    "DiastaticPowerType": {
+      "Lintner": {
+        "quantity_kind": "diastatic_power_lintner",
+        "unit": "one",
+        "scale": "degrees_lintner",
+        "conversion": "none"
+      },
+      "WK": {
+        "quantity_kind": "diastatic_power_windisch_kolbach",
+        "unit": "one",
+        "scale": "windisch_kolbach",
+        "conversion": "none"
+      }
+    }
+  },
+  "non_unit_conversion_rules": [
+    {
+      "from": "specific_gravity",
+      "to": "degrees_plato",
+      "status": "explicit_calculation_required",
+      "reason": "density/extract relationship depends on an identified table or model and reference conditions."
+    },
+    {
+      "from": "degrees_brix",
+      "to": "degrees_plato",
+      "status": "explicit_calculation_required",
+      "reason": "Brix is a sucrose mass-fraction scale and is not generically identical to wort extract."
+    },
+    {
+      "from": "srm_color_index",
+      "to": "ebc_color_index",
+      "status": "explicit_calculation_required",
+      "reason": "Both are method-defined spectrophotometric indices; FermentationJSON does not encode their relationship as a physical-unit conversion."
+    },
+    {
+      "from": "lovibond_color_scale",
+      "to": "srm_color_index",
+      "status": "no_core_conversion",
+      "reason": "Lovibond is not treated as equivalent to the modern spectrophotometric beer-color method."
+    },
+    {
+      "from": "carbon_dioxide_volumes",
+      "to": "gram_per_liter",
+      "status": "explicit_reference_condition_calculation_required",
+      "reason": "The relationship depends on the definition/reference conditions for the gas volume."
+    },
+    {
+      "from": "international_bitterness_units",
+      "to": "milligram_per_liter",
+      "status": "no_core_conversion",
+      "reason": "IBU is an operational analytical result and is not an identity with iso-alpha-acid mass concentration."
+    },
+    {
+      "from": "degrees_lintner",
+      "to": "windisch_kolbach",
+      "status": "explicit_method_calculation_required",
+      "reason": "The scales arise from diastatic-power methods; any conversion must cite the adopted method relationship rather than masquerading as a unit conversion."
+    }
+  ],
+  "range_policy": {
+    "same_scale": "construct_native_range_after validating compatible quantity kind and scale",
+    "mixed_scale": "preserve both BeerJSON endpoint objects; derive a normalized range only through an explicit calculation model"
+  }
+}

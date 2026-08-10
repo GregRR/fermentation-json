@@ -1,0 +1,26 @@
+{
+  "_schema": "quantity.schema.json",
+  "instance": {
+    "quantity_kind": "srm_color_index",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 6.5
+      },
+      "unit": "one",
+      "scale": "srm_color_index"
+    },
+    "reported": {
+      "form": {
+        "type": "exact",
+        "value": 6.5
+      },
+      "unit": "one",
+      "scale": "srm_color_index",
+      "original_unit_text": "SRM"
+    },
+    "epistemic_state": [
+      "reported"
+    ]
+  }
+}

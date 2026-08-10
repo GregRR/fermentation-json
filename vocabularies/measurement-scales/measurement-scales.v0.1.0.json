@@ -1,0 +1,72 @@
+{
+  "vocabulary": "fermentationjson.measurement_scales",
+  "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/measurement-scales/0.1.0",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "vocabulary_class": "extensible",
+  "term_identifier_policy": "core_token_or_absolute_uri",
+  "unknown_core_term_behavior": "reject",
+  "unknown_uri_term_behavior": "preserve_without_inference",
+  "entries": [
+    {
+      "id": "specific_gravity",
+      "family": "relative_density",
+      "description": "Specific-gravity scale reading. Reference-temperature conditions are semantic metadata and MUST NOT be invented when absent.",
+      "conversion_policy": "explicit_model_or_table_only"
+    },
+    {
+      "id": "degrees_plato",
+      "family": "extract",
+      "description": "Degrees Plato extract scale. Conversion to specific gravity is a model/table calculation, not a unit conversion.",
+      "conversion_policy": "explicit_model_or_table_only"
+    },
+    {
+      "id": "degrees_brix",
+      "family": "sucrose_mass_fraction",
+      "description": "Brix sucrose mass-fraction scale. A Brix reading on wort or another non-sucrose matrix MUST NOT be relabeled as Plato without an explicit correction/model.",
+      "conversion_policy": "explicit_model_or_table_only"
+    },
+    {
+      "id": "srm_color_index",
+      "family": "beer_color",
+      "description": "ASBC/SRM beer color index. The numerical index is method-defined and is not a physical color unit.",
+      "conversion_policy": "explicit_model_only"
+    },
+    {
+      "id": "ebc_color_index",
+      "family": "beer_color",
+      "description": "EBC spectrophotometric beer color index. The numerical index is method-defined and is not a physical color unit.",
+      "conversion_policy": "explicit_model_only"
+    },
+    {
+      "id": "lovibond_color_scale",
+      "family": "visual_material_color",
+      "description": "Lovibond color scale. No generic core conversion to SRM or EBC is defined by FermentationJSON.",
+      "conversion_policy": "no_core_conversion"
+    },
+    {
+      "id": "carbon_dioxide_volumes",
+      "family": "dissolved_gas_volume_ratio",
+      "description": "Beverage-industry volumes-of-CO2 scale: gas volume relative to beverage volume under stated reference conditions. Conversion to mass concentration requires explicit reference conditions/model provenance.",
+      "conversion_policy": "explicit_reference_condition_model_only"
+    },
+    {
+      "id": "international_bitterness_units",
+      "family": "bitterness",
+      "description": "International bitterness-unit analytical index. It is not identical to iso-alpha-acid mass concentration or perceived bitterness.",
+      "conversion_policy": "no_core_conversion"
+    },
+    {
+      "id": "degrees_lintner",
+      "family": "diastatic_power",
+      "description": "Degrees Lintner diastatic-power scale.",
+      "conversion_policy": "explicit_method_model_only"
+    },
+    {
+      "id": "windisch_kolbach",
+      "family": "diastatic_power",
+      "description": "Windisch-Kolbach diastatic-power scale.",
+      "conversion_policy": "explicit_method_model_only"
+    }
+  ]
+}

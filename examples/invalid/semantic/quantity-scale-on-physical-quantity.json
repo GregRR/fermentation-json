@@ -1,0 +1,15 @@
+{
+  "_schema": "quantity.schema.json",
+  "_semantic_error": "measurement_scale_not_allowed_for_quantity_kind",
+  "instance": {
+    "quantity_kind": "mass",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 1
+      },
+      "unit": "kilogram",
+      "scale": "degrees_plato"
+    }
+  }
+}

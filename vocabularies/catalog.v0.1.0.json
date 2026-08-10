@@ -19,6 +19,13 @@
       "path": "quantity-kinds/quantity-kinds.v0.1.0.json"
     },
     {
+      "name": "measurement_scales",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/measurement-scales/0.1.0",
+      "version": "0.1.0",
+      "vocabulary_class": "extensible",
+      "path": "measurement-scales/measurement-scales.v0.1.0.json"
+    },
+    {
       "name": "reporting_basis_kinds",
       "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/reporting-bases/0.1.0",
       "version": "0.1.0",

@@ -92,6 +92,9 @@
         "unit": {
           "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
         },
+        "scale": {
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+        },
         "basis": {
           "$ref": "#reportingBasis"
         }
@@ -109,6 +112,9 @@
           "$ref": "result-form.schema.json#resultForm"
         },
         "unit": {
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+        },
+        "scale": {
           "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
         },
         "basis": {

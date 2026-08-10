@@ -87,29 +87,34 @@
       "notes": "BeerJSON uses this type for count-like and unitless amounts. FJSON does not equate package counts, item counts, and mathematical dimensionless ratios without field/item context."
     },
     "DiastaticPowerType": {
-      "status": "analytical_scale_pending",
+      "status": "token_dispatched_analytical_scale",
       "source_unit_type": "DiastaticPowerUnitType",
-      "notes": "Native scale semantics and conversion provenance must be documented before core quantity/unit registration."
+      "notes": "Lintner and WK map to distinct scale-defined diastatic-power quantity kinds. Cross-scale conversion is explicit calculation work, not unit conversion.",
+      "analytical_scale_mapping": "analytical-scales.v0.1.0.json"
     },
     "ColorType": {
-      "status": "analytical_scale_pending",
+      "status": "token_dispatched_analytical_scale",
       "source_unit_type": "ColorUnitType",
-      "notes": "BeerJSON combines grain Lovibond and wort/beer SRM/EBC in one source type. Native mapping must retain material/measurement context rather than treating them as one generic physical dimension."
+      "notes": "SRM, EBC, and Lovibond map to distinct native color-index kinds/scales; no implicit cross-scale conversion is performed.",
+      "analytical_scale_mapping": "analytical-scales.v0.1.0.json"
     },
     "CarbonationType": {
-      "status": "analytical_scale_pending",
+      "status": "token_dispatched_mixed_semantics",
       "source_unit_type": "CarbonationUnitType",
-      "notes": "g/L and volumes of CO2 are not treated as interchangeable units without an explicit carbonation definition and reference-condition model."
+      "notes": "vols maps to a scale-defined CO2 volume ratio; g/l maps to physical mass concentration of CO2. Conversion between them requires explicit reference conditions.",
+      "analytical_scale_mapping": "analytical-scales.v0.1.0.json"
     },
     "BitternessType": {
-      "status": "analytical_scale_pending",
+      "status": "analytical_scale_resolved",
       "source_unit_type": "BitternessUnitType",
-      "notes": "IBU is an analytical brewing measure and requires method/scale semantics rather than a generic physical unit conversion."
+      "notes": "IBUs map to a scale-defined bitterness index and are not identified with iso-alpha-acid concentration or perceived bitterness.",
+      "analytical_scale_mapping": "analytical-scales.v0.1.0.json"
     },
     "GravityType": {
-      "status": "multi_scale_pending",
+      "status": "token_dispatched_analytical_scale",
       "source_unit_type": "GravityUnitType",
-      "notes": "Specific gravity, Plato, and Brix are distinct measurement/scaling concepts. Native FJSON will not pretend they are ordinary units of one physical dimension."
+      "notes": "Gravity tokens map to distinct native scale-defined quantity kinds; SG, Plato, and Brix are not unit aliases.",
+      "analytical_scale_mapping": "analytical-scales.v0.1.0.json"
     }
   },
   "range_type_mappings": {
@@ -125,23 +130,27 @@
     },
     "CarbonationRangeType": {
       "base_type": "CarbonationType",
-      "status": "base_type_pending",
-      "reported_endpoint_unit_policy": "preserve_source_objects"
+      "status": "base_type_token_dispatched",
+      "reported_endpoint_unit_policy": "preserve_source_objects_and_scale_tokens",
+      "native_range_policy": "same_scale_only_without_explicit_conversion"
     },
     "BitternessRangeType": {
       "base_type": "BitternessType",
-      "status": "base_type_pending",
-      "reported_endpoint_unit_policy": "preserve_source_objects"
+      "status": "base_type_token_dispatched",
+      "reported_endpoint_unit_policy": "preserve_source_objects_and_scale_tokens",
+      "native_range_policy": "same_scale_only_without_explicit_conversion"
     },
     "ColorRangeType": {
       "base_type": "ColorType",
-      "status": "base_type_pending",
-      "reported_endpoint_unit_policy": "preserve_source_objects"
+      "status": "base_type_token_dispatched",
+      "reported_endpoint_unit_policy": "preserve_source_objects_and_scale_tokens",
+      "native_range_policy": "same_scale_only_without_explicit_conversion"
     },
     "GravityRangeType": {
       "base_type": "GravityType",
-      "status": "base_type_pending",
-      "reported_endpoint_unit_policy": "preserve_source_objects"
+      "status": "base_type_token_dispatched",
+      "reported_endpoint_unit_policy": "preserve_source_objects_and_scale_tokens",
+      "native_range_policy": "same_scale_only_without_explicit_conversion"
     }
   },
   "non_quantity_types": {

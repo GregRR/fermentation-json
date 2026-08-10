@@ -70,6 +70,12 @@ BeerJSON `v1.0.2` `measureable_units.json` schema and generated documentation.
 BeerJSON uses compact source-format unit tokens. FermentationJSON does not
 reuse those tokens as its core vocabulary; its BeerJSON compatibility profile
 defines explicit mappings while preserving BeerJSON source values and units.
+
+BeerJSON also serializes several measurement scales and analytical indices in its
+unit-token position. FermentationJSON does not register `sg`, `plato`, `brix`,
+`SRM`, `EBC`, `Lovi`, `vols`, `IBUs`, `Lintner`, or `WK` as physical units.
+They map through the measurement-scale vocabulary documented in
+`ANALYTICAL_SCALES.md`; cross-scale transformations are explicit calculations.
 Composite specific-volume units added for compatibility are defined from the
 already registered FermentationJSON volume and mass units. Ambiguous BeerJSON
 tokens remain unresolved rather than being assigned a guessed definition.

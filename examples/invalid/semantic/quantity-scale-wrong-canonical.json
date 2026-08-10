@@ -1,0 +1,15 @@
+{
+  "_schema": "quantity.schema.json",
+  "_semantic_error": "wrong_canonical_measurement_scale",
+  "instance": {
+    "quantity_kind": "srm_color_index",
+    "canonical": {
+      "form": {
+        "type": "exact",
+        "value": 6.5
+      },
+      "unit": "one",
+      "scale": "ebc_color_index"
+    }
+  }
+}
