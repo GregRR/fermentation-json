@@ -102,7 +102,7 @@ def test_ppm_and_ppb_are_not_mapped_to_mass_per_volume() -> None:
 
 def test_profile_does_not_claim_completed_compatibility() -> None:
     profile = _load("profile.v0.1.0.json")
-    assert profile["status"] == "pre-release_behavioral_fixture_baseline"
+    assert profile["status"] == "pre-release_domain_mapping_baseline"
     assert profile["directions"]["import"] == "required_target"
     assert "No FermentationJSON implementation may claim completed" in profile["claim_status"]
 
@@ -131,3 +131,25 @@ def test_beerjson_equipment_rates_map_to_native_volume_flow_rate() -> None:
         assert time_basis in layers["semantic_interpretation"]
         assert "volume_flow_rate" in layers["native_representation"]
         assert "plain volume" in layers["native_representation"]
+
+
+def test_hop_variety_base_fields_have_concrete_mapping_or_explicit_source_preservation() -> None:
+    mapping = _load("mappings/field-mapping.v0.1.0.json")
+    rows = {
+        row["source_field"]: row
+        for row in mapping["field_mappings"]
+        if row["source_type"] == "hop.json#HopVarietyBase"
+    }
+    assert set(rows) == {
+        "name",
+        "producer",
+        "product_id",
+        "origin",
+        "year",
+        "form",
+        "alpha_acid",
+        "beta_acid",
+    }
+    assert rows["year"]["status"] == "special_mapping_defined"
+    for field in set(rows) - {"year"}:
+        assert rows[field]["status"] == "domain_mapping_defined"

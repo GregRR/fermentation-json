@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/material.schema.json",
+  "title": "FermentationJSON material definition",
+  "$ref": "#materialDefinition",
+  "$defs": {
+    "material_definition_base": {
+      "$anchor": "materialDefinitionBase",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "object_id": {
+          "$ref": "../core/identity.schema.json#objectId"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "product_identifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provenance": {
+          "$ref": "../core/provenance.schema.json#provenance"
+        },
+        "extensions": {
+          "$ref": "../core/extension.schema.json#extensionContainer"
+        }
+      }
+    },
+    "material_definition": {
+      "$anchor": "materialDefinition",
+      "allOf": [
+        {
+          "$ref": "#materialDefinitionBase"
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

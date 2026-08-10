@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/ingredients/hop.schema.json",
+  "title": "FermentationJSON hop material definition",
+  "$ref": "#hopDefinition",
+  "$defs": {
+    "fraction_quantity": {
+      "$anchor": "hopFractionQuantity",
+      "allOf": [
+        {
+          "$ref": "../core/quantity.schema.json#quantity"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quantity_kind": {
+              "const": "fraction"
+            },
+            "canonical": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "const": "one"
+                }
+              },
+              "required": [
+                "unit"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "hop_form": {
+      "$anchor": "hopForm",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "extract",
+            "leaf",
+            "wet_leaf",
+            "pellet",
+            "powder",
+            "plug"
+          ]
+        },
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+        }
+      ]
+    },
+    "hop_definition": {
+      "$anchor": "hopDefinition",
+      "allOf": [
+        {
+          "$ref": "../production/material.schema.json#materialDefinitionBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "form": {
+              "$ref": "#hopForm"
+            },
+            "alpha_acid": {
+              "$ref": "#hopFractionQuantity"
+            },
+            "beta_acid": {
+              "$ref": "#hopFractionQuantity"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

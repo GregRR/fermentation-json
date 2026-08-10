@@ -16,8 +16,10 @@ Files:
 - `mappings/measurable-types.v0.1.0.json` — concrete measurable/quantity type mapping;
 - `mappings/analytical-scales.v0.1.0.json` — token-dispatched BeerJSON gravity, color, carbonation, bitterness, and diastatic-power semantics;
 - `mappings/primitive-field-semantics.v0.1.0.json` — reusable rules for primitive carriers, percentages, field-encoded scales/bases, local date-times, and identity/absence semantics;
+- `mappings/hop-variety-base.v0.1.0.json` — first concrete BeerJSON domain-object mapping into the native hop material schema;
 - `fixtures/primitive-field-vectors.v0.1.0.json` — representative source-to-semantic mapping vectors;
 - `fixtures/measurable-roundtrip-vectors.v0.1.0.json` — representative measurable/range import and semantic round-trip vectors;
+- `fixtures/hop-variety-base-roundtrip-v0.1.0.json` — complete-object vectors for BeerJSON `HopVarietyBase`, including mixed native/source-preservation behavior;
 - `mappings/field-mapping.v0.1.0.json` — one mapping row for every declared object field;
 - `profile.v0.1.0.json` — pre-release compatibility-profile manifest.
 
@@ -70,3 +72,9 @@ BeerJSON primitive JSON types are treated as serialization carriers, not as comp
 The compatibility mapping also resolves source semantics encoded outside a value's immediate type. Examples include cell counts expressed in billions by the field name, hop oil reported as mL per 100 g, equipment rates whose time basis is in the field name, and packaging graphic dimensions whose unit is supplied by a sibling field. When BeerJSON does not provide enough semantics, such as its bare numeric carbonation fields or `calories_per_pint`, FermentationJSON preserves the source value rather than inventing missing units.
 
 BeerJSON `DateType` uses an unanchored shape-only regex. Exact calendar-valid date and local-date-time strings can receive native semantics, while other strings accepted by that source regex remain preserved without being repaired or assigned an invented time zone. Distinct embedded BeerJSON objects are likewise not deduplicated merely because descriptive fields happen to match.
+
+## First concrete domain mapping: HopVarietyBase
+
+ADR-0013 introduces the first native material/hop schemas and maps BeerJSON `HopVarietyBase` into them. `name`, producer text, product identifier, origin text, form, alpha acid, and beta acid have concrete native paths. BeerJSON `year` remains source-preserved because the pinned schema defines only an unconstrained string and does not establish crop/harvest/production-year semantics.
+
+Native FermentationJSON constraints are not weakened merely to accept every BeerJSON value. When a valid BeerJSON object cannot be represented natively without repair, the compatibility path preserves the complete source object instead.

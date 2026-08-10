@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.18
+**Document version:** 0.19
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -1223,6 +1223,18 @@ A batch SHOULD reference actual material lots and quantities where traceability 
 
 A planned material use and an actual material consumption record MUST remain distinguishable.
 
+### 15.5 Initial hop material model
+
+The first concrete brewing material schema defines a hop material separately from its recipe addition, inventory state, or lot-specific record. A native hop definition extends the reusable material-definition base and MAY carry hop form plus alpha- and beta-acid quantities.
+
+Core hop-form identifiers are versioned vocabulary terms. Extension hop forms MUST use absolute URI identifiers rather than introducing undeclared core-style tokens.
+
+Alpha- and beta-acid values are represented as fraction quantities. Compatibility mappings MUST preserve the BeerJSON reported percentage representation and MUST NOT infer a mass-fraction reporting basis solely from brewing convention when the source does not state that basis.
+
+Textual producer and origin information MAY be preserved as `producer_name` and `origin_text` without implying that the text has been resolved to a structured organization or geographic identity.
+
+BeerJSON `HopVarietyBase.year` MUST NOT be automatically interpreted as crop year, harvest year, or production year because the pinned BeerJSON schema supplies no such semantic definition. It remains source-preserved unless additional source information justifies a native interpretation.
+
 ---
 
 ## 16. Cultures and microbiology
@@ -2161,6 +2173,8 @@ Measurement scales and analytical indices MUST remain distinct from physical uni
 The strict compatibility guarantee applies to documents valid under the pinned BeerJSON schema snapshot. A pragmatic importer MAY preserve nonstandard application fields opaquely, but MUST report that the source deviates from the BeerJSON compatibility baseline.
 
 The project MUST maintain documented mappings and conformance fixtures for BeerJSON 1.0. Representative measurable/range fixtures MUST distinguish native-quantity imports from source-preservation-only imports. A valid BeerJSON measurable object for which FermentationJSON cannot safely construct a native quantity MUST remain losslessly preservable without inventing semantics. Where a native quantity is constructed, its reported representation MUST retain enough BeerJSON value/unit information to reconstruct the source measurable object at the JSON data-model level. See ADR-0012.
+
+Concrete BeerJSON domain-object mappings MUST likewise preserve the distinction between native interpretation and source preservation. The first such mapping, `HopVarietyBase`, targets the native material/hop schema for safely understood fields while retaining BeerJSON-only or under-specified fields separately. Native FermentationJSON domain constraints MUST NOT be weakened merely because the BeerJSON source schema permits a weaker value. See ADR-0013.
 
 For content representable in both formats, a BeerJSON-to-FermentationJSON-to-BeerJSON round trip MUST preserve all BeerJSON-defined information.
 

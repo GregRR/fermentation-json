@@ -8,13 +8,14 @@ from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[2]
-SCHEMA_DIR = ROOT / "schemas" / "core"
+SCHEMA_ROOT = ROOT / "schemas"
 CATALOG_PATH = ROOT / "schemas" / "catalog.v0.1.0.json"
 VALID_ROOT = ROOT / "examples" / "valid"
 
 EXPECTED_SET_VERSION = "0.1.0"
 EXPECTED_PUBLIC_NAMESPACE = "https://gregrr.github.io/fermentation-json/schemas/"
-EXPECTED_CORE_NAMESPACE = f"{EXPECTED_PUBLIC_NAMESPACE}{EXPECTED_SET_VERSION}/core/"
+EXPECTED_SET_NAMESPACE = f"{EXPECTED_PUBLIC_NAMESPACE}{EXPECTED_SET_VERSION}/"
+EXPECTED_CORE_NAMESPACE = f"{EXPECTED_SET_NAMESPACE}core/"
 
 
 def _load_json(path: Path) -> dict:
@@ -60,22 +61,30 @@ def _walk_refs(value):
 def test_schema_catalog_declares_expected_namespace() -> None:
     assert CATALOG["version"] == EXPECTED_SET_VERSION
     assert CATALOG["public_namespace"] == EXPECTED_PUBLIC_NAMESPACE
-    assert CATALOG["schema_set_namespace"] == EXPECTED_CORE_NAMESPACE
+    assert CATALOG["schema_set_namespace"] == EXPECTED_SET_NAMESPACE
+    assert CATALOG["core_namespace"] == EXPECTED_CORE_NAMESPACE
 
 
-def test_every_core_schema_has_exactly_one_catalog_entry_and_canonical_id() -> None:
-    schema_paths = sorted(SCHEMA_DIR.glob("*.schema.json"))
+def test_every_catalog_schema_is_valid_draft_2020_12() -> None:
+    for entry in CATALOG["schemas"]:
+        Draft202012Validator.check_schema(_load_json(ROOT / "schemas" / entry["path"]))
+
+
+def test_every_normative_schema_has_exactly_one_catalog_entry_and_canonical_id() -> None:
+    schema_paths = sorted(SCHEMA_ROOT.rglob("*.schema.json"))
+    relative_paths = {path.relative_to(SCHEMA_ROOT).as_posix() for path in schema_paths}
     catalog_paths = {entry["path"] for entry in CATALOG["schemas"]}
 
-    assert catalog_paths == {f"core/{path.name}" for path in schema_paths}
+    assert catalog_paths == relative_paths
 
     ids = [entry["id"] for entry in CATALOG["schemas"]]
     assert len(ids) == len(set(ids))
 
     for path in schema_paths:
+        relative_path = path.relative_to(SCHEMA_ROOT).as_posix()
         schema = _load_json(path)
-        entry = CATALOG_BY_PATH[f"core/{path.name}"]
-        expected_id = EXPECTED_CORE_NAMESPACE + path.name
+        entry = CATALOG_BY_PATH[relative_path]
+        expected_id = EXPECTED_SET_NAMESPACE + relative_path
 
         assert entry["id"] == expected_id
         assert schema["$id"] == expected_id
@@ -85,12 +94,12 @@ def test_every_core_schema_has_exactly_one_catalog_entry_and_canonical_id() -> N
 def test_cross_schema_refs_resolve_inside_the_same_schema_set() -> None:
     known_ids = set(CATALOG_BY_ID)
 
-    for path in sorted(SCHEMA_DIR.glob("*.schema.json")):
+    for path in sorted(SCHEMA_ROOT.rglob("*.schema.json")):
         schema = _load_json(path)
         for ref in _walk_refs(schema):
             resolved, _fragment = urldefrag(urljoin(schema["$id"], ref))
             assert resolved in known_ids, (path.name, ref, resolved)
-            assert resolved.startswith(EXPECTED_CORE_NAMESPACE), (
+            assert resolved.startswith(EXPECTED_SET_NAMESPACE), (
                 path.name,
                 ref,
                 resolved,
@@ -100,11 +109,14 @@ def test_cross_schema_refs_resolve_inside_the_same_schema_set() -> None:
 def test_valid_examples_resolve_with_canonical_registry_without_retrieval() -> None:
     for case_path in sorted(VALID_ROOT.glob("*/*.json")):
         case = _load_json(case_path)
-        schema_filename = case.get("_schema")
-        if schema_filename is None:
-            continue
+        schema_path = case.get("_schema_path")
+        if schema_path is None:
+            schema_filename = case.get("_schema")
+            if schema_filename is None:
+                continue
+            schema_path = f"core/{schema_filename}"
 
-        entry = CATALOG_BY_PATH[f"core/{schema_filename}"]
+        entry = CATALOG_BY_PATH[schema_path]
         schema = _load_json(ROOT / "schemas" / entry["path"])
 
         validator = Draft202012Validator(

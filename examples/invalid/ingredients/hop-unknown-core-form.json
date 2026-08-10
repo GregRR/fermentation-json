@@ -1,0 +1,28 @@
+{
+  "_schema_path": "ingredients/hop.schema.json",
+  "instance": {
+    "name": "Invalid form",
+    "form": "wet_leaf_cluster",
+    "alpha_acid": {
+      "quantity_kind": "fraction",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.05
+        },
+        "unit": "one"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 5
+        },
+        "unit": "percent",
+        "original_unit_text": "%"
+      },
+      "epistemic_state": [
+        "reported"
+      ]
+    }
+  }
+}

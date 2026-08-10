@@ -56,3 +56,5 @@ states whether understanding it is required for full interpretation.
 See ADR-0006 and `schemas/core/declaration.schema.json`.
 
 - `measurement-scales/` — numerical measurement scales and analytical indices that are semantically distinct from physical units.
+
+- `hop-forms/` — extensible core identifiers for hop material form.

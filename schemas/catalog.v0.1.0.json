@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "status": "pre-release",
   "public_namespace": "https://gregrr.github.io/fermentation-json/schemas/",
-  "schema_set_namespace": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/",
+  "schema_set_namespace": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/",
   "schemas": [
     {
       "name": "calculation_result",
@@ -104,6 +104,17 @@
       "name": "vocabulary_identifier",
       "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/vocabulary-identifier.schema.json",
       "path": "core/vocabulary-identifier.schema.json"
+    },
+    {
+      "name": "hop_definition",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/ingredients/hop.schema.json",
+      "path": "ingredients/hop.schema.json"
+    },
+    {
+      "name": "material_definition",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/material.schema.json",
+      "path": "production/material.schema.json"
     }
-  ]
+  ],
+  "core_namespace": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/core/"
 }

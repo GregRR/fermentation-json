@@ -12,11 +12,11 @@
       "path": "foundation/foundation.v0.1.0.json"
     },
     {
-      "name": "quantity_kinds",
-      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/quantity-kinds/0.1.0",
+      "name": "hop_forms",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/hop-forms/0.1.0",
       "version": "0.1.0",
       "vocabulary_class": "extensible",
-      "path": "quantity-kinds/quantity-kinds.v0.1.0.json"
+      "path": "hop-forms/hop-forms.v0.1.0.json"
     },
     {
       "name": "measurement_scales",
@@ -24,6 +24,13 @@
       "version": "0.1.0",
       "vocabulary_class": "extensible",
       "path": "measurement-scales/measurement-scales.v0.1.0.json"
+    },
+    {
+      "name": "quantity_kinds",
+      "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/quantity-kinds/0.1.0",
+      "version": "0.1.0",
+      "vocabulary_class": "extensible",
+      "path": "quantity-kinds/quantity-kinds.v0.1.0.json"
     },
     {
       "name": "reporting_basis_kinds",

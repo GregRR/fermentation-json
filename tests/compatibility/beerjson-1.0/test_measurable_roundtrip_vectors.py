@@ -265,4 +265,4 @@ def test_profile_advertises_measurable_roundtrip_fixture_set() -> None:
         profile["measurable_roundtrip_fixture_set"]
         == "fixtures/measurable-roundtrip-vectors.v0.1.0.json"
     )
-    assert profile["status"] == "pre-release_behavioral_fixture_baseline"
+    assert profile["status"] == "pre-release_domain_mapping_baseline"

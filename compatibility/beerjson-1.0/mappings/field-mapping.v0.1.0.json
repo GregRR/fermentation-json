@@ -8,7 +8,8 @@
     "foundation_mapping_available": "The foundation already has the semantic structure needed, though domain vocabulary may still be added.",
     "domain_schema_pending": "The source field is inventoried and assigned to a FermentationJSON concept family, but its concrete target path awaits that domain schema.",
     "special_mapping_required": "The source field needs an explicit transformation rule because meaning is not fully represented by its BeerJSON value type.",
-    "special_mapping_defined": "Source representation differs materially from the native FermentationJSON representation, but the compatibility mapping rule is now defined."
+    "special_mapping_defined": "Source representation differs materially from the native FermentationJSON representation, but the compatibility mapping rule is now defined.",
+    "domain_mapping_defined": "The concrete native FermentationJSON schema and target path are defined; source preservation still applies where the native schema intentionally rejects or omits weaker source semantics."
   },
   "inheritance_rule": "Mappings on a BeerJSON base type apply to fields inherited by derived types unless a derived-type rule explicitly overrides them.",
   "array_order_rule": "Importers MUST preserve array item ordering. No claim is made that JSON object member order is semantic.",
@@ -1406,88 +1407,94 @@
       "source_field": "name",
       "source_required": true,
       "source_value_type": "string",
-      "target_family": "material",
-      "target_concept": "material.name",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_definition.name",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-base.v0.1.0.json; BeerJSON source representation remains subject to the compatibility preservation rules."
     },
     {
       "source_type": "hop.json#HopVarietyBase",
       "source_field": "producer",
       "source_required": false,
       "source_value_type": "string",
-      "target_family": "material",
-      "target_concept": "material.producer",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_definition.producer_name",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-base.v0.1.0.json; BeerJSON source representation remains subject to the compatibility preservation rules."
     },
     {
       "source_type": "hop.json#HopVarietyBase",
       "source_field": "product_id",
       "source_required": false,
       "source_value_type": "string",
-      "target_family": "material",
-      "target_concept": "material.product_id",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_definition.product_identifier",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-base.v0.1.0.json; BeerJSON source representation remains subject to the compatibility preservation rules."
     },
     {
       "source_type": "hop.json#HopVarietyBase",
       "source_field": "origin",
       "source_required": false,
       "source_value_type": "string",
-      "target_family": "material",
-      "target_concept": "material.origin",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_definition.origin_text",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-base.v0.1.0.json; BeerJSON source representation remains subject to the compatibility preservation rules."
     },
     {
       "source_type": "hop.json#HopVarietyBase",
       "source_field": "year",
       "source_required": false,
       "source_value_type": "string",
-      "target_family": "material",
-      "target_concept": "material.year",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "beerjson_source_preservation.year",
+      "status": "special_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "BeerJSON defines year only as an unconstrained string. Preserve it without relabeling it as crop, harvest, or production year.",
+      "mapping_layers": {
+        "source_representation": "Preserve the BeerJSON year string exactly when present.",
+        "semantic_interpretation": "Treat the field only as a BeerJSON source label named year; the pinned schema supplies no more specific semantics.",
+        "native_representation": "No native hop year field is populated from BeerJSON year without additional source semantics; retain the source field for compatibility.",
+        "reverse_mapping": "Re-emit the retained BeerJSON year string exactly."
+      }
     },
     {
       "source_type": "hop.json#HopVarietyBase",
       "source_field": "form",
       "source_required": false,
       "source_value_type": "HopFormEnum",
-      "target_family": "material",
-      "target_concept": "material.form",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_definition.form",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-base.v0.1.0.json; BeerJSON source representation remains subject to the compatibility preservation rules."
     },
     {
       "source_type": "hop.json#HopVarietyBase",
       "source_field": "alpha_acid",
       "source_required": true,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.alpha_acid",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_definition.alpha_acid",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-base.v0.1.0.json; BeerJSON source representation remains subject to the compatibility preservation rules."
     },
     {
       "source_type": "hop.json#HopVarietyBase",
       "source_field": "beta_acid",
       "source_required": false,
       "source_value_type": "PercentType",
-      "target_family": "material",
-      "target_concept": "material.beta_acid",
-      "status": "domain_schema_pending",
+      "target_family": "hop_material",
+      "target_concept": "hop_definition.beta_acid",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-variety-base.v0.1.0.json; BeerJSON source representation remains subject to the compatibility preservation rules."
     },
     {
       "source_type": "hop.json#VarietyInformation",

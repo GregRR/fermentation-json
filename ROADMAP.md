@@ -208,7 +208,7 @@ BeerJSON compatibility should be developed **before or alongside** the brewing s
 
 ## 2.2 Shared production schemas
 
-- [ ] Material definition.
+- [x] Material definition (initial reusable schema; expected to evolve with lot/reference work).
 - [ ] Material lot.
 - [ ] Planned material use.
 - [ ] Actual material-use/consumption record.
@@ -256,7 +256,7 @@ BeerJSON compatibility should be developed **before or alongside** the brewing s
 ## 2.4 Brewing ingredients and cultures
 
 - [ ] Fermentables.
-- [ ] Hops and hop-derived products.
+- [ ] Hops and hop-derived products (initial hop definition and BeerJSON `HopVarietyBase` mapping complete; oil/profile/addition mappings remain).
 - [ ] Cultures.
 - [ ] Miscellaneous ingredients.
 - [ ] Processing aids and additives.
@@ -706,13 +706,16 @@ The next development sequence is:
 1. **BeerJSON field-level mappings and representative fixtures**
    - [x] define primitive carrier, omission/null, enum-token, local-date-time, percentage, field-encoded basis, and embedded-object identity rules;
    - [x] add representative primitive/source-semantic mapping vectors;
-   - [ ] expand representative measurable import fixtures covering physical quantities and scale-defined analytical values;
-   - [ ] add same-scale and mixed-scale range fixtures plus round-trip expectations before recipe/domain schema work expands.
+   - [x] expand representative measurable import fixtures covering physical quantities and scale-defined analytical values;
+   - [x] add same-scale and mixed-scale range fixtures plus round-trip expectations before recipe/domain schema work expands.
 
 2. **First concrete domain schemas**
-   - shared materials/cultures/process/equipment foundations;
-   - recipe and batch separation;
-   - water schemas as an early scientific pressure test.
+   - [x] establish schema-set publication/resolution outside `core/`;
+   - [x] add the initial reusable material definition and hop definition;
+   - [x] map BeerJSON `HopVarietyBase` with complete-object round-trip fixtures;
+   - [ ] extend hops through `VarietyInformation`/oil content without folding inventory into material identity;
+   - [ ] add planned material-use/process foundations before mapping `HopAdditionType`;
+   - [ ] continue recipe/batch separation and water schemas as early scientific pressure tests.
 
 3. **BeerXML 1.0 preservation mapping**
    - begin once the brewing object model can receive standard-defined BeerXML information without artificial flattening.
@@ -728,8 +731,8 @@ This sequence may be adjusted when implementation reveals a dependency, but new 
 | Architecture and design review | Complete | Main design and initial ADRs accepted |
 | Initial foundation schemas | Complete | Core schemas and positive/negative fixtures validate |
 | Foundation stabilization | Complete for compatibility work | Units, IDs, declarations, loss reporting, and foundation semantic conformance implemented |
-| BeerJSON compatibility baseline | In progress | Source snapshot, exhaustive inventory, mapping framework, measurable-type mapping, and analytical-scale semantics implemented; field/domain mappings and fixtures remain |
-| Core brewing schemas | Not started | Recipes, batches, materials, processes, equipment, water implemented |
+| BeerJSON compatibility baseline | In progress | Source snapshot, exhaustive inventory, measurable/primitive mappings, behavioral fixtures, and first concrete hop-domain mapping implemented; remaining domain/document mappings and fixtures remain |
+| Core brewing schemas | In progress | Initial material and hop schemas implemented; recipes, batches, processes, equipment, water, and remaining ingredient domains still required |
 | BeerXML compatibility | Not started | Preservation profile and fixtures implemented |
 | First stable FermentationJSON release | Future | Published schemas, profiles, mappings, conformance suite |
 | Engineering modules | Future | Optional v1.x capabilities implemented as needed |

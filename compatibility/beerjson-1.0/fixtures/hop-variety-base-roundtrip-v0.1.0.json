@@ -1,0 +1,222 @@
+{
+  "artifact": "fermentationjson.beerjson_hop_variety_base_roundtrip_vectors",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_type": "hop.json#HopVarietyBase",
+  "target_schema": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/ingredients/hop.schema.json",
+  "rules": [
+    "Native construction MUST NOT weaken the FermentationJSON hop schema merely to accept a weaker BeerJSON source constraint.",
+    "Any BeerJSON-defined field not represented natively MUST remain available as retained source information for round trip.",
+    "PercentType values mapped to hop alpha_acid or beta_acid preserve the BeerJSON percentage representation while canonicalizing to fraction/one."
+  ],
+  "vectors": [
+    {
+      "id": "representative_wet_leaf_hop",
+      "source": {
+        "name": "Cascade",
+        "producer": "Example Hop Farms",
+        "product_id": "CAS-2025",
+        "origin": "US",
+        "form": "leaf (wet)",
+        "alpha_acid": {
+          "unit": "%",
+          "value": 5.5
+        },
+        "beta_acid": {
+          "unit": "%",
+          "value": 6.0
+        }
+      },
+      "expected": {
+        "import_status": "native_object",
+        "native_object": {
+          "name": "Cascade",
+          "producer_name": "Example Hop Farms",
+          "product_identifier": "CAS-2025",
+          "origin_text": "US",
+          "form": "wet_leaf",
+          "alpha_acid": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.055
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 5.5
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          },
+          "beta_acid": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.06
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 6.0
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        "retained_source_fields": {},
+        "roundtrip_source": {
+          "name": "Cascade",
+          "producer": "Example Hop Farms",
+          "product_id": "CAS-2025",
+          "origin": "US",
+          "form": "leaf (wet)",
+          "alpha_acid": {
+            "unit": "%",
+            "value": 5.5
+          },
+          "beta_acid": {
+            "unit": "%",
+            "value": 6.0
+          }
+        }
+      }
+    },
+    {
+      "id": "minimal_required_hop",
+      "source": {
+        "name": "Test Hop",
+        "alpha_acid": {
+          "unit": "%",
+          "value": 12
+        }
+      },
+      "expected": {
+        "import_status": "native_object",
+        "native_object": {
+          "name": "Test Hop",
+          "alpha_acid": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.12
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 12
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        "retained_source_fields": {},
+        "roundtrip_source": {
+          "name": "Test Hop",
+          "alpha_acid": {
+            "unit": "%",
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "id": "free_form_year_is_retained_not_reinterpreted",
+      "source": {
+        "name": "Legacy Lot Label",
+        "year": "2024 crop",
+        "alpha_acid": {
+          "unit": "%",
+          "value": 8.25
+        }
+      },
+      "expected": {
+        "import_status": "native_object_with_source_preservation",
+        "native_object": {
+          "name": "Legacy Lot Label",
+          "alpha_acid": {
+            "quantity_kind": "fraction",
+            "canonical": {
+              "form": {
+                "type": "exact",
+                "value": 0.0825
+              },
+              "unit": "one"
+            },
+            "reported": {
+              "form": {
+                "type": "exact",
+                "value": 8.25
+              },
+              "unit": "percent",
+              "original_unit_text": "%"
+            },
+            "epistemic_state": [
+              "reported"
+            ]
+          }
+        },
+        "retained_source_fields": {
+          "year": "2024 crop"
+        },
+        "roundtrip_source": {
+          "name": "Legacy Lot Label",
+          "year": "2024 crop",
+          "alpha_acid": {
+            "unit": "%",
+            "value": 8.25
+          }
+        }
+      }
+    },
+    {
+      "id": "empty_required_name_uses_source_preservation_only",
+      "source": {
+        "name": "",
+        "alpha_acid": {
+          "unit": "%",
+          "value": 5
+        }
+      },
+      "expected": {
+        "import_status": "source_preservation_only",
+        "native_object": null,
+        "retained_source_object": {
+          "name": "",
+          "alpha_acid": {
+            "unit": "%",
+            "value": 5
+          }
+        },
+        "roundtrip_source": {
+          "name": "",
+          "alpha_acid": {
+            "unit": "%",
+            "value": 5
+          }
+        }
+      }
+    }
+  ]
+}

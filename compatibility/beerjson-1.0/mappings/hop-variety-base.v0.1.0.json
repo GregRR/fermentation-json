@@ -1,0 +1,83 @@
+{
+  "artifact": "fermentationjson.beerjson_hop_variety_base_mapping",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_type": "hop.json#HopVarietyBase",
+  "target_schema": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/ingredients/hop.schema.json",
+  "target_anchor": "hopDefinition",
+  "native_construction_policy": "Construct a native hop definition only when the source values present can satisfy the native schema without repair. BeerJSON-defined information that is not natively interpreted remains separately source-preserved for compatibility.",
+  "field_mappings": [
+    {
+      "source_field": "name",
+      "target_path": "name",
+      "mode": "direct_text",
+      "native_condition": "non-empty string",
+      "reverse": "Use the native name when unchanged; otherwise prefer retained BeerJSON source text."
+    },
+    {
+      "source_field": "producer",
+      "target_path": "producer_name",
+      "mode": "direct_text",
+      "native_condition": "non-empty string",
+      "reverse": "Map producer_name back to BeerJSON producer; preserve an empty source string separately rather than manufacturing a non-empty native value."
+    },
+    {
+      "source_field": "product_id",
+      "target_path": "product_identifier",
+      "mode": "direct_text",
+      "native_condition": "non-empty string",
+      "reverse": "Map product_identifier back to BeerJSON product_id; preserve an empty source string separately when present."
+    },
+    {
+      "source_field": "origin",
+      "target_path": "origin_text",
+      "mode": "direct_text",
+      "native_condition": "non-empty string",
+      "reverse": "Map origin_text back to BeerJSON origin without interpreting it as a structured geography."
+    },
+    {
+      "source_field": "year",
+      "target_path": null,
+      "mode": "source_preservation_only",
+      "native_condition": null,
+      "reverse": "Re-emit the retained BeerJSON year string exactly. BeerJSON does not define whether this string is crop year, harvest year, production year, or another label."
+    },
+    {
+      "source_field": "form",
+      "target_path": "form",
+      "mode": "token_map",
+      "token_map": {
+        "extract": "extract",
+        "leaf": "leaf",
+        "leaf (wet)": "wet_leaf",
+        "pellet": "pellet",
+        "powder": "powder",
+        "plug": "plug"
+      },
+      "reverse": "Reverse the explicit one-to-one token map; do not treat source spelling as the native vocabulary identifier."
+    },
+    {
+      "source_field": "alpha_acid",
+      "target_path": "alpha_acid",
+      "mode": "percent_to_fraction_quantity",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct BeerJSON PercentType from the retained reported percentage value and '%' token."
+    },
+    {
+      "source_field": "beta_acid",
+      "target_path": "beta_acid",
+      "mode": "percent_to_fraction_quantity",
+      "quantity_kind": "fraction",
+      "canonical_unit": "one",
+      "reported_unit": "percent",
+      "reverse": "Reconstruct BeerJSON PercentType from the retained reported percentage value and '%' token."
+    }
+  ],
+  "non_inferences": [
+    "Do not infer a mass-fraction reporting basis for alpha_acid or beta_acid merely because brewing convention commonly uses mass percentages.",
+    "Do not interpret BeerJSON year as crop_year, harvest_year, or production_year without additional source semantics.",
+    "Do not force BeerJSON empty strings into native fields that require meaningful non-empty text; preserve the source representation instead."
+  ]
+}

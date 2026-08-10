@@ -12,7 +12,13 @@ The canonical public namespace reserved for schema identifiers is:
 https://gregrr.github.io/fermentation-json/schemas/
 ```
 
-Core schema resources in this schema set therefore use identifiers of the form:
+Normative schema resources in this schema set use identifiers that mirror their path beneath `schemas/`:
+
+```text
+https://gregrr.github.io/fermentation-json/schemas/<schema-set-version>/<path-relative-to-schemas/>
+```
+
+Core schema resources therefore continue to use identifiers of the form:
 
 ```text
 https://gregrr.github.io/fermentation-json/schemas/<schema-set-version>/core/<filename>
@@ -34,8 +40,7 @@ must not be replaced by different normative content.
 
 ## References and version isolation
 
-Core schemas may use relative `$ref` values for other schemas in the same
-versioned directory and fragment-only references for local anchors.
+Schemas may use relative `$ref` values for other schemas in the same versioned schema set and fragment-only references for local anchors. Relative references may cross sibling schema directories but must not escape the versioned schema-set namespace.
 
 Because every schema has an absolute `$id`, those relative references resolve
 against the schema's canonical versioned URI, not against the local repository
@@ -50,8 +55,7 @@ separately versioned artifact.
 A validator must not require network access merely because a schema uses an
 HTTPS `$id`.
 
-`catalog.v0.1.0.json` maps canonical schema identifiers to the repository files
-that contain the resources. Implementations may construct an equivalent local
+`catalog.v0.1.0.json` maps every normative schema resource in the schema set to the repository file that contains it. Implementations may construct an equivalent local
 registry, cache, package, or resolver.
 
 The repository tests build such a registry and fail if validation attempts an

@@ -1,0 +1,16 @@
+{
+  "_schema_path": "ingredients/hop.schema.json",
+  "instance": {
+    "name": "Invalid analytical kind",
+    "alpha_acid": {
+      "quantity_kind": "mass",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 5.5
+        },
+        "unit": "gram"
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "vocabulary": "fermentationjson.hop_forms",
+  "identifier": "https://gregrr.github.io/fermentation-json/vocabularies/hop-forms/0.1.0",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "vocabulary_class": "extensible",
+  "term_identifier_policy": "core_token_or_absolute_uri",
+  "unknown_core_term_behavior": "reject",
+  "unknown_uri_term_behavior": "preserve_without_inference",
+  "entries": [
+    {
+      "id": "extract",
+      "description": "Hop-derived extract product."
+    },
+    {
+      "id": "leaf",
+      "description": "Whole or leaf hops not specifically identified as wet/fresh."
+    },
+    {
+      "id": "wet_leaf",
+      "description": "Wet or fresh whole/leaf hops."
+    },
+    {
+      "id": "pellet",
+      "description": "Pelletized hop product."
+    },
+    {
+      "id": "powder",
+      "description": "Powdered hop product."
+    },
+    {
+      "id": "plug",
+      "description": "Compressed hop plug."
+    }
+  ]
+}

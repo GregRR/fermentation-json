@@ -1,0 +1,52 @@
+{
+  "_schema_path": "ingredients/hop.schema.json",
+  "instance": {
+    "name": "Cascade",
+    "producer_name": "Example Hop Farms",
+    "product_identifier": "CAS-2025",
+    "origin_text": "US",
+    "form": "wet_leaf",
+    "alpha_acid": {
+      "quantity_kind": "fraction",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.055
+        },
+        "unit": "one"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 5.5
+        },
+        "unit": "percent",
+        "original_unit_text": "%"
+      },
+      "epistemic_state": [
+        "reported"
+      ]
+    },
+    "beta_acid": {
+      "quantity_kind": "fraction",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.06
+        },
+        "unit": "one"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 6.0
+        },
+        "unit": "percent",
+        "original_unit_text": "%"
+      },
+      "epistemic_state": [
+        "reported"
+      ]
+    }
+  }
+}
