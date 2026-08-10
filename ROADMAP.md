@@ -129,11 +129,11 @@ The normative standard must remain independent of any particular unit library.
 
 ### Reusable semantic schemas
 
-- [ ] Add generic calculation/model-result schema.
-- [ ] Add machine-readable warning/explanation schema.
-- [ ] Add constraint and constraint-outcome schema.
-- [ ] Add loss-report schema.
-- [ ] Add import/export report structures.
+- [x] Add generic calculation/model-result schema.
+- [x] Add machine-readable warning/explanation schema.
+- [x] Add constraint and constraint-outcome schema.
+- [x] Add loss-report schema.
+- [x] Add import/export/transcode report structures.
 - [ ] Add profile/module declaration support beyond the document-envelope fields.
 - [ ] Add reference-integrity semantic validation.
 
@@ -695,23 +695,22 @@ They should remain proposals or design notes until a concrete interoperability r
 
 The next development sequence is:
 
-1. **Remaining reusable foundation schemas**
-   - generic calculation result;
-   - warnings/explanations;
-   - constraints/outcomes;
-   - loss report;
-   - import/export reports.
-
-2. **Public schema namespace**
+1. **Public schema namespace**
    - select canonical namespace;
    - assign versioned `$id` values;
    - verify external reference resolution.
+
+2. **Foundation vocabulary and declaration policy**
+   - define closed versus extensible vocabulary rules;
+   - define vocabulary versioning and unknown-value behavior;
+   - add profile/module declaration structures beyond envelope identifiers.
 
 3. **Foundation semantic conformance**
    - reference integrity;
    - required-extension handling;
    - source-versus-derived invariants;
-   - loss-report behavior.
+   - loss-report and interchange-report behavior;
+   - machine-readable conformance-suite versioning.
 
 4. **BeerJSON 1.0 compatibility inventory and mapping**
    - begin before the brewing object model is considered stable.

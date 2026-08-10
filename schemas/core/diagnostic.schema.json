@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON diagnostic",
+  "$anchor": "diagnostic",
+  "description": "Machine-readable warning, explanation, error, or informational diagnostic.",
+  "type": "object",
+  "required": [
+    "code",
+    "severity"
+  ],
+  "properties": {
+    "code": {
+      "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "informational",
+        "warning",
+        "error",
+        "fatal"
+      ]
+    },
+    "message": {
+      "type": "string"
+    },
+    "instance_path": {
+      "type": "string"
+    },
+    "object_reference": {
+      "$ref": "reference.schema.json#dataReference"
+    },
+    "related_references": {
+      "type": "array",
+      "items": {
+        "$ref": "reference.schema.json#dataReference"
+      }
+    },
+    "provenance": {
+      "$ref": "provenance.schema.json#provenance"
+    },
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  },
+  "unevaluatedProperties": false
+}

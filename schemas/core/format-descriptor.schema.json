@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON interchange format descriptor",
+  "$anchor": "formatDescriptor",
+  "type": "object",
+  "required": [
+    "format"
+  ],
+  "properties": {
+    "format": {
+      "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_id": {
+      "$ref": "identity.schema.json#schemaId"
+    },
+    "profile_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_id": {
+      "$ref": "identity.schema.json#schemaId"
+    },
+    "media_type": {
+      "$ref": "identity.schema.json#mediaType"
+    },
+    "document_id": {
+      "$ref": "identity.schema.json#documentId"
+    },
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  },
+  "unevaluatedProperties": false
+}

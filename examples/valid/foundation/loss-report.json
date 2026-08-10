@@ -1,0 +1,23 @@
+{
+  "_schema": "loss-report.schema.json",
+  "instance": {
+    "source": {
+      "format": "fermentationjson",
+      "version": "0.1.0"
+    },
+    "target": {
+      "format": "beerjson",
+      "version": "1.0"
+    },
+    "entries": [
+      {
+        "category": "unsupported_semantic_qualifier",
+        "severity": "warning",
+        "source_path": "/content/source_water/results/4",
+        "affected_concept": "non_detect",
+        "transformation": "omitted",
+        "explanation": "The target format cannot represent the source qualifier."
+      }
+    ]
+  }
+}

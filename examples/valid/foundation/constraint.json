@@ -1,0 +1,21 @@
+{
+  "_schema": "constraint.schema.json",
+  "instance": {
+    "constraint_id": "max-calcium",
+    "constraint_type": "maximum",
+    "hard": true,
+    "subject_label": "calcium",
+    "parameters": {
+      "maximum": {
+        "quantity_kind": "mass_concentration",
+        "canonical": {
+          "form": {
+            "type": "exact",
+            "value": 100
+          },
+          "unit": "milligram_per_liter"
+        }
+      }
+    }
+  }
+}

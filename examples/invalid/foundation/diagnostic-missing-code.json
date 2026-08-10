@@ -1,0 +1,7 @@
+{
+  "_schema": "diagnostic.schema.json",
+  "instance": {
+    "severity": "warning",
+    "message": "No machine-readable code."
+  }
+}

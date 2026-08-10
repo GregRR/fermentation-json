@@ -1,0 +1,14 @@
+{
+  "_schema": "constraint-outcome.schema.json",
+  "instance": {
+    "constraint_id": "max-calcium",
+    "status": "violated",
+    "observed": 112.0,
+    "diagnostics": [
+      {
+        "code": "maximum_exceeded",
+        "severity": "warning"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "_schema": "interchange-report.schema.json",
+  "instance": {
+    "operation": "export",
+    "status": "failed",
+    "preservation_status": "not_completed",
+    "source": {
+      "format": "fermentationjson"
+    },
+    "target": {
+      "format": "beerjson",
+      "version": "1.0"
+    },
+    "diagnostics": [
+      {
+        "code": "required_extension_not_representable",
+        "severity": "fatal"
+      }
+    ]
+  }
+}

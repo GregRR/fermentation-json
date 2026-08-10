@@ -1,0 +1,33 @@
+{
+  "_schema": "interchange-report.schema.json",
+  "instance": {
+    "operation": "export",
+    "status": "success_with_warnings",
+    "preservation_status": "lossy",
+    "source": {
+      "format": "fermentationjson",
+      "version": "0.1.0"
+    },
+    "target": {
+      "format": "beerjson",
+      "version": "1.0"
+    },
+    "loss_report": {
+      "source": {
+        "format": "fermentationjson",
+        "version": "0.1.0"
+      },
+      "target": {
+        "format": "beerjson",
+        "version": "1.0"
+      },
+      "entries": [
+        {
+          "category": "unsupported_semantic_qualifier",
+          "severity": "warning",
+          "source_path": "/content/source_water/results/4"
+        }
+      ]
+    }
+  }
+}

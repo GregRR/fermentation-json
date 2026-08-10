@@ -1,0 +1,67 @@
+{
+  "_schema": "calculation-result.schema.json",
+  "instance": {
+    "object_id": "calc-1",
+    "calculation_type": "water_treatment_optimization",
+    "status": "closest_feasible",
+    "model": {
+      "identifier": "water_chemistry_model",
+      "version": "0.3.0"
+    },
+    "implementation": {
+      "name": "example-calculator",
+      "version": "0.2.0"
+    },
+    "policy": {
+      "identifier": "closest_match",
+      "version": "1"
+    },
+    "inputs": [
+      {
+        "name": "source_water",
+        "reference": {
+          "object_id": "source-water-1"
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "name": "predicted_water",
+        "reference": {
+          "object_id": "treated-water-1"
+        }
+      }
+    ],
+    "constraints": [
+      {
+        "constraint_id": "max-calcium",
+        "constraint_type": "maximum",
+        "hard": true,
+        "subject_label": "calcium",
+        "parameters": {
+          "maximum_mg_l": 100
+        }
+      }
+    ],
+    "constraint_outcomes": [
+      {
+        "constraint_id": "max-calcium",
+        "status": "violated"
+      }
+    ],
+    "objective_components": [
+      {
+        "name": "weighted_analyte_deviation",
+        "value": 2.4,
+        "weight": 1.0,
+        "weighted_value": 2.4
+      }
+    ],
+    "diagnostics": [
+      {
+        "code": "closest_feasible_solution",
+        "severity": "warning"
+      }
+    ]
+  }
+}

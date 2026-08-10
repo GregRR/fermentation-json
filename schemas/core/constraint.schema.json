@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON constraint",
+  "$anchor": "constraint",
+  "description": "A named constraint whose detailed parameter semantics are defined by its constraint type and applicable profile or module.",
+  "type": "object",
+  "required": [
+    "constraint_id",
+    "constraint_type",
+    "hard"
+  ],
+  "properties": {
+    "constraint_id": {
+      "$ref": "identity.schema.json#objectId"
+    },
+    "constraint_type": {
+      "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+    },
+    "hard": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string"
+    },
+    "subject_reference": {
+      "$ref": "reference.schema.json#dataReference"
+    },
+    "subject_label": {
+      "type": "string"
+    },
+    "parameters": true,
+    "weight": {
+      "type": "number",
+      "minimum": 0
+    },
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  },
+  "unevaluatedProperties": false
+}

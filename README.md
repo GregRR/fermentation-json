@@ -55,7 +55,11 @@ They currently cover:
 - analytical detection, reporting, and quantification limits;
 - measurements and observations;
 - source-document metadata;
-- provenance.
+- provenance;
+- calculation and model results;
+- structured diagnostics, constraints, and constraint outcomes;
+- transformation loss reports;
+- import, export, and transcode reports.
 
 The schemas use **JSON Schema Draft 2020-12**.
 
@@ -150,12 +154,13 @@ Implemented so far:
 - identifier and reference semantics;
 - controlled extension rules;
 - the first core foundation schemas;
+- versioned unit, quantity-kind, and reporting-basis vocabularies;
+- reusable calculation, diagnostic, constraint, loss-report, and interchange-report schemas;
 - positive and negative schema fixtures;
 - foundation schema tests.
 
 Important work still in progress includes:
 
-- canonical unit vocabulary and policy;
 - public schema identifier namespace;
 - concrete document-type schemas;
 - brewing production schemas and profile;

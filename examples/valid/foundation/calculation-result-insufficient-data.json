@@ -1,0 +1,18 @@
+{
+  "_schema": "calculation-result.schema.json",
+  "instance": {
+    "calculation_type": "working_water_ph",
+    "status": "insufficient_data",
+    "model": {
+      "identifier": "working_water_ph_model",
+      "version": "1"
+    },
+    "diagnostics": [
+      {
+        "code": "missing_required_alkalinity_basis",
+        "severity": "error",
+        "message": "The supplied alkalinity result lacks the basis required by this model."
+      }
+    ]
+  }
+}

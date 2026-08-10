@@ -1,0 +1,9 @@
+{
+  "_schema": "diagnostic.schema.json",
+  "instance": {
+    "code": "source_value_above_target",
+    "severity": "warning",
+    "message": "Source value is already above the requested target.",
+    "instance_path": "/content/source_water/calcium"
+  }
+}

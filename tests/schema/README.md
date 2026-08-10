@@ -27,3 +27,14 @@ express by itself:
 - the 31-U.S.-gallon definition of `us_beer_barrel`;
 - rejection of ambiguous unregistered customary unit identifiers;
 - `ppm` and `ppb` remaining fraction units.
+
+## Result and report semantic tests
+
+`test_result_report_semantics.py` checks relationships that cross object
+boundaries and therefore are not fully expressible in the individual schemas:
+
+- constraint identifiers are unique within a calculation result;
+- constraint outcomes reference declared constraints;
+- ranked candidate numbers are unique;
+- an embedded loss report describes the same source and target formats as its
+  enclosing interchange report.

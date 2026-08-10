@@ -18,6 +18,13 @@ They use JSON Schema Draft 2020-12 and implement ADR-0001 through ADR-0003.
 - `measurement.schema.json` — measurements and observations
 - `document-metadata.schema.json` — common document metadata
 - `document.schema.json` — reusable document envelope
+- `diagnostic.schema.json` — machine-readable warnings and explanations
+- `constraint.schema.json` — generic constraint definitions
+- `constraint-outcome.schema.json` — constraint evaluation outcomes
+- `format-descriptor.schema.json` — source/target interchange format descriptors
+- `calculation-result.schema.json` — calculations, models, optimization candidates, and statuses
+- `loss-report.schema.json` — machine-readable transformation loss reports
+- `interchange-report.schema.json` — import, export, and transcode operation reports
 
 ## Pre-release `$id` policy
 
@@ -45,3 +52,23 @@ in JSON Schema.
 membership, dimensional compatibility, and canonical-unit selection are
 semantic conformance requirements checked by
 `tests/schema/test_vocabulary_semantics.py`.
+
+## Generic result and interchange semantics
+
+`calculation-result.schema.json` deliberately permits failed, infeasible, or
+indeterminate calculations without numeric outputs. A consuming implementation
+must not manufacture an output merely to populate a field.
+
+Constraint parameters and named calculation values are intentionally generic at
+the foundation layer. Their detailed semantics are supplied by the applicable
+constraint type, calculation type, profile, or module.
+
+`interchange-report.schema.json` distinguishes operational completion from
+information preservation:
+
+- `lossless` means no loss report is permitted;
+- `lossy` requires a machine-readable loss report;
+- `not_completed` represents an operation that did not produce a completed
+  transformation.
+
+A failed interchange operation must use `not_completed`.

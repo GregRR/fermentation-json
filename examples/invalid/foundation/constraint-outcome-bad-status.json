@@ -1,0 +1,7 @@
+{
+  "_schema": "constraint-outcome.schema.json",
+  "instance": {
+    "constraint_id": "max-calcium",
+    "status": "maybe"
+  }
+}

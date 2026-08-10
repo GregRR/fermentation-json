@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON import/export/transcode report",
+  "$anchor": "interchangeReport",
+  "type": "object",
+  "required": [
+    "operation",
+    "status",
+    "preservation_status",
+    "source",
+    "target"
+  ],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": [
+        "import",
+        "export",
+        "transcode"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "success_with_warnings",
+        "failed"
+      ]
+    },
+    "preservation_status": {
+      "type": "string",
+      "enum": [
+        "lossless",
+        "lossy",
+        "not_completed"
+      ]
+    },
+    "source": {
+      "$ref": "format-descriptor.schema.json#formatDescriptor"
+    },
+    "target": {
+      "$ref": "format-descriptor.schema.json#formatDescriptor"
+    },
+    "compatibility_profile_id": {
+      "$ref": "identity.schema.json#schemaId"
+    },
+    "compatibility_profile_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "implementation": {
+      "$ref": "provenance.schema.json#softwareIdentity"
+    },
+    "result_document_id": {
+      "$ref": "identity.schema.json#documentId"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "diagnostic.schema.json#diagnostic"
+      }
+    },
+    "loss_report": {
+      "$ref": "loss-report.schema.json#lossReport"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "preservation_status": {
+            "const": "lossy"
+          }
+        },
+        "required": [
+          "preservation_status"
+        ]
+      },
+      "then": {
+        "required": [
+          "loss_report"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "preservation_status": {
+            "const": "lossless"
+          }
+        },
+        "required": [
+          "preservation_status"
+        ]
+      },
+      "then": {
+        "not": {
+          "required": [
+            "loss_report"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "failed"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "preservation_status": {
+            "const": "not_completed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "success",
+              "success_with_warnings"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "preservation_status": {
+            "enum": [
+              "lossless",
+              "lossy"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

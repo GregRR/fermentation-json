@@ -1,0 +1,14 @@
+{
+  "_schema": "interchange-report.schema.json",
+  "instance": {
+    "operation": "export",
+    "status": "failed",
+    "preservation_status": "lossless",
+    "source": {
+      "format": "fermentationjson"
+    },
+    "target": {
+      "format": "beerjson"
+    }
+  }
+}

@@ -1,0 +1,323 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON calculation or model result",
+  "$anchor": "calculationResult",
+  "type": "object",
+  "required": [
+    "calculation_type",
+    "status"
+  ],
+  "properties": {
+    "object_id": {
+      "$ref": "identity.schema.json#objectId"
+    },
+    "calculation_type": {
+      "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+    },
+    "status": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "successful",
+            "exact_within_tolerance",
+            "feasible",
+            "closest_feasible",
+            "infeasible",
+            "operationally_impractical",
+            "indeterminate",
+            "insufficient_data",
+            "unsupported_model",
+            "solver_failure"
+          ]
+        },
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+        }
+      ]
+    },
+    "model": {
+      "$ref": "#modelDescriptor"
+    },
+    "implementation": {
+      "$ref": "provenance.schema.json#softwareIdentity"
+    },
+    "policy": {
+      "$ref": "#modelDescriptor"
+    },
+    "reference_data_versions": {
+      "type": "array",
+      "items": {
+        "$ref": "#versionedReference"
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#namedValue"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#namedValue"
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "coefficients": {
+      "type": "array",
+      "items": {
+        "$ref": "#namedValue"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "$ref": "constraint.schema.json#constraint"
+      }
+    },
+    "constraint_outcomes": {
+      "type": "array",
+      "items": {
+        "$ref": "constraint-outcome.schema.json#constraintOutcome"
+      }
+    },
+    "objective_components": {
+      "type": "array",
+      "items": {
+        "$ref": "#objectiveComponent"
+      }
+    },
+    "rounding_policy": {
+      "type": "string"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "diagnostic.schema.json#diagnostic"
+      }
+    },
+    "rank": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "selection_status": {
+      "type": "string",
+      "enum": [
+        "selected",
+        "rejected",
+        "unselected"
+      ]
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#calculationCandidate"
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "provenance": {
+      "$ref": "provenance.schema.json#provenance"
+    },
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  },
+  "unevaluatedProperties": false,
+  "$defs": {
+    "named_value": {
+      "$anchor": "namedValue",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+        },
+        "value": true,
+        "reference": {
+          "$ref": "reference.schema.json#dataReference"
+        },
+        "description": {
+          "type": "string"
+        },
+        "extensions": {
+          "$ref": "extension.schema.json#extensionContainer"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "value"
+          ],
+          "not": {
+            "required": [
+              "reference"
+            ]
+          }
+        },
+        {
+          "required": [
+            "reference"
+          ],
+          "not": {
+            "required": [
+              "value"
+            ]
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "model_descriptor": {
+      "$anchor": "modelDescriptor",
+      "type": "object",
+      "required": [
+        "identifier"
+      ],
+      "properties": {
+        "identifier": {
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "versioned_reference": {
+      "$anchor": "versionedReference",
+      "type": "object",
+      "required": [
+        "identifier",
+        "version"
+      ],
+      "properties": {
+        "identifier": {
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "objective_component": {
+      "$anchor": "objectiveComponent",
+      "type": "object",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "vocabulary-identifier.schema.json#vocabularyIdentifier"
+        },
+        "value": {
+          "type": "number"
+        },
+        "weight": {
+          "type": "number"
+        },
+        "weighted_value": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        },
+        "extensions": {
+          "$ref": "extension.schema.json#extensionContainer"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "candidate": {
+      "$anchor": "calculationCandidate",
+      "type": "object",
+      "required": [
+        "rank",
+        "status"
+      ],
+      "properties": {
+        "rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "successful",
+                "exact_within_tolerance",
+                "feasible",
+                "closest_feasible",
+                "infeasible",
+                "operationally_impractical",
+                "indeterminate",
+                "insufficient_data",
+                "unsupported_model",
+                "solver_failure"
+              ]
+            },
+            {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:"
+            }
+          ]
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#namedValue"
+          }
+        },
+        "objective_components": {
+          "type": "array",
+          "items": {
+            "$ref": "#objectiveComponent"
+          }
+        },
+        "constraint_outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "constraint-outcome.schema.json#constraintOutcome"
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "diagnostic.schema.json#diagnostic"
+          }
+        },
+        "selection_status": {
+          "type": "string",
+          "enum": [
+            "selected",
+            "rejected",
+            "unselected"
+          ]
+        },
+        "extensions": {
+          "$ref": "extension.schema.json#extensionContainer"
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

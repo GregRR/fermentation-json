@@ -1,0 +1,16 @@
+{
+  "_schema": "calculation-result.schema.json",
+  "instance": {
+    "calculation_type": "example",
+    "status": "successful",
+    "outputs": [
+      {
+        "name": "result",
+        "value": 1,
+        "reference": {
+          "object_id": "result-1"
+        }
+      }
+    ]
+  }
+}

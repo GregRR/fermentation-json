@@ -1,0 +1,55 @@
+{
+  "_schema": "calculation-result.schema.json",
+  "instance": {
+    "calculation_type": "water_treatment_optimization",
+    "status": "feasible",
+    "constraints": [
+      {
+        "constraint_id": "chloride-range",
+        "constraint_type": "range",
+        "hard": true,
+        "subject_label": "chloride",
+        "parameters": {
+          "minimum": 40,
+          "maximum": 80
+        }
+      }
+    ],
+    "candidates": [
+      {
+        "rank": 1,
+        "status": "feasible",
+        "selection_status": "selected",
+        "constraint_outcomes": [
+          {
+            "constraint_id": "chloride-range",
+            "status": "satisfied"
+          }
+        ],
+        "objective_components": [
+          {
+            "name": "weighted_analyte_deviation",
+            "value": 0.8
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "status": "feasible",
+        "selection_status": "unselected",
+        "constraint_outcomes": [
+          {
+            "constraint_id": "chloride-range",
+            "status": "satisfied"
+          }
+        ],
+        "objective_components": [
+          {
+            "name": "weighted_analyte_deviation",
+            "value": 1.1
+          }
+        ]
+      }
+    ]
+  }
+}

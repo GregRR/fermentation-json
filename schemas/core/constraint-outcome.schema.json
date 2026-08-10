@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FermentationJSON constraint outcome",
+  "$anchor": "constraintOutcome",
+  "type": "object",
+  "required": [
+    "constraint_id",
+    "status"
+  ],
+  "properties": {
+    "constraint_id": {
+      "$ref": "identity.schema.json#objectId"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "satisfied",
+        "violated",
+        "not_evaluated"
+      ]
+    },
+    "observed": true,
+    "margin": true,
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "diagnostic.schema.json#diagnostic"
+      }
+    },
+    "extensions": {
+      "$ref": "extension.schema.json#extensionContainer"
+    }
+  },
+  "unevaluatedProperties": false
+}

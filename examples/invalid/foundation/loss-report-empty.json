@@ -1,0 +1,12 @@
+{
+  "_schema": "loss-report.schema.json",
+  "instance": {
+    "source": {
+      "format": "fermentationjson"
+    },
+    "target": {
+      "format": "beerjson"
+    },
+    "entries": []
+  }
+}
