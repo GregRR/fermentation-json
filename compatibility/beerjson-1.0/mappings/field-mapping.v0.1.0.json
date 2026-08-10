@@ -1556,16 +1556,16 @@
       "source_field": "inventory",
       "source_required": false,
       "source_value_type": "HopInventoryType",
-      "target_family": "hop_material",
-      "target_concept": "beerjson_source_preservation.inventory",
-      "status": "special_mapping_defined",
+      "target_family": "inventory",
+      "target_concept": "separate inventory_position record or source preservation",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Concrete mapping defined by mappings/hop-variety-information.v0.1.0.json; source preservation remains required.",
+      "notes": "Concrete contextual mapping defined by mappings/hop-inventory.v0.1.0.json; inventory remains separate from hop material identity.",
       "mapping_layers": {
         "source_representation": "Preserve the BeerJSON HopInventoryType exactly when present.",
-        "semantic_interpretation": "Treat inventory as contextual stock state, not hop-variety identity.",
-        "native_representation": "No inventory field is added to the native hop variety profile in this batch.",
-        "reverse_mapping": "Re-emit the retained BeerJSON inventory object exactly until a separate native inventory model is defined."
+        "semantic_interpretation": "Treat inventory as contextual stock state attached to the containing hop material context, not hop-variety identity.",
+        "native_representation": "When amount is present and a referenceable native hop material exists, create a separate inventoryPosition referencing that material; otherwise preserve source only. Do not invent a material lot.",
+        "reverse_mapping": "Reconstruct HopInventoryType from retained reported inventory quantity or source-preserved data."
       }
     },
     {
@@ -1790,11 +1790,11 @@
       "source_field": "amount",
       "source_required": false,
       "source_value_type": "VolumeType|MassType",
-      "target_family": "material",
-      "target_concept": "material.amount",
-      "status": "domain_schema_pending",
+      "target_family": "inventory",
+      "target_concept": "inventory_position.quantity",
+      "status": "domain_mapping_defined",
       "preservation": "required",
-      "notes": "Preserve the source field exactly until the concrete FermentationJSON domain mapping is finalized."
+      "notes": "Concrete mapping defined by mappings/hop-inventory.v0.1.0.json; native inventory position additionally requires contextual material reference."
     },
     {
       "source_type": "mash.json#MashProcedureType",

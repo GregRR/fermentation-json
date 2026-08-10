@@ -1,0 +1,19 @@
+{
+  "_schema_path": "production/inventory.schema.json",
+  "_schema_anchor": "inventoryPosition",
+  "instance": {
+    "material_reference": {
+      "object_id": "hop-citra"
+    },
+    "quantity": {
+      "quantity_kind": "temperature",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 4
+        },
+        "unit": "degree_celsius"
+      }
+    }
+  }
+}

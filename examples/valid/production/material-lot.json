@@ -1,0 +1,15 @@
+{
+  "_schema_path": "production/inventory.schema.json",
+  "_schema_anchor": "materialLot",
+  "instance": {
+    "object_id": "lot-citra-2026-08",
+    "material_reference": {
+      "object_id": "hop-citra",
+      "expected_type": "hop_variety_profile"
+    },
+    "lot_identifier": "CIT-26-0810",
+    "supplier_name": "Example Hop Supplier",
+    "received_on": "2026-08-10",
+    "expires_on": "2029-08-10"
+  }
+}

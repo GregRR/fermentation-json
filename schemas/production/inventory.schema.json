@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/inventory.schema.json",
+  "title": "FermentationJSON material lot and inventory position",
+  "$ref": "#inventoryPosition",
+  "$defs": {
+    "mass_quantity": {
+      "$anchor": "inventoryMassQuantity",
+      "allOf": [
+        {
+          "$ref": "../core/quantity.schema.json#quantity"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quantity_kind": {
+              "const": "mass"
+            },
+            "canonical": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "const": "kilogram"
+                }
+              },
+              "required": [
+                "unit"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "volume_quantity": {
+      "$anchor": "inventoryVolumeQuantity",
+      "allOf": [
+        {
+          "$ref": "../core/quantity.schema.json#quantity"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quantity_kind": {
+              "const": "volume"
+            },
+            "canonical": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "const": "liter"
+                }
+              },
+              "required": [
+                "unit"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "count_quantity": {
+      "$anchor": "inventoryCountQuantity",
+      "allOf": [
+        {
+          "$ref": "../core/quantity.schema.json#quantity"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quantity_kind": {
+              "const": "count"
+            },
+            "canonical": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "const": "one"
+                }
+              },
+              "required": [
+                "unit"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "inventory_quantity": {
+      "$anchor": "inventoryQuantity",
+      "oneOf": [
+        {
+          "$ref": "#inventoryMassQuantity"
+        },
+        {
+          "$ref": "#inventoryVolumeQuantity"
+        },
+        {
+          "$ref": "#inventoryCountQuantity"
+        }
+      ]
+    },
+    "material_lot": {
+      "$anchor": "materialLot",
+      "type": "object",
+      "required": [
+        "material_reference"
+      ],
+      "properties": {
+        "object_id": {
+          "$ref": "../core/identity.schema.json#objectId"
+        },
+        "material_reference": {
+          "$ref": "../core/reference.schema.json#dataReference"
+        },
+        "lot_identifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supplier_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "received_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "opened_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "expires_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "provenance": {
+          "$ref": "../core/provenance.schema.json#provenance"
+        },
+        "extensions": {
+          "$ref": "../core/extension.schema.json#extensionContainer"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "inventory_position": {
+      "$anchor": "inventoryPosition",
+      "type": "object",
+      "required": [
+        "material_reference",
+        "quantity"
+      ],
+      "properties": {
+        "object_id": {
+          "$ref": "../core/identity.schema.json#objectId"
+        },
+        "material_reference": {
+          "$ref": "../core/reference.schema.json#dataReference"
+        },
+        "lot_reference": {
+          "$ref": "../core/reference.schema.json#dataReference"
+        },
+        "quantity": {
+          "$ref": "#inventoryQuantity"
+        },
+        "location_label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recorded_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "provenance": {
+          "$ref": "../core/provenance.schema.json#provenance"
+        },
+        "extensions": {
+          "$ref": "../core/extension.schema.json#extensionContainer"
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

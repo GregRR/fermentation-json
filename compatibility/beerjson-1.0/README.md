@@ -18,10 +18,12 @@ Files:
 - `mappings/primitive-field-semantics.v0.1.0.json` — reusable rules for primitive carriers, percentages, field-encoded scales/bases, local date-times, and identity/absence semantics;
 - `mappings/hop-variety-base.v0.1.0.json` — BeerJSON base hop-object mapping into the native hop material schema;
 - `mappings/hop-variety-information.v0.1.0.json` — BeerJSON variety/profile and oil-analysis decomposition into native hop-profile semantics plus explicit source-preservation-only fields;
+- `mappings/hop-inventory.v0.1.0.json` — contextual BeerJSON hop-inventory mapping into a separate native inventory position;
 - `fixtures/primitive-field-vectors.v0.1.0.json` — representative source-to-semantic mapping vectors;
 - `fixtures/measurable-roundtrip-vectors.v0.1.0.json` — representative measurable/range import and semantic round-trip vectors;
 - `fixtures/hop-variety-base-roundtrip-v0.1.0.json` — complete-object vectors for BeerJSON `HopVarietyBase`, including mixed native/source-preservation behavior;
 - `fixtures/hop-variety-information-roundtrip-v0.1.0.json` — complete-object vectors for BeerJSON `VarietyInformation`, including decomposition of `OilContentType` and contextual inventory preservation;
+- `fixtures/hop-inventory-roundtrip-v0.1.0.json` — mass, volume, empty-object, and missing-material-context vectors for BeerJSON `HopInventoryType`;
 - `mappings/field-mapping.v0.1.0.json` — one mapping row for every declared object field;
 - `profile.v0.1.0.json` — pre-release compatibility-profile manifest.
 
@@ -83,6 +85,12 @@ Native FermentationJSON constraints are not weakened merely to accept every Beer
 
 ## Hop variety profile and oil analysis
 
-ADR-0014 extends the hop mapping through BeerJSON `VarietyInformation` without treating its nesting as the native domain model. Combined BeerJSON hop-use tokens become sets of descriptive variety roles, free-text substitutes remain text, and the six-month alpha-loss value is preserved as a fraction with no invented storage conditions. BeerJSON inventory remains source-preserved because stock state is contextual rather than intrinsic material identity.
+ADR-0014 extends the hop mapping through BeerJSON `VarietyInformation` without treating its nesting as the native domain model. Combined BeerJSON hop-use tokens become sets of descriptive variety roles, free-text substitutes remain text, and the six-month alpha-loss value is preserved as a fraction with no invented storage conditions. Inventory remains contextual rather than intrinsic material identity.
 
 BeerJSON `OilContentType` is decomposed by analytical meaning. `total_oil_ml_per_100g` maps to explicit `volume_per_mass`; recognized essential-oil component percentages map to an extensible component list whose values are fractions of total oil. Cohumulone, polyphenols, xanthohumol, and generic `pinene` remain source-preserved in this mapping version because BeerJSON does not provide a scientifically safe denominator or identity for native normalization.
+
+## Hop inventory and material lots
+
+ADR-0015 separates material definition, material lot, and inventory position. BeerJSON `HopInventoryType` supplies only an optional mass-or-volume `amount`, so a native inventory position can be created only when that amount is present and the containing hop import supplies a referenceable native material. The inventory position references that material and preserves the BeerJSON reported amount for reverse mapping.
+
+BeerJSON inventory does not justify inventing a material lot, supplier, storage location, timestamp, or storage condition. Because `amount` is optional in the pinned source schema, `{}` remains a valid source inventory object and MUST NOT be reinterpreted as zero inventory. If native material context is unavailable, the source inventory object remains preserved without a dangling native inventory record.

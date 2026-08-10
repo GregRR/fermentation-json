@@ -111,6 +111,11 @@
       "path": "ingredients/hop.schema.json"
     },
     {
+      "name": "inventory",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/inventory.schema.json",
+      "path": "production/inventory.schema.json"
+    },
+    {
       "name": "material_definition",
       "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/material.schema.json",
       "path": "production/material.schema.json"

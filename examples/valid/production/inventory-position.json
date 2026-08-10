@@ -1,0 +1,37 @@
+{
+  "_schema_path": "production/inventory.schema.json",
+  "_schema_anchor": "inventoryPosition",
+  "instance": {
+    "object_id": "inventory-citra-cold-room",
+    "material_reference": {
+      "object_id": "hop-citra",
+      "expected_type": "hop_variety_profile"
+    },
+    "lot_reference": {
+      "object_id": "lot-citra-2026-08",
+      "expected_type": "material_lot"
+    },
+    "quantity": {
+      "quantity_kind": "mass",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 2.5
+        },
+        "unit": "kilogram"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 2.5
+        },
+        "unit": "kilogram",
+        "original_unit_text": "kg"
+      },
+      "epistemic_state": [
+        "measured"
+      ]
+    },
+    "location_label": "Cold room"
+  }
+}

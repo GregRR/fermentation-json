@@ -1,0 +1,38 @@
+{
+  "artifact": "fermentationjson.beerjson_hop_inventory_mapping",
+  "version": "0.1.0",
+  "status": "pre-release",
+  "source_type": "hop.json#HopInventoryType",
+  "source_context": "hop.json#VarietyInformation.inventory",
+  "target_schema": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/inventory.schema.json",
+  "target_anchor": "inventoryPosition",
+  "native_model_policy": "BeerJSON hop inventory is contextual stock state. When amount is present and the containing hop variety can be represented as a referenceable native material, import it as a separate inventory position referencing that material. Do not add inventory fields to the hop material itself and do not invent a material lot because BeerJSON supplies no lot identity.",
+  "context_requirements": [
+    "A native inventory position requires a material_reference supplied by the containing imported hop material/variety context.",
+    "If the containing BeerJSON hop cannot receive a referenceable native material representation, preserve HopInventoryType as source data rather than inventing a dangling native inventory record."
+  ],
+  "field_mappings": [
+    {
+      "source_field": "amount",
+      "target_path": "quantity",
+      "mode": "measurable_to_inventory_quantity",
+      "allowed_source_types": [
+        "MassType",
+        "VolumeType"
+      ],
+      "allowed_native_quantity_kinds": [
+        "mass",
+        "volume"
+      ],
+      "reverse": "Reconstruct the BeerJSON amount from the retained reported value and BeerJSON unit token; do not use the canonical value when an unchanged reported representation is available."
+    }
+  ],
+  "empty_object_policy": "BeerJSON HopInventoryType does not require amount. An empty source object remains valid BeerJSON source data but does not create a native inventory position because FermentationJSON inventoryPosition requires a material reference and quantity.",
+  "lot_policy": "Do not create a native materialLot from HopInventoryType. BeerJSON HopInventoryType contains no lot identifier, supplier lot, receipt date, or other lot identity.",
+  "non_inferences": [
+    "Do not treat BeerJSON inventory as intrinsic hop-variety identity.",
+    "Do not infer a material lot from inventory amount alone.",
+    "Do not infer inventory location, timestamp, supplier, availability status, or storage conditions.",
+    "Do not convert an empty BeerJSON inventory object into zero inventory."
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "artifact": "fermentationjson.beerjson_hop_inventory_roundtrip_vectors",
+  "version": "0.1.0",
+  "source_type": "hop.json#HopInventoryType",
+  "mapping": "../mappings/hop-inventory.v0.1.0.json",
+  "vectors": [
+    {
+      "id": "mass_amount_maps_to_separate_inventory_position",
+      "source_inventory": {
+        "amount": {
+          "unit": "kg",
+          "value": 2.5
+        }
+      },
+      "context": {
+        "native_material_reference": {
+          "object_id": "hop-citra",
+          "expected_type": "hop_variety_profile"
+        }
+      },
+      "expected_native_inventory_position": {
+        "material_reference": {
+          "object_id": "hop-citra",
+          "expected_type": "hop_variety_profile"
+        },
+        "quantity": {
+          "quantity_kind": "mass",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 2.5
+            },
+            "unit": "kilogram"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 2.5
+            },
+            "unit": "kilogram",
+            "original_unit_text": "kg"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        }
+      },
+      "expected_roundtrip_inventory": {
+        "amount": {
+          "unit": "kg",
+          "value": 2.5
+        }
+      }
+    },
+    {
+      "id": "volume_amount_maps_without_inventing_lot",
+      "source_inventory": {
+        "amount": {
+          "unit": "gal",
+          "value": 1
+        }
+      },
+      "context": {
+        "native_material_reference": {
+          "object_id": "hop-extract",
+          "expected_type": "hop_variety_profile"
+        }
+      },
+      "expected_native_inventory_position": {
+        "material_reference": {
+          "object_id": "hop-extract",
+          "expected_type": "hop_variety_profile"
+        },
+        "quantity": {
+          "quantity_kind": "volume",
+          "canonical": {
+            "form": {
+              "type": "exact",
+              "value": 3.785411784
+            },
+            "unit": "liter"
+          },
+          "reported": {
+            "form": {
+              "type": "exact",
+              "value": 1
+            },
+            "unit": "us_liquid_gallon",
+            "original_unit_text": "gal"
+          },
+          "epistemic_state": [
+            "reported"
+          ]
+        }
+      },
+      "expected_roundtrip_inventory": {
+        "amount": {
+          "unit": "gal",
+          "value": 1
+        }
+      },
+      "expected_native_lot": null
+    },
+    {
+      "id": "empty_inventory_object_is_preserved_not_zeroed",
+      "source_inventory": {},
+      "context": {
+        "native_material_reference": {
+          "object_id": "hop-cascade",
+          "expected_type": "hop_variety_profile"
+        }
+      },
+      "expected_native_inventory_position": null,
+      "source_preservation_required": true,
+      "expected_roundtrip_inventory": {}
+    },
+    {
+      "id": "missing_native_material_context_uses_source_preservation",
+      "source_inventory": {
+        "amount": {
+          "unit": "g",
+          "value": 500
+        }
+      },
+      "context": {
+        "native_material_reference": null
+      },
+      "expected_native_inventory_position": null,
+      "source_preservation_required": true,
+      "expected_roundtrip_inventory": {
+        "amount": {
+          "unit": "g",
+          "value": 500
+        }
+      }
+    }
+  ]
+}

@@ -76,10 +76,11 @@
     },
     {
       "source_field": "inventory",
-      "target_path": null,
-      "mode": "source_preservation_only",
+      "target_path": "separate inventoryPosition record when amount and referenceable native material context are available",
+      "mode": "contextual_object_mapping",
+      "mapping": "hop-inventory.v0.1.0.json",
       "reason": "Inventory is contextual stock state, not intrinsic hop-variety identity or composition.",
-      "reverse": "Re-emit the retained BeerJSON HopInventoryType exactly until a separate native inventory model exists."
+      "reverse": "Reconstruct the BeerJSON HopInventoryType from the separate inventory position's retained reported quantity or from source-preserved data when no native inventory position was created."
     }
   ],
   "oil_content_field_mappings": [
@@ -215,7 +216,7 @@
   "non_inferences": [
     "Do not treat VarietyInformation.type as a recipe addition instruction; it is mapped to descriptive variety roles.",
     "Do not parse BeerJSON substitutes free text into material references.",
-    "Do not fold BeerJSON inventory into hop material identity.",
+    "Do not fold BeerJSON inventory into hop material identity or invent a material lot from its amount-only stock record.",
     "Do not assume every PercentType nested under BeerJSON OilContentType is a fraction of total oil merely because the source object description says so; field-level analytical meaning controls native mapping.",
     "Do not reinterpret ambiguous BeerJSON pinene, polyphenols, xanthohumol, or cohumulone percentages without a defensible denominator/identity."
   ]

@@ -23,3 +23,7 @@ The first domain-object fixture set covers BeerJSON `HopVarietyBase`. Tests vali
 ## Hop variety-information vectors
 
 `test_hop_variety_information_roundtrip.py` verifies that BeerJSON `VarietyInformation` extends the native hop model without importing source nesting as native structure. It checks role-set mapping, exact total-oil conversion, essential-oil component fractions, source-preservation-only handling for ambiguous analytical fields, and separation of BeerJSON inventory from material identity.
+
+## Hop inventory vectors
+
+`test_hop_inventory_roundtrip.py` verifies the separate inventory-position mapping for BeerJSON `HopInventoryType`. It covers mass and volume quantities, retained BeerJSON unit/value round trip, prohibition on invented lots, preservation of an empty inventory object without treating it as zero, and source-preservation fallback when no referenceable native hop material exists.

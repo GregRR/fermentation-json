@@ -134,12 +134,15 @@ def test_total_oil_conversion_is_exact_and_field_basis_is_not_lost() -> None:
     assert Decimal(str(total_oil["reported"]["form"]["value"])) == Decimal("1.2")
 
 
-def test_ambiguous_oil_fields_and_inventory_are_source_preservation_only() -> None:
+def test_ambiguous_oil_fields_remain_source_only_while_inventory_is_contextual() -> None:
     for field in ("cohumulone", "pinene", "polyphenols", "xanthohumol"):
         assert OIL_RULES[field]["mode"] == "source_preservation_only"
         assert OIL_RULES[field]["target_path"] is None
-    assert VARIETY_RULES["inventory"]["mode"] == "source_preservation_only"
-    assert VARIETY_RULES["inventory"]["target_path"] is None
+
+    inventory = VARIETY_RULES["inventory"]
+    assert inventory["mode"] == "contextual_object_mapping"
+    assert inventory["mapping"] == "hop-inventory.v0.1.0.json"
+    assert "separate inventoryPosition" in inventory["target_path"]
 
 
 def test_oil_component_mapping_does_not_include_ambiguous_beerjson_fields() -> None:

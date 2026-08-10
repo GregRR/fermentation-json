@@ -1,7 +1,7 @@
 # FermentationJSON Design Specification
 
 **Status:** Working Draft  
-**Document version:** 0.20
+**Document version:** 0.21
 **Repository path:** `docs/design/DESIGN.md`
 
 ---
@@ -1174,24 +1174,47 @@ Supplier, purchasing, cost, and inventory state are not intrinsic material ident
 
 ### 15.2 Material lots
 
-A material lot represents a specific produced, received, harvested, propagated, or otherwise traceable quantity of a material.
+A material lot represents a specific produced, received, harvested, propagated, or otherwise traceable instance or batch of a material. It is distinct from both the relatively stable material definition and changing inventory state.
 
 A lot SHOULD support, as applicable:
 
-- lot identifier;
+- document-scoped identifier;
 - material definition reference;
 - producer or supplier lot code;
-- production, harvest, or receipt date;
+- production, harvest, receipt, opening, expiration, or best-use dates;
+- supplier information;
 - lot-specific analysis;
-- quantity;
 - storage condition;
-- expiration or best-use date;
 - quality status;
 - provenance.
 
-Lot-specific analysis MUST remain distinguishable from a material specification or typical analysis.
+Lot-specific analysis MUST remain distinguishable from a material specification or typical analysis. Current quantity on hand MUST NOT be treated as intrinsic lot identity. If an original or received lot quantity is recorded later, it MUST remain distinguishable from current inventory state.
 
-### 15.3 Ingredient and process roles
+The initial native `materialLot` schema requires a material reference and permits lot identifier, supplier text, receipt/open/expiration dates, provenance, and extensions. It deliberately does not invent lot identity when an imported format supplies only an inventory amount.
+
+### 15.3 Inventory positions
+
+An inventory position represents quantity-on-hand or another point-in-time stock state for a material. It MUST remain separate from the material definition and MAY reference a material lot when the source actually identifies one.
+
+The initial native inventory position requires:
+
+- material reference;
+- quantity.
+
+It MAY additionally carry:
+
+- material-lot reference;
+- document-scoped identifier;
+- location label;
+- observation/recording timestamp;
+- provenance;
+- extensions.
+
+Initial inventory quantities are restricted to mass, volume, or count with their registered canonical units. A lot reference does not eliminate the material reference; semantic conformance MAY verify that both references are consistent.
+
+An omitted quantity MUST NOT be interpreted as zero. Inventory records imported from weaker source formats MAY remain source-preserved when the native record cannot be formed without inventing identity or context. See ADR-0015.
+
+### 15.4 Ingredient and process roles
 
 A material's use as an ingredient, processing aid, cleaning agent, treatment chemical, packaging material, or other process input is a contextual role and SHOULD NOT require redefining the material itself.
 
@@ -1215,7 +1238,7 @@ Profiles MAY define specialized material types for:
 - cleaning or sanitizing agents;
 - processing aids.
 
-### 15.4 Planned and actual material use
+### 15.5 Planned and actual material use
 
 A recipe SHOULD reference planned material uses.
 
@@ -1223,7 +1246,7 @@ A batch SHOULD reference actual material lots and quantities where traceability 
 
 A planned material use and an actual material consumption record MUST remain distinguishable.
 
-### 15.5 Initial hop material model
+### 15.6 Initial hop material model
 
 The first concrete brewing material schema defines a hop material separately from its recipe addition, inventory state, or lot-specific record. A native hop definition extends the reusable material-definition base and MAY carry hop form plus alpha- and beta-acid quantities.
 
@@ -1239,7 +1262,7 @@ A native hop variety profile MAY extend the hop-definition base with descriptive
 
 Hop essential-oil data MUST be modeled by analytical meaning rather than by copying the BeerJSON `OilContentType` container. Total oil MAY be represented as `volume_per_mass`; BeerJSON `total_oil_ml_per_100g` maps exactly to a reported `milliliter_per_100_gram` representation and canonical `liter_per_kilogram`. Identified oil-component percentages MAY be represented as fractions of total essential oil through an extensible component identifier list.
 
-BeerJSON fields grouped under `OilContentType` MUST NOT automatically be treated as essential-oil fractions when the analytical meaning does not support that interpretation. In the initial mapping, cohumulone, polyphenols, xanthohumol, and generic `pinene` remain source-preserved rather than receiving invented native denominators or chemical identities. BeerJSON variety inventory likewise remains contextual stock state and MUST NOT be folded into intrinsic hop material identity. See ADR-0014.
+BeerJSON fields grouped under `OilContentType` MUST NOT automatically be treated as essential-oil fractions when the analytical meaning does not support that interpretation. In the initial mapping, cohumulone, polyphenols, xanthohumol, and generic `pinene` remain source-preserved rather than receiving invented native denominators or chemical identities. BeerJSON variety inventory likewise remains contextual stock state and MUST NOT be folded into intrinsic hop material identity. When its amount and containing native hop identity are available, it maps to a separate inventory position; an empty inventory object remains source-preserved rather than becoming zero inventory, and no material lot is inferred. See ADR-0014 and ADR-0015.
 
 ---
 
@@ -2183,6 +2206,8 @@ The project MUST maintain documented mappings and conformance fixtures for BeerJ
 Concrete BeerJSON domain-object mappings MUST likewise preserve the distinction between native interpretation and source preservation. The first such mapping, `HopVarietyBase`, targets the native material/hop schema for safely understood fields while retaining BeerJSON-only or under-specified fields separately. Native FermentationJSON domain constraints MUST NOT be weakened merely because the BeerJSON source schema permits a weaker value. See ADR-0013.
 
 BeerJSON `VarietyInformation` and `OilContentType` compatibility MUST decompose the source object by actual semantic role. Descriptive variety roles and safe essential-oil data MAY receive native hop-profile representations, while inventory remains contextual and analytically ambiguous percentages remain source-preserved. The compatibility layer MUST NOT use BeerJSON object nesting as evidence that cohumulone, polyphenols, xanthohumol, or an unspecified pinene field are fractions of total hop essential oil. See ADR-0014.
+
+BeerJSON `HopInventoryType` compatibility MUST use contextual material identity rather than nesting inventory into the native hop profile. A present mass or volume `amount` MAY become a separate native inventory position that references the imported hop material. The mapping MUST NOT infer a material lot, supplier, location, timestamp, storage condition, or zero amount. Empty inventory objects and inventory attached to BeerJSON hops that cannot receive a referenceable native representation remain source-preserved. See ADR-0015.
 
 For content representable in both formats, a BeerJSON-to-FermentationJSON-to-BeerJSON round trip MUST preserve all BeerJSON-defined information.
 

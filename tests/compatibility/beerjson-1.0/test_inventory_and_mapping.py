@@ -161,7 +161,8 @@ def test_hop_variety_information_and_oil_fields_are_no_longer_domain_pending() -
 
     for field in ("type", "notes", "percent_lost", "substitutes", "oil_content"):
         assert rows[("hop.json#VarietyInformation", field)]["status"] == "domain_mapping_defined"
-    assert rows[("hop.json#VarietyInformation", "inventory")]["status"] == "special_mapping_defined"
+    assert rows[("hop.json#VarietyInformation", "inventory")]["status"] == "domain_mapping_defined"
+    assert rows[("hop.json#HopInventoryType", "amount")]["status"] == "domain_mapping_defined"
 
     safe_components = {
         "humulene",

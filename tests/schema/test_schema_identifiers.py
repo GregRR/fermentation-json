@@ -118,9 +118,11 @@ def test_valid_examples_resolve_with_canonical_registry_without_retrieval() -> N
 
         entry = CATALOG_BY_PATH[schema_path]
         schema = _load_json(ROOT / "schemas" / entry["path"])
+        schema_anchor = case.get("_schema_anchor")
+        validation_schema = {"$ref": f"{entry['id']}#{schema_anchor}"} if schema_anchor else schema
 
         validator = Draft202012Validator(
-            schema,
+            validation_schema,
             registry=REGISTRY,
             format_checker=FORMAT_CHECKER,
         )

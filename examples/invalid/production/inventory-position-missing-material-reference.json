@@ -1,0 +1,16 @@
+{
+  "_schema_path": "production/inventory.schema.json",
+  "_schema_anchor": "inventoryPosition",
+  "instance": {
+    "quantity": {
+      "quantity_kind": "mass",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 1
+        },
+        "unit": "kilogram"
+      }
+    }
+  }
+}

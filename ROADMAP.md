@@ -209,7 +209,8 @@ BeerJSON compatibility should be developed **before or alongside** the brewing s
 ## 2.2 Shared production schemas
 
 - [x] Material definition (initial reusable schema; expected to evolve with lot/reference work).
-- [ ] Material lot.
+- [x] Material lot (initial traceable-lot schema separated from changing inventory state).
+- [x] Inventory position (initial mass/volume/count stock-state schema with optional lot reference).
 - [ ] Planned material use.
 - [ ] Actual material-use/consumption record.
 - [ ] Culture definition.

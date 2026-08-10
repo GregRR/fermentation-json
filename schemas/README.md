@@ -71,3 +71,5 @@ identity or reproducibility is required.
 ## Domain-schema anchors
 
 A normative schema resource may expose multiple named anchors when related concrete objects share a composable base. For example, `ingredients/hop.schema.json` exposes closed `hopDefinition` and `hopVarietyProfile` objects built from the composable `hopDefinitionBase`. Consumers should reference the concrete anchor matching the object they validate.
+
+`production/inventory.schema.json` similarly exposes `materialLot` and `inventoryPosition` as distinct closed objects. Material identity, lot identity, and changing inventory quantity are separate concepts; an inventory position always references its material and may additionally reference a lot.
