@@ -74,7 +74,7 @@ The repository's GitHub Pages workflow publishes and visualizes the current pre-
 
 `https://gregrr.github.io/fermentation-json/`
 
-The Pages site provides an interactive schema graph and a selector generated from the versioned schema catalog. Cataloged schemas are also published as raw JSON at their canonical `$id` paths. The site is rebuilt automatically from `main`; the repository schemas remain the authoritative source, and the published `0.1.0` schema set remains explicitly pre-release until promoted through the project's release process.
+The Pages site provides an interactive schema graph and a selector generated from the versioned schema catalog. Cataloged schemas are also published as raw JSON at their canonical `$id` paths. For visualization only, the Pages build creates derived Draft 2020-12 Compound Schema Documents so JSON Schema Studio can resolve the modular schema set locally; these generated bundles do not replace or modify the authoritative schemas. The site is rebuilt automatically from `main`, and the published `0.1.0` schema set remains explicitly pre-release until promoted through the project's release process.
 
 ## Quantity model
 

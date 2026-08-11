@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import html
 import json
 import re
 import shutil
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urldefrag, urljoin, urlparse
 
 ROOT = Path(__file__).resolve().parents[2]
 CATALOG_PATH = ROOT / "schemas" / "catalog.v0.1.0.json"
@@ -73,6 +74,80 @@ def _copy_published_schemas(output: Path, version: str, schemas: list[dict]) -> 
         shutil.copy2(source, destination)
 
     shutil.copy2(CATALOG_PATH, output / "schemas" / CATALOG_PATH.name)
+
+
+def _referenced_resource_ids(schema: object, base_uri: str) -> set[str]:
+    referenced: set[str] = set()
+
+    def visit(value: object, current_base: str) -> None:
+        if isinstance(value, dict):
+            scoped_base = current_base
+            schema_id = value.get("$id")
+            if isinstance(schema_id, str):
+                scoped_base = urljoin(current_base, schema_id)
+
+            for keyword in ("$ref", "$dynamicRef"):
+                reference = value.get(keyword)
+                if isinstance(reference, str):
+                    target_uri, _ = urldefrag(urljoin(scoped_base, reference))
+                    scoped_resource, _ = urldefrag(scoped_base)
+                    if target_uri and target_uri != scoped_resource:
+                        referenced.add(target_uri)
+
+            for child in value.values():
+                visit(child, scoped_base)
+        elif isinstance(value, list):
+            for child in value:
+                visit(child, current_base)
+
+    visit(schema, base_uri)
+    return referenced
+
+
+def _dependency_ids(root_id: str, resources: dict[str, dict]) -> set[str]:
+    dependencies: set[str] = set()
+    pending = list(_referenced_resource_ids(resources[root_id], root_id))
+
+    while pending:
+        resource_id = pending.pop()
+        if resource_id == root_id or resource_id in dependencies:
+            continue
+        if resource_id not in resources:
+            raise ValueError(f"external $ref target is not cataloged: {resource_id}")
+
+        dependencies.add(resource_id)
+        pending.extend(_referenced_resource_ids(resources[resource_id], resource_id))
+
+    return dependencies
+
+
+def _write_studio_bundles(output: Path, version: str, schemas: list[dict]) -> None:
+    """Create visualization-only Compound Schema Documents for JSON Schema Studio.
+
+    Studio 0.9.1 intentionally resolves references from a local-only schema cache.
+    Embedding the transitive cataloged dependencies under ``$defs`` follows the
+    Draft 2020-12 bundling model while preserving authoritative ``$id`` and
+    ``$ref`` values unchanged.
+    """
+    resources = {entry["id"]: _load_json(ROOT / "schemas" / entry["path"]) for entry in schemas}
+    bundle_root = output / "explorer-schemas" / version
+
+    for entry in schemas:
+        schema = copy.deepcopy(resources[entry["id"]])
+        definitions = schema.setdefault("$defs", {})
+        if not isinstance(definitions, dict):
+            raise TypeError(f"$defs must be an object in {entry['path']}")
+
+        for resource_id in sorted(_dependency_ids(entry["id"], resources)):
+            if resource_id in definitions:
+                raise ValueError(
+                    f"visualization bundle key collides with existing $defs entry: {resource_id}"
+                )
+            definitions[resource_id] = copy.deepcopy(resources[resource_id])
+
+        destination = bundle_root / entry["path"]
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(json.dumps(schema, indent=2) + "\n", encoding="utf-8")
 
 
 def _schema_options(schemas: list[dict]) -> str:
@@ -183,7 +258,7 @@ const allowedSchemas = new Set({allowed_paths});
 const defaultSchema = {json.dumps(DEFAULT_SCHEMA_PATH)};
 const requested = new URLSearchParams(window.location.search).get("schema");
 const schemaPath = requested && allowedSchemas.has(requested) ? requested : defaultSchema;
-const schemaUrl = new URL(`../schemas/{version}/${{schemaPath}}`, window.location.href);
+const schemaUrl = new URL(`../explorer-schemas/{version}/${{schemaPath}}`, window.location.href);
 
 try {{
   const response = await fetch(schemaUrl, {{ cache: "no-cache" }});
@@ -218,6 +293,7 @@ def build_site(studio_dist: Path, studio_license: Path, output: Path) -> None:
     output.mkdir(parents=True)
 
     _copy_published_schemas(output, version, schemas)
+    _write_studio_bundles(output, version, schemas)
     _write_launcher(output, version, schemas)
 
     studio_output = output / "studio"
