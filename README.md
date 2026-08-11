@@ -68,6 +68,14 @@ catalog.
 
 Passing JSON Schema validation establishes structural validity only. Full FermentationJSON conformance also includes semantic requirements that are not completely expressible in JSON Schema, such as reference integrity, scientific interpretation rules, compatibility preservation, and loss-reporting behavior.
 
+## Interactive schema explorer
+
+The repository's GitHub Pages workflow publishes and visualizes the current pre-release schema set at:
+
+`https://gregrr.github.io/fermentation-json/`
+
+The Pages site provides an interactive schema graph and a selector generated from the versioned schema catalog. Cataloged schemas are also published as raw JSON at their canonical `$id` paths. The site is rebuilt automatically from `main`; the repository schemas remain the authoritative source, and the published `0.1.0` schema set remains explicitly pre-release until promoted through the project's release process.
+
 ## Quantity model
 
 Every interoperable quantity has a canonical representation. A reported representation is optional but strongly recommended when the value originated from user input, an imported document, an instrument, a laboratory result, a product label, a publication, or another identifiable source.
