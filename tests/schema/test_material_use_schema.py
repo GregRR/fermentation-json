@@ -19,9 +19,7 @@ def _registry() -> Registry:
 
 
 REGISTRY = _registry()
-MATERIAL_USE_SCHEMA = json.loads(
-    (ROOT / "schemas/production/material-use.schema.json").read_text()
-)
+MATERIAL_USE_SCHEMA = json.loads((ROOT / "schemas/production/material-use.schema.json").read_text())
 
 
 def _validator(anchor: str) -> Draft202012Validator:
@@ -45,9 +43,7 @@ def test_valid_planned_material_use_validates() -> None:
 def test_planned_material_use_may_omit_quantity() -> None:
     errors = list(
         _validator("plannedMaterialUse").iter_errors(
-            _load_example(
-                "examples/valid/production/planned-material-use-without-quantity.json"
-            )
+            _load_example("examples/valid/production/planned-material-use-without-quantity.json")
         )
     )
     assert not errors, "; ".join(error.message for error in errors)
@@ -67,9 +63,7 @@ def test_planned_material_use_requires_material_reference() -> None:
 def test_planned_material_use_rejects_undeclared_timing_shape() -> None:
     errors = list(
         _validator("plannedMaterialUse").iter_errors(
-            _load_example(
-                "examples/invalid/production/planned-material-use-unknown-field.json"
-            )
+            _load_example("examples/invalid/production/planned-material-use-unknown-field.json")
         )
     )
     assert errors
@@ -94,9 +88,7 @@ def test_valid_actual_material_use_validates() -> None:
 def test_actual_material_use_may_omit_lot_reference() -> None:
     errors = list(
         _validator("actualMaterialUse").iter_errors(
-            _load_example(
-                "examples/valid/production/actual-material-use-without-lot.json"
-            )
+            _load_example("examples/valid/production/actual-material-use-without-lot.json")
         )
     )
     assert not errors, "; ".join(error.message for error in errors)
@@ -105,9 +97,7 @@ def test_actual_material_use_may_omit_lot_reference() -> None:
 def test_actual_material_use_requires_actual_quantity() -> None:
     errors = list(
         _validator("actualMaterialUse").iter_errors(
-            _load_example(
-                "examples/invalid/production/actual-material-use-missing-quantity.json"
-            )
+            _load_example("examples/invalid/production/actual-material-use-missing-quantity.json")
         )
     )
     assert errors
@@ -116,9 +106,7 @@ def test_actual_material_use_requires_actual_quantity() -> None:
 def test_actual_material_use_rejects_inline_inventory_state() -> None:
     errors = list(
         _validator("actualMaterialUse").iter_errors(
-            _load_example(
-                "examples/invalid/production/actual-material-use-unknown-field.json"
-            )
+            _load_example("examples/invalid/production/actual-material-use-unknown-field.json")
         )
     )
     assert errors
@@ -126,6 +114,4 @@ def test_actual_material_use_rejects_inline_inventory_state() -> None:
 
 def test_actual_quantity_uses_generic_quantity_schema() -> None:
     actual_properties = MATERIAL_USE_SCHEMA["$defs"]["actual_material_use"]["properties"]
-    assert actual_properties["actual_quantity"] == {
-        "$ref": "../core/quantity.schema.json#quantity"
-    }
+    assert actual_properties["actual_quantity"] == {"$ref": "../core/quantity.schema.json#quantity"}
