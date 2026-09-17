@@ -1367,6 +1367,8 @@ Provider, brand, product, water type, treatment facility, and physical source MU
 
 A source-water profile MUST permit multiple physical sources because a supplied water may be drawn from or blended from multiple sources.
 
+A source-water profile MAY include free-text notes describing the profile itself. Profile notes MUST remain distinct from notes attached to source documents, individual reported results, treatment plans, or other referenced objects.
+
 Source types MAY include:
 
 - municipal;
@@ -1566,7 +1568,9 @@ A target MAY also include:
 - optimization weight or priority;
 - flavor, process, or application priority;
 - required or prohibited conditions;
-- notes.
+- notes describing the target profile itself.
+
+Target-profile notes MUST remain distinct from notes attached to source documents, treatment plans, optimization results, or other referenced objects.
 
 A target-water profile MUST identify its target or reference role where material. Roles MAY include:
 
