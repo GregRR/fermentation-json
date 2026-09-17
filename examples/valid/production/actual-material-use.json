@@ -1,0 +1,41 @@
+{
+  "_schema_path": "production/material-use.schema.json",
+  "_schema_anchor": "actualMaterialUse",
+  "instance": {
+    "object_id": "use-actual-citra-001",
+    "material_reference": {
+      "object_id": "hop-citra",
+      "expected_type": "hop_variety_profile"
+    },
+    "lot_reference": {
+      "object_id": "lot-citra-2026-08",
+      "expected_type": "material_lot"
+    },
+    "planned_use_reference": {
+      "object_id": "use-planned-citra-001",
+      "expected_type": "planned_material_use"
+    },
+    "actual_quantity": {
+      "quantity_kind": "mass",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.058
+        },
+        "unit": "kilogram"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 58.0
+        },
+        "unit": "gram",
+        "original_unit_text": "g"
+      },
+      "epistemic_state": [
+        "measured"
+      ]
+    },
+    "purpose": "whirlpool addition"
+  }
+}

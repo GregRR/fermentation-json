@@ -1,0 +1,12 @@
+{
+  "_schema_path": "production/material-use.schema.json",
+  "_schema_anchor": "actualMaterialUse",
+  "instance": {
+    "material_reference": {
+      "object_id": "hop-citra"
+    },
+    "lot_reference": {
+      "object_id": "lot-citra-2026-08"
+    }
+  }
+}

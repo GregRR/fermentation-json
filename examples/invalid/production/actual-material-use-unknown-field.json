@@ -1,0 +1,29 @@
+{
+  "_schema_path": "production/material-use.schema.json",
+  "_schema_anchor": "actualMaterialUse",
+  "instance": {
+    "material_reference": {
+      "object_id": "hop-citra"
+    },
+    "actual_quantity": {
+      "quantity_kind": "mass",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.05
+        },
+        "unit": "kilogram"
+      }
+    },
+    "remaining_inventory": {
+      "quantity_kind": "mass",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.95
+        },
+        "unit": "kilogram"
+      }
+    }
+  }
+}

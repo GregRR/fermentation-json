@@ -80,3 +80,52 @@ def test_planned_quantity_uses_generic_quantity_schema() -> None:
     assert planned_properties["planned_quantity"] == {
         "$ref": "../core/quantity.schema.json#quantity"
     }
+
+
+def test_valid_actual_material_use_validates() -> None:
+    errors = list(
+        _validator("actualMaterialUse").iter_errors(
+            _load_example("examples/valid/production/actual-material-use.json")
+        )
+    )
+    assert not errors, "; ".join(error.message for error in errors)
+
+
+def test_actual_material_use_may_omit_lot_reference() -> None:
+    errors = list(
+        _validator("actualMaterialUse").iter_errors(
+            _load_example(
+                "examples/valid/production/actual-material-use-without-lot.json"
+            )
+        )
+    )
+    assert not errors, "; ".join(error.message for error in errors)
+
+
+def test_actual_material_use_requires_actual_quantity() -> None:
+    errors = list(
+        _validator("actualMaterialUse").iter_errors(
+            _load_example(
+                "examples/invalid/production/actual-material-use-missing-quantity.json"
+            )
+        )
+    )
+    assert errors
+
+
+def test_actual_material_use_rejects_inline_inventory_state() -> None:
+    errors = list(
+        _validator("actualMaterialUse").iter_errors(
+            _load_example(
+                "examples/invalid/production/actual-material-use-unknown-field.json"
+            )
+        )
+    )
+    assert errors
+
+
+def test_actual_quantity_uses_generic_quantity_schema() -> None:
+    actual_properties = MATERIAL_USE_SCHEMA["$defs"]["actual_material_use"]["properties"]
+    assert actual_properties["actual_quantity"] == {
+        "$ref": "../core/quantity.schema.json#quantity"
+    }

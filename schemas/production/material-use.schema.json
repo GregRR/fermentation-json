@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/material-use.schema.json",
-  "title": "FermentationJSON planned material use",
+  "title": "FermentationJSON material use",
   "$ref": "#plannedMaterialUse",
   "$defs": {
     "planned_material_use": {
@@ -35,6 +35,48 @@
           "minLength": 1
         },
         "instructions": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provenance": {
+          "$ref": "../core/provenance.schema.json#provenance"
+        },
+        "extensions": {
+          "$ref": "../core/extension.schema.json#extensionContainer"
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "actual_material_use": {
+      "$anchor": "actualMaterialUse",
+      "type": "object",
+      "required": [
+        "material_reference",
+        "actual_quantity"
+      ],
+      "properties": {
+        "object_id": {
+          "$ref": "../core/identity.schema.json#objectId"
+        },
+        "material_reference": {
+          "$ref": "../core/reference.schema.json#dataReference"
+        },
+        "lot_reference": {
+          "$ref": "../core/reference.schema.json#dataReference"
+        },
+        "planned_use_reference": {
+          "$ref": "../core/reference.schema.json#dataReference"
+        },
+        "actual_quantity": {
+          "$ref": "../core/quantity.schema.json#quantity"
+        },
+        "process_stage_reference": {
+          "$ref": "../core/reference.schema.json#dataReference"
+        },
+        "process_step_reference": {
+          "$ref": "../core/reference.schema.json#dataReference"
+        },
+        "purpose": {
           "type": "string",
           "minLength": 1
         },
