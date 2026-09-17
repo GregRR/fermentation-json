@@ -1,0 +1,33 @@
+{
+  "_schema_path": "production/material-use.schema.json",
+  "_schema_anchor": "plannedMaterialUse",
+  "instance": {
+    "object_id": "hop-addition-1",
+    "material_reference": {
+      "object_id": "cascade-hop"
+    },
+    "planned_quantity": {
+      "quantity_kind": "mass",
+      "canonical": {
+        "form": {
+          "type": "exact",
+          "value": 0.05669904625
+        },
+        "unit": "kilogram"
+      },
+      "reported": {
+        "form": {
+          "type": "exact",
+          "value": 2
+        },
+        "unit": "ounce",
+        "original_unit_text": "oz"
+      },
+      "epistemic_state": [
+        "target"
+      ]
+    },
+    "purpose": "bittering",
+    "instructions": "Add according to the referenced process step."
+  }
+}

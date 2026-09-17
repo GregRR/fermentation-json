@@ -1,0 +1,10 @@
+{
+  "_schema_path": "production/material-use.schema.json",
+  "_schema_anchor": "plannedMaterialUse",
+  "instance": {
+    "material_reference": {
+      "object_id": "cascade-hop"
+    },
+    "timing": "60 minutes"
+  }
+}

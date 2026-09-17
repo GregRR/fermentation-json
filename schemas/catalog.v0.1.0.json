@@ -116,6 +116,11 @@
       "path": "production/inventory.schema.json"
     },
     {
+      "name": "planned_material_use",
+      "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/material-use.schema.json",
+      "path": "production/material-use.schema.json"
+    },
+    {
       "name": "material_definition",
       "id": "https://gregrr.github.io/fermentation-json/schemas/0.1.0/production/material.schema.json",
       "path": "production/material.schema.json"

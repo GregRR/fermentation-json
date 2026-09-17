@@ -1,0 +1,13 @@
+{
+  "_schema_path": "production/material-use.schema.json",
+  "_schema_anchor": "plannedMaterialUse",
+  "instance": {
+    "planned_quantity": {
+      "quantity_kind": "mass",
+      "canonical": {
+        "value": 0.01,
+        "unit": "kilogram"
+      }
+    }
+  }
+}
